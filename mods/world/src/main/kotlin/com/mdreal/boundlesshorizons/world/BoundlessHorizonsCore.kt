@@ -1,7 +1,5 @@
 package com.mdreal.boundlesshorizons.world
 
-import com.mdreal.boundlesshorizons.world.worldGen.injector.DeadlandsPackInjector
-import com.mdreal.boundlesshorizons.world.worldGen.typeSelector.DeadlandsWorldTypeSelector
 import net.minecraft.client.Minecraft
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -16,28 +14,22 @@ import thedarkcolour.kotlinforforge.neoforge.forge.runForDist
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 object BoundlessHorizonsCore {
     init {
-        DeadlandsPackInjector.init()
-        DeadlandsWorldTypeSelector.init()
-        
-        runForDist(
-            clientTarget = {
-                MOD_BUS.addListener(::onClientSetup)
-                Minecraft.getInstance()
-            },
-            serverTarget = {
-                MOD_BUS.addListener(::onServerSetup)
-                "test"
-            }
-        )
+        runForDist(clientTarget = {
+            MOD_BUS.addListener(::onClientSetup)
+            Minecraft.getInstance()
+        }, serverTarget = {
+            MOD_BUS.addListener(::onServerSetup)
+            "test"
+        })
     }
 
-    private fun onClientSetup(event: FMLClientSetupEvent) {
+    private fun onClientSetup(@Suppress("UNUSED_PARAMETER") event: FMLClientSetupEvent) {
     }
 
-    private fun onServerSetup(event: FMLDedicatedServerSetupEvent) {
+    private fun onServerSetup(@Suppress("UNUSED_PARAMETER") event: FMLDedicatedServerSetupEvent) {
     }
 
     @SubscribeEvent
-    fun onCommonSetup(event: FMLCommonSetupEvent) {
+    fun onCommonSetup(@Suppress("UNUSED_PARAMETER") event: FMLCommonSetupEvent) {
     }
 }
