@@ -1,0 +1,3 @@
+# If true: Deadlands is the ONLY preset (set as default and other presets are hidden/ignored in the UI).
+# If false: Deadlands is added as an extra selectable option (normal behavior).
+worldPreset.forceDeadlandsOnly = false
