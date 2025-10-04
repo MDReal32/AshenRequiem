@@ -1,6 +1,7 @@
 package com.mdreal.boundlesshorizons.world
 
 import com.mdreal.boundlesshorizons.world.config.WorldCommonConfig
+import com.mdreal.boundlesshorizons.world.worldGen.ModWorldgen
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModContainer
@@ -14,6 +15,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 class BoundlessHorizonsCore(container: ModContainer, modBus: IEventBus) {
     init {
         container.registerConfig(ModConfig.Type.CLIENT, WorldCommonConfig.spec)
+        ModWorldgen.hook(modBus)
     }
 
     @SubscribeEvent
