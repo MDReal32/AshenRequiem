@@ -1,7 +1,3 @@
-plugins {
-    id("net.neoforged.moddev") version "2.0.112"
-}
-
 val modProjects = rootProject.subprojects.filter { it.path.startsWith(":mods:") }
 modProjects.forEach { evaluationDependsOn(it.path) }
 
