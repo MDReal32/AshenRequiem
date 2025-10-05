@@ -1,6 +1,5 @@
 plugins {
-    id("net.neoforged.moddev") version "2.0.110"
-    id("org.jetbrains.kotlin.jvm") version "2.0.0"
+    id("net.neoforged.moddev") version "2.0.112"
 }
 
 val modProjects = rootProject.subprojects.filter { it.path.startsWith(":mods:") }
@@ -12,10 +11,9 @@ dependencies {
     }
 }
 
-
 neoForge {
     version = providers.gradleProperty("neo_version").get()
-
+    
     parchment {
         mappingsVersion = providers.gradleProperty("parchment_mappings_version").get()
         minecraftVersion = providers.gradleProperty("parchment_minecraft_version").get()
@@ -24,15 +22,7 @@ neoForge {
     runs {
         create("client") {
             client()
-
+            gameDirectory = file("${project.rootDir}/modpack")
         }
     }
-
-//    mods {
-//        modProjects.forEach { mp ->
-//            create(mp.name) {
-//                sourceSet(mp.extensions.getByType(SourceSetContainer::class.java).named("main").get())
-//            }
-//        }
-//    }
 }
