@@ -144,3 +144,6 @@ gradle-app.setting
 modpack/*
 !modpack/mods/
 !modpack/mods/**
+
+!modpack/kubejs/
+!modpack/kubejs/**
