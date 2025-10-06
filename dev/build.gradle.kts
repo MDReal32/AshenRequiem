@@ -18,7 +18,7 @@ neoForge {
     runs {
         create("client") {
             client()
-            gameDirectory = file("${project.rootDir}/modpack")
+            gameDirectory = file("pack")
         }
     }
 }

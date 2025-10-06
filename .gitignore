@@ -140,16 +140,3 @@ gradle-app.setting
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
 .kotlin/sessions
-
-modpack/*
-
-!modpack/mods/
-!modpack/kubejs/
-!modpack/config/
-
-!modpack/mods/**
-!modpack/kubejs/**
-
-modpack/config/*
-!modpack/config/boundless-horizons/
-!modpack/config/boundless-horizons/**

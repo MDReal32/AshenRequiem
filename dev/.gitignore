@@ -1,0 +1,12 @@
+pack/*
+
+!pack/mods/
+#!pack/kubejs/
+!pack/config/
+
+!pack/mods/**
+#!pack/kubejs/**
+
+pack/config/*
+!pack/config/boundless-horizons/
+!pack/config/boundless-horizons/**
