@@ -1,0 +1,17 @@
+{
+  "name": "@boundless-horizons/modpack",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "kubejs build -r ../dev/pack",
+    "watch": "kubejs build -r ../dev/pack --watch"
+  },
+  "dependencies": {
+    "@kubejs/plugin": "^1.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.0",
+    "typescript": "^5.9.3"
+  }
+}
