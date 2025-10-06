@@ -142,8 +142,14 @@ gradle-app.setting
 .kotlin/sessions
 
 modpack/*
-!modpack/mods/
-!modpack/mods/**
 
+!modpack/mods/
 !modpack/kubejs/
+!modpack/config/
+
+!modpack/mods/**
 !modpack/kubejs/**
+
+modpack/config/*
+!modpack/config/boundless-horizons/
+!modpack/config/boundless-horizons/**

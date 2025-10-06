@@ -8,7 +8,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.ScreenEvent
 
-@EventBusSubscriber(modid = WorldConfig.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = [Dist.CLIENT])
+@EventBusSubscriber(modid = WorldConfig.MOD_ID, value = [Dist.CLIENT])
 object ScreenSwapper {
     @SubscribeEvent
     fun onOpening(event: ScreenEvent.Opening) {
