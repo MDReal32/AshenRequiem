@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BoundlessHorizons.iml" filepath="$PROJECT_DIR$/.idea/modules/BoundlessHorizons.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev/BoundlessHorizons.dev.main.iml" filepath="$PROJECT_DIR$/.idea/modules/dev/BoundlessHorizons.dev.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/core/BoundlessHorizons.mods.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/core/BoundlessHorizons.mods.core.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/world/BoundlessHorizons.mods.world.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/world/BoundlessHorizons.mods.world.main.iml" />
