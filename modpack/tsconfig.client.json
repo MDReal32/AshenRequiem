@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "typeRoots": []
+  },
+  "files": [
+    "./src/client.ts",
+    "../dev/pack/.probe/client/probe-types/global/index.d.ts",
+    "../dev/pack/.probe/client/probe-types/packages/index.d.ts"
+  ]
+}

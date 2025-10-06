@@ -1103,23 +1103,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@boundless-horizons/modpack@workspace:modpack":
+"@boundless-horizons/modpack@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@boundless-horizons/modpack@workspace:modpack"
+  resolution: "@boundless-horizons/modpack@workspace:."
   dependencies:
     "@kubejs/plugin": "npm:^1.2.3"
+    "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"
     "@types/node": "npm:^24.7.0"
+    prettier: "npm:^3.5.3"
+    prettier-plugin-packagejson: "npm:^2.5.14"
     typescript: "npm:^5.9.3"
-  languageName: unknown
-  linkType: soft
-
-"@boundless-horizons/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@boundless-horizons/monorepo@workspace:."
-  dependencies:
-    "@trivago/prettier-plugin-sort-imports": "npm:5.2.2"
-    prettier: "npm:^3.6.2"
-    prettier-plugin-packagejson: "npm:^2.5.19"
   languageName: unknown
   linkType: soft
 
@@ -1661,7 +1654,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trivago/prettier-plugin-sort-imports@npm:5.2.2":
+"@trivago/prettier-plugin-sort-imports@npm:^5.2.2":
   version: 5.2.2
   resolution: "@trivago/prettier-plugin-sort-imports@npm:5.2.2"
   dependencies:
@@ -3251,7 +3244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-packagejson@npm:^2.5.19":
+"prettier-plugin-packagejson@npm:^2.5.14":
   version: 2.5.19
   resolution: "prettier-plugin-packagejson@npm:2.5.19"
   dependencies:
@@ -3266,7 +3259,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.6.2":
+"prettier@npm:^3.5.3":
   version: 3.6.2
   resolution: "prettier@npm:3.6.2"
   bin:

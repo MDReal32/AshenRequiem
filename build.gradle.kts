@@ -10,9 +10,5 @@ subprojects {
     repositories {
         mavenCentral()
         maven("https://maven.neoforged.net/releases")
-        maven("https://thedarkcolour.github.io/KotlinForForge/") {
-            name = "Kotlin for Forge"
-            content { includeGroup("thedarkcolour") }
-        }
     }
 }

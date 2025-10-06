@@ -1,2 +1,2 @@
 #If true, shows minimal UI with Deadlands preset; if false, uses the normal world setup.
-forceDeadlandsOnly = false
+forceDeadlandsOnly = true

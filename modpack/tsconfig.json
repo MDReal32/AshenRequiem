@@ -1,5 +1,9 @@
 {
-  "compilerOptions": {
-    "types": ["@kubejs/plugin/probe.d.ts"]
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.client.json" },
+    { "path": "./tsconfig.server.json" },
+    { "path": "./tsconfig.startup.json" }
+  ],
+  "exclude": ["../dev/pack/.probe/**"]
 }

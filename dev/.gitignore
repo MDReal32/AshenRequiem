@@ -1,12 +1,22 @@
 pack/*
 
-!pack/mods/
+#!pack/.probe/
+#!pack/mods/
 #!pack/kubejs/
-!pack/config/
+#!pack/config/
 
+#!pack/.probe/**
 !pack/mods/**
-#!pack/kubejs/**
 
-pack/config/*
-!pack/config/boundless-horizons/
-!pack/config/boundless-horizons/**
+#!pack/kubejs/client_scripts/
+#!pack/kubejs/client_scripts/**
+#
+#!pack/kubejs/common_scripts/
+#!pack/kubejs/common_scripts/**
+#
+#!pack/kubejs/server_scripts/
+#!pack/kubejs/server_scripts/**
+#
+#pack/config/*
+#!pack/config/boundless-horizons/
+#!pack/config/boundless-horizons/**
