@@ -28,6 +28,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
+    compileOnly(project(":mods:core"))
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
