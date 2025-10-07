@@ -13,6 +13,5 @@ pack/local
 pack/logs
 pack/resourcepacks
 pack/waypoints
-pack/options.txt
 pack/command_history.txt
 pack/user*cache.json
