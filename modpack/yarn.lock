@@ -1400,24 +1400,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kubejs/core@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/core::locator=%40boundless-horizons%2Fmodpack%40workspace%3A.":
+"@kubejs/core@npm:^1.0.3":
   version: 1.0.3
-  resolution: "@kubejs/core@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/core#/Users/mdrealiyev/Projects/bundled-kubejs/libs/core::hash=967493&locator=%40boundless-horizons%2Fmodpack%40workspace%3A."
+  resolution: "@kubejs/core@npm:1.0.3"
   dependencies:
     archiver: "npm:^7.0.1"
     electron: "npm:^38.2.1"
     temp-dir: "npm:^3.0.0"
-  checksum: 10c0/f5087782ebe28ddccd4ab5065c617c566b0b237545720813a65e09fb196b4b1487151b2a9953cf3edf9a903d2f0de3f016e18363b7b75ea1e34435e8baab8dc0
+  checksum: 10c0/371ec515e061bbb983dc7a1fdc686d501998e8cdb8465e4433a2e454673b13efa7e4be00b5128951c7978d7060f1dbb42b7447886ea7d5834c5240f7f65ca4ca
   languageName: node
   linkType: hard
 
-"@kubejs/plugin@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin::locator=%40boundless-horizons%2Fmodpack%40workspace%3A.":
+"@kubejs/plugin@npm:^1.2.9":
   version: 1.2.9
-  resolution: "@kubejs/plugin@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin#/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin::hash=d9ca56&locator=%40boundless-horizons%2Fmodpack%40workspace%3A."
+  resolution: "@kubejs/plugin@npm:1.2.9"
   dependencies:
     "@babel/core": "npm:^7.28.4"
     "@babel/preset-env": "npm:^7.28.3"
-    "@kubejs/core": "workspace:^"
+    "@kubejs/core": "npm:^1.0.3"
     "@rollup/plugin-babel": "npm:^6.0.4"
     "@swc/core": "npm:1.13.5"
     chokidar: "npm:^4.0.3"
@@ -1428,7 +1428,7 @@ __metadata:
     yargs: "npm:18.0.0"
   bin:
     kubejs: bin/cli.js
-  checksum: 10c0/147e9583761f4a0c4328711b8806fc02a6049987aa36bc65622371805d5375ea92db840cc0924db85b04009aacc945a1b3344889ed967c55e069bb2bca920651
+  checksum: 10c0/e96b9760c13b847b77d973d01286b4bfb3f5e38d22f5be2d26cc7e7bfce725dad84b8a7c6c0322f0174ae0fa73964db849219549d035c3e56842292f20353d6c
   languageName: node
   linkType: hard
 
