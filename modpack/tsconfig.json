@@ -1,9 +1,5 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.client.json" },
-    { "path": "./tsconfig.server.json" },
-    { "path": "./tsconfig.startup.json" }
-  ],
-  "exclude": ["../dev/pack/.probe/**"]
+  "extends": "@kubejs/plugin/tsconfig.json",
+  "include": ["src/**/*.ts", "types/**/*.d.ts"],
+  "exclude": ["kubejs", "**/node_modules", "**/*.tmp.*"]
 }

@@ -7,14 +7,19 @@
     "build": "kubejs build -r ../dev/pack",
     "watch": "kubejs build -r ../dev/pack --watch"
   },
+  "resolutions": {
+    "@kubejs/core": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/core",
+    "@kubejs/generator": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/generator",
+    "@kubejs/plugin": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin"
+  },
   "dependencies": {
-    "@kubejs/plugin": "^1.2.3"
+    "@kubejs/plugin": "^1.2.9"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^24.7.0",
-    "prettier": "^3.5.3",
-    "prettier-plugin-packagejson": "^2.5.14",
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.19",
     "typescript": "^5.9.3"
   },
   "packageManager": "yarn@4.10.3"
