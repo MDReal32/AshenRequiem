@@ -7,6 +7,11 @@
     "build": "kubejs build -r ../dev/pack",
     "watch": "kubejs build -r ../dev/pack --watch"
   },
+  "resolutions": {
+    "@kubejs/core": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/core",
+    "@kubejs/generator": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/generator",
+    "@kubejs/plugin": "/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin"
+  },
   "dependencies": {
     "@kubejs/plugin": "^1.2.9"
   },

@@ -1,3 +1,1 @@
-import { aa } from "../../utils/java-math";
-
-console.log(aa);
+console.log(FTBQuests.questShapes);

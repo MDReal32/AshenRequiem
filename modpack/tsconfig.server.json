@@ -1,0 +1,11 @@
+{
+  "extends": "@kubejs/plugin/tsconfig.json",
+  "compilerOptions": { "composite": true },
+  "include": [
+    "./node_modules/.kubejs/types/server.globals.d.ts",
+    "src/server.ts",
+    "src/server/**/*",
+    "src/shared/server/**/*",
+    "src/shared/common/**/*"
+  ]
+}

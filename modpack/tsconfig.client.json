@@ -1,0 +1,10 @@
+{
+  "extends": "@kubejs/plugin/tsconfig.json",
+  "include": [
+    "./node_modules/.kubejs/types/client.globals.d.ts",
+    "src/client.ts",
+    "src/client/**/*",
+    "src/shared/client/**/*",
+    "src/shared/common/**/*"
+  ]
+}
