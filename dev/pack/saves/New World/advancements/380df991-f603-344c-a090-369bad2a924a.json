@@ -14,6 +14,7 @@
   "minecraft:adventure/adventuring_time": {
     "criteria": {
       "minecraft:flower_forest": "2025-10-06 22:10:42 +0400",
+      "minecraft:stony_shore": "2025-10-08 18:46:56 +0400",
       "minecraft:plains": "2025-10-06 16:18:13 +0400"
     },
     "done": false

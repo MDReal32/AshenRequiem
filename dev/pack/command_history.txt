@@ -1,0 +1,17 @@
+/probejs dump
+/probejs
+/probejs enable
+/probejs dump
+/ftbquests editing_mode true
+/kubejs reload lang
+/time set day
+/gamerule doDaylightCycle false
+/time set 1000
+/ftbquests reload
+/probejs dump
+/kubejs reload
+/kubejs reload server-scripts
+/reload
+/probejs dump
+/probejs enable
+/probejs dump
