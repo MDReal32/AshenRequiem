@@ -28,21 +28,21 @@ class DeadlandsChunkGenerator(
 ) : ChunkGenerator(biomeSrc) {
 
     companion object {
-        val CODEC: MapCodec<DeadlandsChunkGenerator> = mapCodec { instance: Instance<DeadlandsChunkGenerator> ->
+        val CODEC: MapCodec<DeadlandsChunkGenerator> = mapCodec { instance ->
             val biomeSourceField: RecordCodecBuilder<DeadlandsChunkGenerator, BiomeSource> =
                 BiomeSource.CODEC
                     .fieldOf("biome_source")
-                    .forGetter { generator: DeadlandsChunkGenerator -> generator.biomeSource }
+                    .forGetter { generator -> generator.biomeSource }
 
             val settingsHolderField: RecordCodecBuilder<DeadlandsChunkGenerator, Holder<NoiseGeneratorSettings>> =
                 RegistryFileCodec.create(Registries.NOISE_SETTINGS, NoiseGeneratorSettings.DIRECT_CODEC)
                     .fieldOf("settings")
-                    .forGetter { generator: DeadlandsChunkGenerator -> generator.settings }
+                    .forGetter { generator -> generator.settings }
 
 
             instance
                 .group(biomeSourceField, settingsHolderField)
-                .apply(instance) { biomeSource: BiomeSource, settingsHolder: Holder<NoiseGeneratorSettings> ->
+                .apply(instance) { biomeSource, settingsHolder ->
                     DeadlandsChunkGenerator(biomeSource, settingsHolder)
                 }
         }

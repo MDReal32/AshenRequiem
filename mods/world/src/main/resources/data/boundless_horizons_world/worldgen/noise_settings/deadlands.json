@@ -1,0 +1,75 @@
+{
+  "sea_level": 63,
+  "disable_mob_generation": false,
+  "aquifers_enabled": true,
+  "ore_veins_enabled": true,
+  "legacy_random_source": false,
+  "default_block": {
+    "Name": "minecraft:stone"
+  },
+  "default_fluid": {
+    "Name": "minecraft:water"
+  },
+  "noise": {
+    "min_y": -64,
+    "height": 384,
+    "size_horizontal": 1,
+    "size_vertical": 2
+  },
+  "noise_router": "minecraft:overworld",
+  "surface_rule": {
+    "type": "minecraft:rule",
+    "sequence": [
+      {
+        "if_true": {
+          "type": "minecraft:and",
+          "values": [
+            {
+              "type": "minecraft:stone_depth",
+              "surface_type": "floor",
+              "offset": 0,
+              "add_surface_depth": false
+            },
+            {
+              "type": "minecraft:above_preliminary_surface"
+            }
+          ]
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "boundless_horizons:dead_grass_block"
+          }
+        }
+      },
+      {
+        "if_true": {
+          "type": "minecraft:stone_depth",
+          "surface_type": "floor",
+          "offset": 1,
+          "add_surface_depth": false
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "boundless_horizons:dead_dirt"
+          }
+        }
+      },
+      {
+        "if_true": {
+          "type": "minecraft:stone_depth",
+          "surface_type": "floor",
+          "offset": 2,
+          "add_surface_depth": false
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "boundless_horizons:dead_dirt"
+          }
+        }
+      }
+    ]
+  }
+}

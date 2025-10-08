@@ -25,7 +25,7 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies."${mod_id}"]]
-modId="boundless_horizons_core"
+modId="boundless_horizons"
 type="required"
 versionRange="*"
 ordering="AFTER"

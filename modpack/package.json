@@ -8,7 +8,7 @@
     "watch": "kubejs build -r ../dev/pack --watch"
   },
   "dependencies": {
-    "@kubejs/plugin": "^1.2.9"
+    "@kubejs/plugin": "^1.2.11"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",

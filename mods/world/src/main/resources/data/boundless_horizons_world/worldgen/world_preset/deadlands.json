@@ -3,12 +3,12 @@
     "minecraft:overworld": {
       "type": "minecraft:overworld",
       "generator": {
-        "type": "minecraft:noise",
+        "type": "boundless_horizons_world:deadlands",
         "biome_source": {
-          "type": "minecraft:multi_noise",
-          "preset": "minecraft:overworld"
+          "type": "minecraft:fixed",
+          "biome": "minecraft:plains"
         },
-        "settings": "minecraft:overworld"
+        "settings": "boundless_horizons_world:deadlands"
       }
     }
   }

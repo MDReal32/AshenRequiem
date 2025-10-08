@@ -8,7 +8,10 @@ pack/defaultconfigs
 pack/downloads
 pack/dynamic-resource-pack-cache
 pack/journeymap
-pack/kubejs
+pack/kubejs/config
+pack/kubejs/client_scripts
+pack/kubejs/server_scripts
+pack/kubejs/startup_scripts
 pack/local
 pack/logs
 pack/resourcepacks

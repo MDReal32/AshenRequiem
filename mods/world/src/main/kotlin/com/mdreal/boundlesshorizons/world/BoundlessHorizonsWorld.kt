@@ -1,5 +1,7 @@
 package com.mdreal.boundlesshorizons.world
 
+import com.mdreal.boundlesshorizons.core.BlockRegistries
+import com.mdreal.boundlesshorizons.world.blocks.Blocks
 import com.mdreal.boundlesshorizons.world.config.WorldCommonConfig
 import com.mdreal.boundlesshorizons.world.worldGen.ModWorldgen
 import net.neoforged.bus.api.IEventBus
@@ -12,5 +14,6 @@ class BoundlessHorizonsWorld(container: ModContainer, modBus: IEventBus) {
     init {
         container.registerConfig(ModConfig.Type.CLIENT, WorldCommonConfig.getSpec(), "boundless-horizons/client/world.toml")
         ModWorldgen.hook(modBus)
+        Blocks.registerAll()
     }
 }

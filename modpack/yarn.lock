@@ -1107,7 +1107,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@boundless-horizons/modpack@workspace:."
   dependencies:
-    "@kubejs/plugin": "npm:^1.2.9"
+    "@kubejs/plugin": "npm:^1.2.11"
     "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"
     "@types/node": "npm:^24.7.0"
     prettier: "npm:^3.6.2"
@@ -1400,24 +1400,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kubejs/core@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/core::locator=%40boundless-horizons%2Fmodpack%40workspace%3A.":
+"@kubejs/core@npm:^1.0.3":
   version: 1.0.3
-  resolution: "@kubejs/core@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/core#/Users/mdrealiyev/Projects/bundled-kubejs/libs/core::hash=15e301&locator=%40boundless-horizons%2Fmodpack%40workspace%3A."
+  resolution: "@kubejs/core@npm:1.0.3"
   dependencies:
     archiver: "npm:^7.0.1"
     electron: "npm:^38.2.1"
     temp-dir: "npm:^3.0.0"
-  checksum: 10c0/1a31ce4820768c76bc1edc24b6cb77c02c9946a35220054717937e31e623814f3a1b9f1e0b12d708b1fd8ae14078f2cd26dce6af89ea4e68b9c5a658554d799c
+  checksum: 10c0/371ec515e061bbb983dc7a1fdc686d501998e8cdb8465e4433a2e454673b13efa7e4be00b5128951c7978d7060f1dbb42b7447886ea7d5834c5240f7f65ca4ca
   languageName: node
   linkType: hard
 
-"@kubejs/plugin@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin::locator=%40boundless-horizons%2Fmodpack%40workspace%3A.":
-  version: 1.2.9
-  resolution: "@kubejs/plugin@file:/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin#/Users/mdrealiyev/Projects/bundled-kubejs/libs/plugin::hash=f12115&locator=%40boundless-horizons%2Fmodpack%40workspace%3A."
+"@kubejs/plugin@npm:^1.2.11":
+  version: 1.2.11
+  resolution: "@kubejs/plugin@npm:1.2.11"
   dependencies:
     "@babel/core": "npm:^7.28.4"
     "@babel/preset-env": "npm:^7.28.3"
-    "@kubejs/core": "workspace:^"
+    "@kubejs/core": "npm:^1.0.3"
     "@rollup/plugin-babel": "npm:^6.0.4"
     "@swc/core": "npm:1.13.5"
     chokidar: "npm:^4.0.3"
@@ -1428,7 +1428,7 @@ __metadata:
     yargs: "npm:18.0.0"
   bin:
     kubejs: bin/cli.js
-  checksum: 10c0/59cea26fa3815806956fbd23a3cba370239751f3cbf7c2ab958626f9459ad528b7668fd576e4556636575f463db47cef314acfefde392aecc13861632b7381e5
+  checksum: 10c0/f00918656f3f6e5fea541599689a5fea29f4302deb7459c521d84bb21700c557612f23e6d69dc268ca6b211d8a78e50b7306e438f9f141f94090f3aeb1931ec5
   languageName: node
   linkType: hard
 

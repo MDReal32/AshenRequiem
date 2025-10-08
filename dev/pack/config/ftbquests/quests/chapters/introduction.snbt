@@ -8,9 +8,13 @@
 	quest_links: [ ]
 	quests: [{
 		icon: {
-			id: "minecraft:oak_log"
+			components: {
+				"ftbquests:icon": "kubejs:item/logo"
+			}
+			id: "ftbquests:custom_icon"
 		}
 		id: "4C42E0C9D5063097"
+		shape: "none"
 		tasks: [{
 			id: "2E89C12CC255F0EC"
 			type: "checkmark"

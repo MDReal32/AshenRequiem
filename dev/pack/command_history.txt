@@ -15,3 +15,5 @@
 /probejs dump
 /probejs enable
 /probejs dump
+/kubejs reload client-scripts
+/probejs dump
