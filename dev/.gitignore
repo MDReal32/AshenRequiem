@@ -16,4 +16,7 @@ pack/local
 pack/logs
 pack/resourcepacks
 pack/waypoints
+pack/.curseclient
+pack/minecraftinstance.json
+pack/user-prefs.json
 pack/user*cache.json
