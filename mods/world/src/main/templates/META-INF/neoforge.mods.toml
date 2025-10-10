@@ -25,13 +25,6 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies."${mod_id}"]]
-modId="boundless_horizons"
-type="required"
-versionRange="*"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies."${mod_id}"]]
 modId="kotlinforforge"
 type="required"
 versionRange="${kotlin_version_range}"
