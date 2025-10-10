@@ -5,21 +5,8 @@
 	lock: false
 	rewards_blocked: false
 	task_progress: { }
-	started: {
-		19B36F23B45AB620: 1759761121811L
-		0000000000000001: 1759761121811L
-		4C42E0C9D5063097: 1759761121811L
-	}
-	completed: {
-		0000000000000000: 1759761121816L
-		19B36F23B45AB620: 1759761121816L
-		0000000000000001: 1759761121816L
-		4C42E0C9D5063097: 1759761121816L
-	}
+	started: { }
+	completed: { }
 	claimed_rewards: { }
-	player_data: {
-		380df991f603344ca090369bad2a924a: {
-			can_edit: 1b
-		}
-	}
+	player_data: { }
 }
