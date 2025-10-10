@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "boundless_horizons_world:block/ashen_grass/top",
+    "bottom": "boundless_horizons_world:block/ashen_dirt/bottom",
+    "side": "boundless_horizons_world:block/ashen_grass/side"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "up": "boundless_horizons_world:block/ashen_dirt/top",
+    "down": "boundless_horizons_world:block/ashen_dirt/bottom",
+    "north": "boundless_horizons_world:block/ashen_dirt/side",
+    "south": "boundless_horizons_world:block/ashen_dirt/side",
+    "west": "boundless_horizons_world:block/ashen_dirt/side",
+    "east": "boundless_horizons_world:block/ashen_dirt/side",
+    "particle": "boundless_horizons_world:block/ashen_dirt/side"
+  }
+}

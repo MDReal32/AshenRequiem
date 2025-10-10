@@ -1,3 +1,6 @@
 {
-  "generator.boundless_horizons_world.deadlands": "Dead Lands"
+  "generator.boundless_horizons_world.deadlands": "Dead Lands",
+
+  "block.boundless_horizons_world.ashen_dirt": "Ashen Dirt",
+  "block.boundless_horizons_world.ashen_grass": "Ashen Grass"
 }
