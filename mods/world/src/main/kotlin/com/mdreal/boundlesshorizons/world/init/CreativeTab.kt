@@ -1,7 +1,6 @@
 package com.mdreal.boundlesshorizons.world.init
 
 import com.mdreal.boundlesshorizons.world.WorldConfig
-import net.minecraft.core.MappedRegistry
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
