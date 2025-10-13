@@ -16,6 +16,7 @@ class BoundlessHorizonsWorld(container: ModContainer, modBus: IEventBus) {
             ModConfig.Type.COMMON, WorldCommonConfig.getSpec(), "boundless-horizons/client/world.toml"
         )
         ModWorldgen.hook(modBus)
+        CreativeTab.hook(modBus)
         Blocks.hook(modBus)
         Items.hook(modBus)
     }
