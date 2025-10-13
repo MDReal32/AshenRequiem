@@ -2,7 +2,11 @@ name: Publish to CurseForge (matrix, per-mod decision)
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
@@ -174,7 +178,7 @@ jobs:
 
       - name: Publish module to CurseForge
         if: steps.cf_check.outputs.exists != 'true'
-        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:publishCurseForge"
+        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:publishToCurseForge"
 
       - name: Per-mod summary
         if: always()
