@@ -1,14 +1,14 @@
 {
   "dimensions": {
     "minecraft:overworld": {
-      "type": "minecraft:overworld",
+      "type": "boundless_horizons_world:deadlands",
       "generator": {
-        "type": "boundless_horizons_world:deadlands",
+        "type": "minecraft:noise",
         "biome_source": {
-          "type": "minecraft:fixed",
-          "biome": "minecraft:plains"
+          "type": "minecraft:multi_noise",
+          "preset": "minecraft:overworld"
         },
-        "settings": "boundless_horizons_world:deadlands"
+        "settings": "minecraft:overworld"
       }
     }
   }
