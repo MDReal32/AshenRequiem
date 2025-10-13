@@ -17,3 +17,4 @@
 /probejs dump
 /kubejs reload client-scripts
 /probejs dump
+/effect give Dev minecraft:night_vision infinite
