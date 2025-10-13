@@ -70,11 +70,6 @@ if (cfProjectId && tokenProvider.isPresent()) {
             }
         }
     }
-} else {
-    logger.warn("CurseForge disabled for ${project.path} (missing projectId or apiToken).")
-    // Avoid hard failures if not configured
-    tasks.matching { it.name == 'publishCurseForge' || it.name.endsWith('ToCurseForge') }
-            .configureEach { enabled = false }
 }
 
 idea {
