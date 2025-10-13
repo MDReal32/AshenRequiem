@@ -1,5 +1,4 @@
 val modProjects = rootProject.subprojects.filter { it.path.startsWith(":mods:") }
-modProjects.forEach { evaluationDependsOn(it.path) }
 
 dependencies {
     modProjects.forEach { mp ->
