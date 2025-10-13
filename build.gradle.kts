@@ -12,6 +12,10 @@ subprojects {
         apply(plugin = "net.neoforged.moddev")
     }
 
+    if (path.startsWith(":mods:")) {
+        apply(plugin = "io.github.themrmilchmann.curseforge-publish")
+    }
+
     repositories {
         mavenCentral()
         maven("https://maven.neoforged.net/releases")
