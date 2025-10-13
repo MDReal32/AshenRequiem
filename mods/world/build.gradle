@@ -61,19 +61,13 @@ if (cfProjectId && tokenProvider.isPresent()) {
     curseforge {
         apiToken = tokenProvider
 
-        project(cfProjectId) {
-            // Display name will show up on CurseForge
-            displayName = provider { "${project.name} ${project.version}" }
+        publications {
+            register("curseForge") {
+                projectId = cfProjectId
 
-            loaders = cfLoader
-            gameVersions = cfVersions
-            releaseType = cfReleaseType
-
-            // Changelog text from file in this module
-            changelog = providers.fileContents(layout.projectDirectory.file(cfChangelog)).asText
-
-            // If auto-detection misses your main jar, uncomment:
-            mainArtifact = layout.buildDirectory.file("libs/${project.name}-${project.version}.jar")
+                // Display name will show up on CurseForge
+                displayName = provider { "${project.name} ${project.version}" }
+            }
         }
     }
 } else {
