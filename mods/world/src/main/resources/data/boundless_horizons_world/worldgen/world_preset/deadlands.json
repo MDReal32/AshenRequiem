@@ -6,7 +6,32 @@
         "type": "minecraft:noise",
         "biome_source": {
           "type": "minecraft:multi_noise",
-          "preset": "minecraft:overworld"
+          "biomes": [
+            {
+              "biome": "boundless_horizons_world:deadlands/desert",
+              "parameters": {
+                "temperature": 1.20,
+                "humidity": -0.80,
+                "continentalness": 0.20,
+                "erosion": 0.10,
+                "weirdness": 0.0,
+                "depth": 0.0,
+                "offset": 0.0
+              }
+            },
+            {
+              "biome": "boundless_horizons_world:deadlands/plains",
+              "parameters": {
+                "temperature": 0.30,
+                "humidity": -0.10,
+                "continentalness": 0.25,
+                "erosion": 0.50,
+                "weirdness": 0.0,
+                "depth": 0.0,
+                "offset": 0.0
+              }
+            }
+          ]
         },
         "settings": "boundless_horizons_world:deadlands"
       }
