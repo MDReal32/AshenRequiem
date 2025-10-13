@@ -22,4 +22,10 @@ object Blocks {
         "ashen_dirt", { it.mapColor(MapColor.DIRT).strength(0.5f).sound(SoundType.GRAVEL) })
     val ASHEN_GRASS = registerBlockWithItem(
         "ashen_grass", { it.mapColor(MapColor.GRASS).strength(0.6f).sound(SoundType.GRASS) })
+    val ASHEN_STONE = registerBlockWithItem(
+        "ashen_stone", { it.mapColor(MapColor.STONE).strength(1.5f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE) }
+    )
+    val ASHEN_COBBLE_STONE = registerBlockWithItem(
+        "ashen_cobblestone", { it.mapColor(MapColor.STONE).strength(1.5f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE) }
+    )
 }
