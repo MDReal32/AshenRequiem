@@ -134,13 +134,11 @@ jobs:
 
       - name: Build module
         if: steps.cf_check.outputs.exists != 'true'
-        run: ./gradlew -Pversion=${PUBLISH_VERSION} \
-             "${{ matrix.gradle_path }}:clean" "${{ matrix.gradle_path }}:build" -x test
+        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:clean" "${{ matrix.gradle_path }}:build" -x test
 
       - name: Publish module to CurseForge
         if: steps.cf_check.outputs.exists != 'true'
-        run: ./gradlew -Pversion=${PUBLISH_VERSION} \
-             ${{ matrix.gradle_path }}:publishCurseForge
+        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:publishCurseForge"
 
       - name: Per-mod summary
         if: always()
