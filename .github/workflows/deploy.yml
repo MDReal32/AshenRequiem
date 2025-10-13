@@ -39,31 +39,67 @@ jobs:
       bumped:          ${{ steps.ver.outputs.bumped }}
       curr:            ${{ steps.ver.outputs.curr }}
     steps:
-      - uses: actions/checkout@v5
-        with: { fetch-depth: 0 }
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history
+          fetch-tags: true # ensure tags are fetched
+
       - name: Setup Git user
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - name: Shell Script
-        id: ver
+
+      - id: ver
+        name: Determine version & maybe bump patch
         shell: bash
         run: |
           set -euo pipefail
+
           FILE="gradle.properties"
           [[ -f "$FILE" ]] || { echo "::error::root gradle.properties not found"; exit 1; }
-          CURR=$(grep -E '^version=' "$FILE" | head -n1 | cut -d'=' -f2 | tr -d '[:space:]')
+
+          # Read and normalize version (strip whitespace)
+          CURR="$(sed -n 's/^version[[:space:]]*=[[:space:]]*//p' "$FILE" | head -n1 | tr -d '[:space:]')"
           [[ -n "$CURR" ]] || { echo "::error::No 'version=' in root gradle.properties"; exit 1; }
+
+          # Support SNAPSHOT: treat 1.2.3-SNAPSHOT as 1.2.3 for tag checks
+          BASE="${CURR%-SNAPSHOT}"
+
+          # Fetch tags to be safe
           git fetch --tags --quiet || true
-          if git rev-parse -q --verify "refs/tags/v${CURR}" >/dev/null; then
-            PUBLISH="$CURR"; BUMPED="false"
-          else
-            IFS='.' read -r A B C <<< "$(printf "%s" "$CURR" | awk -F. '{printf "%s.%s.%s", $1, ($2==""?0:$2), ($3==""?0:$3)}')"
-            C=$((C+1)); PUBLISH="${A}.${B}.${C}"; BUMPED="true"
-            sed -i.bak -E "s/^version=.*/version=${PUBLISH}/" "$FILE"; rm -f "${FILE}.bak"
-            git add "$FILE"; git commit -m "chore(release): bump version to ${PUBLISH} [skip ci]" || true
-            git tag "v${PUBLISH}"; git push --follow-tags
+
+          # Check BOTH local and remote for v<BASE>
+          has_local=false
+          has_remote=false
+          if git rev-parse -q --verify "refs/tags/v${BASE}" >/dev/null; then
+            has_local=true
           fi
+          if git ls-remote --tags origin "v${BASE}" | grep -q "refs/tags/v${BASE}\$"; then
+            has_remote=true
+          fi
+
+          if $has_local || $has_remote; then
+            # Tag exists -> publish existing BASE (drop -SNAPSHOT if present)
+            PUBLISH="$BASE"
+            BUMPED="false"
+          else
+            # Tag does not exist -> bump patch
+            # Normalize to A.B.C
+            IFS='.' read -r A B C <<< "$(printf "%s" "$BASE" | awk -F. '{printf "%s.%s.%s", $1, ($2==""?0:$2), ($3==""?0:$3)}')"
+            C=$((C+1))
+            PUBLISH="${A}.${B}.${C}"
+            BUMPED="true"
+
+            # Write bumped version (preserve -SNAPSHOT policy if you want; here we write release)
+            sed -i.bak -E "s/^version[[:space:]]*=.*/version=${PUBLISH}/" "$FILE"
+            rm -f "${FILE}.bak"
+            git add "$FILE"
+            git commit -m "chore(release): bump version to ${PUBLISH} [skip ci]" || true
+            git tag -a "v${PUBLISH}" -m "Release ${PUBLISH}"
+            # Push commit and tag atomically-ish
+            git push && git push --tags
+          fi
+
           echo "curr=${CURR}"       >> "$GITHUB_OUTPUT"
           echo "publish=${PUBLISH}" >> "$GITHUB_OUTPUT"
           echo "bumped=${BUMPED}"   >> "$GITHUB_OUTPUT"
