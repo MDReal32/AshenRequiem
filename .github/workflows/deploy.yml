@@ -40,8 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       publish_version: ${{ steps.ver.outputs.publish }}
-      bumped:          ${{ steps.ver.outputs.bumped }}
-      curr:            ${{ steps.ver.outputs.curr }}
+      bumped: ${{ steps.ver.outputs.bumped }}
+      curr: ${{ steps.ver.outputs.curr }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -110,7 +110,7 @@ jobs:
 
   publish_each:
     name: Publish ${{ matrix.name }}
-    needs: [discover_mods, prepare_version]
+    needs: [ discover_mods, prepare_version ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -118,7 +118,7 @@ jobs:
     env:
       CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
       PUBLISH_VERSION: ${{ needs.prepare_version.outputs.publish_version }}
-      BUMPED:          ${{ needs.prepare_version.outputs.bumped }}
+      BUMPED: ${{ needs.prepare_version.outputs.bumped }}
     steps:
       - uses: actions/checkout@v5
         with: { fetch-depth: 0 }
@@ -179,6 +179,8 @@ jobs:
       - name: Publish module to CurseForge
         if: steps.cf_check.outputs.exists != 'true'
         run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:publishToCurseForge"
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
 
       - name: Per-mod summary
         if: always()
