@@ -45,7 +45,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - id: ver
+      - name: Shell Script
+        id: ver
         shell: bash
         run: |
           set -euo pipefail
