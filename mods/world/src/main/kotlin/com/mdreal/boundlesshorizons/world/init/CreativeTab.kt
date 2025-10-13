@@ -9,8 +9,6 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredRegister
 
-
-
 object CreativeTab {
     val CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, WorldConfig.MOD_ID)
 
