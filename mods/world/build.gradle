@@ -15,6 +15,15 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 kotlin.jvmToolchain(21)
 
+def cfProjectId = (findProperty('curseforge.projectId') ?: System.getenv('CURSEFORGE_PROJECT_ID')) as String
+def tokenProvider = providers.environmentVariable('CURSEFORGE_TOKEN')
+def cfLoader = (findProperty('curseforge.loader') ?: 'neoforge') as String
+def cfVersionsRaw = (findProperty('curseforge.gameVersions') ?: '1.21.1') as String
+def cfReleaseType = (findProperty('curseforge.releaseType') ?: 'release') as String
+def cfChangelog = (findProperty('curseforge.changelogFile') ?: 'CHANGELOG.md') as String
+
+def cfVersions = cfVersionsRaw.split(/[,\n]/)*.trim().findAll { it }
+
 neoForge {
     version = project.neo_version
 
@@ -48,9 +57,30 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
-curseforge {
-    apiToken = providers.gradleProperty("curseforgeApiToken")
-            .orElse(providers.environmentVariable("CURSEFORGE_TOKEN"))
+if (cfProjectId && tokenProvider.isPresent()) {
+    curseforge {
+        apiToken = tokenProvider
+
+        project(cfProjectId) {
+            // Display name will show up on CurseForge
+            displayName = provider { "${project.name} ${project.version}" }
+
+            loaders = cfLoader
+            gameVersions = cfVersions
+            releaseType = cfReleaseType
+
+            // Changelog text from file in this module
+            changelog = providers.fileContents(layout.projectDirectory.file(cfChangelog)).asText
+
+            // If auto-detection misses your main jar, uncomment:
+            mainArtifact = layout.buildDirectory.file("libs/${project.name}-${project.version}.jar")
+        }
+    }
+} else {
+    logger.warn("CurseForge disabled for ${project.path} (missing projectId or apiToken).")
+    // Avoid hard failures if not configured
+    tasks.matching { it.name == 'publishCurseForge' || it.name.endsWith('ToCurseForge') }
+            .configureEach { enabled = false }
 }
 
 idea {
