@@ -8,3 +8,5 @@
     - [ ] Pam's Harvest Craft
 - [ ] Lootr
 - [ ] Storage Drawers
+- [ ] Avaritia
+- [ ] Eden Ring
