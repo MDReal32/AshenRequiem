@@ -1,0 +1,198 @@
+name: Publish to CurseForge (matrix, per-mod decision)
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  discover_mods:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v5
+      - id: discover
+        shell: bash
+        run: |
+          set -euo pipefail
+          MODS=()
+          shopt -s nullglob
+          for d in mods/*/ ; do
+            [[ -f "${d}build.gradle.kts" || -f "${d}build.gradle" ]] || continue
+            name="$(basename "$d")"
+            MODS+=("{\"name\":\"${name}\",\"gradle_path\":\":mods:${name}\"}")
+          done
+          shopt -u nullglob
+          [[ ${#MODS[@]} -gt 0 ]] || { echo "::error::No Gradle modules found under mods/"; exit 1; }
+          JSON="{\"include\":[ $(IFS=,; echo "${MODS[*]}") ]}"
+          echo "matrix=${JSON}" >> "$GITHUB_OUTPUT"
+          echo "Discovered matrix: ${JSON}"
+
+  prepare_version:
+    runs-on: ubuntu-latest
+    outputs:
+      publish_version: ${{ steps.ver.outputs.publish }}
+      bumped: ${{ steps.ver.outputs.bumped }}
+      curr: ${{ steps.ver.outputs.curr }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history
+          fetch-tags: true # ensure tags are fetched
+
+      - name: Setup Git user
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - id: ver
+        name: Determine version & maybe bump patch
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          FILE="gradle.properties"
+          [[ -f "$FILE" ]] || { echo "::error::root gradle.properties not found"; exit 1; }
+
+          # Read and normalize version (strip whitespace)
+          CURR="$(sed -n 's/^version[[:space:]]*=[[:space:]]*//p' "$FILE" | head -n1 | tr -d '[:space:]')"
+          [[ -n "$CURR" ]] || { echo "::error::No 'version=' in root gradle.properties"; exit 1; }
+
+          # Support SNAPSHOT: treat 1.2.3-SNAPSHOT as 1.2.3 for tag checks
+          BASE="${CURR%-SNAPSHOT}"
+
+          # Fetch tags to be safe
+          git fetch --tags --quiet || true
+
+          # Check BOTH local and remote for v<BASE>
+          has_local=false
+          has_remote=false
+          if git rev-parse -q --verify "refs/tags/v${BASE}" >/dev/null; then
+            has_local=true
+          fi
+          if git ls-remote --tags origin "v${BASE}" | grep -q "refs/tags/v${BASE}\$"; then
+            has_remote=true
+          fi
+
+          if $has_local || $has_remote; then
+            # Tag exists -> publish existing BASE (drop -SNAPSHOT if present)
+            PUBLISH="$BASE"
+            BUMPED="false"
+          else
+            # Tag does not exist -> bump patch
+            # Normalize to A.B.C
+            IFS='.' read -r A B C <<< "$(printf "%s" "$BASE" | awk -F. '{printf "%s.%s.%s", $1, ($2==""?0:$2), ($3==""?0:$3)}')"
+            C=$((C+1))
+            PUBLISH="${A}.${B}.${C}"
+            BUMPED="true"
+
+            # Write bumped version (preserve -SNAPSHOT policy if you want; here we write release)
+            sed -i.bak -E "s/^version[[:space:]]*=.*/version=${PUBLISH}/" "$FILE"
+            rm -f "${FILE}.bak"
+            git add "$FILE"
+            git commit -m "chore(release): bump version to ${PUBLISH} [skip ci]" || true
+            git tag -a "v${PUBLISH}" -m "Release ${PUBLISH}"
+            # Push commit and tag atomically-ish
+            git push && git push --tags
+          fi
+
+          echo "curr=${CURR}"       >> "$GITHUB_OUTPUT"
+          echo "publish=${PUBLISH}" >> "$GITHUB_OUTPUT"
+          echo "bumped=${BUMPED}"   >> "$GITHUB_OUTPUT"
+
+  publish_each:
+    name: Publish ${{ matrix.gradle_path }}
+    needs: [ discover_mods, prepare_version ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover_mods.outputs.matrix) }}
+    env:
+      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+      PUBLISH_VERSION: ${{ needs.prepare_version.outputs.publish_version }}
+      BUMPED: ${{ needs.prepare_version.outputs.bumped }}
+    steps:
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0 }
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Verify per-mod CurseForge config
+        shell: bash
+        run: |
+          FILE="mods/${{ matrix.name }}/gradle.properties"
+          if [[ ! -f "$FILE" ]] || ! grep -q '^curseforge\.projectId=' "$FILE"; then
+            echo "::error::mods/${{ matrix.name }} missing curseforge.projectId in gradle.properties"
+            exit 1
+          fi
+          echo "OK"
+
+      - id: read_project
+        name: Read projectId for this mod
+        shell: bash
+        run: |
+          ID=$(grep '^curseforge\.projectId=' "mods/${{ matrix.name }}/gradle.properties" | head -n1 | cut -d'=' -f2 | tr -d '[:space:]')
+          echo "id=${ID}" >> "$GITHUB_OUTPUT"
+
+      # ===== Per-mod CF existence check =====
+      - id: cf_check
+        name: Check if this version already exists on CurseForge
+        shell: bash
+        env:
+          CF_API_KEY: ${{ secrets.CURSEFORGE_TOKEN }}
+        run: |
+          set -euo pipefail
+          MODID="${{ steps.read_project.outputs.id }}"
+          VER="${PUBLISH_VERSION}"
+          # Query recent files for the mod. We match version in displayName OR fileName.
+          RESP=$(curl -sS -H "Accept: application/json" -H "x-api-key: ${CF_API_KEY}" \
+                 "https://api.curseforge.com/v1/mods/${MODID}/files?pageSize=50")
+          # Use jq to check for a match (install jq)
+          sudo apt-get update -y >/dev/null 2>&1
+          sudo apt-get install -y jq >/dev/null 2>&1
+          EXISTS=$(echo "$RESP" | jq --arg v "$VER" '
+            (.data // []) | any(.displayName|test("\\b" + $v + "\\b")) or
+                            any(.fileName|test("[-_]" + $v + "\\b"))
+          ')
+          echo "exists=${EXISTS}" >> "$GITHUB_OUTPUT"
+          echo "CurseForge has version? ${EXISTS}"
+
+      - name: Build module
+        if: steps.cf_check.outputs.exists != 'true'
+        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:clean" "${{ matrix.gradle_path }}:build" -x test
+
+      - name: Publish module to CurseForge
+        if: steps.cf_check.outputs.exists != 'true'
+        run: ./gradlew -Pversion=${PUBLISH_VERSION} "${{ matrix.gradle_path }}:publishToCurseForge"
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+
+      - name: Per-mod summary
+        if: always()
+        run: |
+          echo "### Module: ${{ matrix.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Gradle path: \`${{ matrix.gradle_path }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Version bumped (global): **${BUMPED}**" >> $GITHUB_STEP_SUMMARY
+          echo "- Version to publish: **${PUBLISH_VERSION}**" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ steps.cf_check.outputs.exists }}" == "true" ]]; then
+            echo "- Already on CurseForge: **yes**" >> $GITHUB_STEP_SUMMARY
+            echo "- Action: **skipped**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- Already on CurseForge: **no**" >> $GITHUB_STEP_SUMMARY
+            echo "- Action: **published**" >> $GITHUB_STEP_SUMMARY
+          fi
