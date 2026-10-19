@@ -1,12 +1,14 @@
 name: Publish to CurseForge (matrix, per-mod decision)
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  # Automatic runs are paused; trigger manually from the Actions tab.
+  # To re-enable, uncomment push / pull_request.
+  # push:
+  #   branches:
+  #     - master
+  # pull_request:
+  #   branches:
+  #     - master
   workflow_dispatch:
 
 permissions:
