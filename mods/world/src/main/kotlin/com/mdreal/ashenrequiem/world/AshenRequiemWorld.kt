@@ -5,7 +5,6 @@ import com.mdreal.ashenrequiem.world.init.Blocks
 import com.mdreal.ashenrequiem.world.init.CreativeTab
 import com.mdreal.ashenrequiem.world.init.Items
 import com.mdreal.ashenrequiem.world.progression.DeadlandsArrival
-import com.mdreal.ashenrequiem.world.worldGen.ModWorldgen
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -20,7 +19,6 @@ class AshenRequiemWorld(container: ModContainer, modBus: IEventBus) {
         container.registerConfig(
             ModConfig.Type.COMMON, WorldCommonConfig.getSpec(), "ashen-requiem/client/world.toml"
         )
-        ModWorldgen.hook(modBus)
         CreativeTab.hook(modBus)
         Blocks.hook(modBus)
         Items.hook(modBus)

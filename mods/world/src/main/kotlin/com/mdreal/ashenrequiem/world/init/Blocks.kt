@@ -5,6 +5,8 @@ import com.mdreal.ashenrequiem.world.utils.BlockWithItem
 import com.mdreal.ashenrequiem.world.utils.registerBlockWithItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
+import net.minecraft.world.level.block.Blocks as VanillaBlocks
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -27,5 +29,12 @@ object Blocks {
     )
     val ASHEN_COBBLE_STONE = registerBlockWithItem(
         "ashen_cobblestone", { it.mapColor(MapColor.STONE).strength(1.5f, 6.0f).requiresCorrectToolForDrops().sound(SoundType.STONE) }
+    )
+    /** The Dead Lands floor; replaces vanilla bedrock there. */
+    val ASHEN_BEDROCK = registerBlockWithItem(
+        "ashen_bedrock", {
+            it.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0f, 3600000.0f)
+                .noLootTable().isValidSpawn(VanillaBlocks::never).sound(SoundType.STONE)
+        }
     )
 }

@@ -134,6 +134,10 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
   works on a dedicated server, and holds 60 FPS on mid-range hardware.
 
 ### Stage 3 — Dead Lands v1 (world feel)
+- **Worldgen decisions:** vanilla-like terrain mix, fully data-driven (no custom chunk generator). No seas: low
+  ground is dry basin (`default_fluid` air, `sea_level` -64 so no lava either), and murky water only appears as
+  Grey Marsh pools and rare springs. Underground is almost solid: no carvers, no aquifers, no vanilla ore veins; ores
+  come from our own features. The floor is `ashen_bedrock`.
 - **Biomes (first pass):** Ash Plains, Bone Desert, Petrified Forest, Grey Marsh, Shattered Highlands, Ash Ocean (dry
   basin).
 - **Blocks:** about 25 (ashen soil/stone sets, petrified wood set, bone sand, grey marsh mud, ruin concrete, rusted
