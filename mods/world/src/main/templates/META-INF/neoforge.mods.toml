@@ -30,3 +30,10 @@ type="required"
 versionRange="${kotlin_version_range}"
 ordering="NONE"
 side="BOTH"
+
+[[dependencies."${mod_id}"]]
+modId="ashen_requiem_core"
+type="required"
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

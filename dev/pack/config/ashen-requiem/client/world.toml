@@ -1,0 +1,2 @@
+#If true, shows a minimal create-world screen locked to the Ashen Requiem preset; if false, uses the normal world setup.
+forceDeadlandsOnly = false

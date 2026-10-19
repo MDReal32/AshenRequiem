@@ -7,6 +7,6 @@ object WorldCommonConfig {
     fun getSpec(): ModConfigSpec = spec.build()
     
     val forceDeadlandsOnly: ModConfigSpec.BooleanValue = spec
-        .comment("If true, shows minimal UI with Deadlands preset; if false, uses the normal world setup.")
+        .comment("If true, shows a minimal create-world screen locked to the Ashen Requiem preset; if false, uses the normal world setup.")
         .define("forceDeadlandsOnly", false)
 }

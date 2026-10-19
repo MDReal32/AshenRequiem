@@ -35,7 +35,7 @@ class MinimalDeadlandsCreateWorldScreen private constructor(
     }
 
     private val DEADLANDS_PRESET_KEY: ResourceKey<WorldPreset> = ResourceKey.create(
-        Registries.WORLD_PRESET, ResourceLocation.fromNamespaceAndPath(WorldConfig.MOD_ID, "deadlands")
+        Registries.WORLD_PRESET, ResourceLocation.fromNamespaceAndPath(WorldConfig.MOD_ID, "ashen_requiem")
     )
 
     private val ui get() = sourceScreen.uiState

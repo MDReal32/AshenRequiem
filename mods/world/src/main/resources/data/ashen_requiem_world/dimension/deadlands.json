@@ -1,0 +1,36 @@
+{
+  "type": "ashen_requiem_world:deadlands",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "ashen_requiem_world:deadlands/desert",
+          "parameters": {
+            "temperature": 1.2,
+            "humidity": -0.8,
+            "continentalness": 0.2,
+            "erosion": 0.1,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "ashen_requiem_world:deadlands/plains",
+          "parameters": {
+            "temperature": 0.3,
+            "humidity": -0.1,
+            "continentalness": 0.25,
+            "erosion": 0.5,
+            "weirdness": 0.0,
+            "depth": 0.0,
+            "offset": 0.0
+          }
+        }
+      ]
+    },
+    "settings": "ashen_requiem_world:deadlands"
+  }
+}

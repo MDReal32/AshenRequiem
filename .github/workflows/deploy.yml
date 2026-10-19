@@ -28,6 +28,10 @@ jobs:
           for d in mods/*/ ; do
             [[ -f "${d}build.gradle.kts" || -f "${d}build.gradle" ]] || continue
             name="$(basename "$d")"
+            if ! grep -q '^curseforge\.projectId=' "${d}gradle.properties" 2>/dev/null; then
+              echo "::warning::mods/${name} has no curseforge.projectId yet; skipping publish"
+              continue
+            fi
             MODS+=("{\"name\":\"${name}\",\"gradle_path\":\":mods:${name}\"}")
           done
           shopt -u nullglob

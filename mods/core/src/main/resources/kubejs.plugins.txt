@@ -1,0 +1,1 @@
+com.mdreal.ashenrequiem.core.compat.kubejs.AshenRequiemKubePlugin

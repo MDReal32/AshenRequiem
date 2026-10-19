@@ -19,6 +19,16 @@ neoForge {
         create("client") {
             client()
             gameDirectory = file("pack")
+            // ./gradlew :dev:runClient -PquickPlay=localhost joins a server straight from launch.
+            providers.gradleProperty("quickPlay").orNull?.let {
+                programArguments.addAll("--quickPlayMultiplayer", it)
+            }
+        }
+        // Headless test server. Shared mods (Kotlin for Forge, KubeJS, ...) must be copied into server/mods.
+        create("server") {
+            server()
+            gameDirectory = file("server")
+            programArgument("--nogui")
         }
     }
 }

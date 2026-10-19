@@ -33,6 +33,10 @@ neoForge {
     }
 }
 
+dependencies {
+    implementation project(':mods:core')
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

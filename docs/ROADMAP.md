@@ -59,7 +59,7 @@ Every state change fires a core event (`HushStageChanged`, `RequiemGranted`, …
 listen to.
 
 ### D3 — Quests drive the story, code drives the world
-FTB Quests rewards run a command or a KubeJS reward (`AR.setHushStage(3)`, `AR.cinematic(...)`). The mods never read
+FTB Quests rewards run a command or a KubeJS reward (`AR.setHushStage(server, 3)`, `AR.cinematic(...)`). The mods never read
 quest data directly. That keeps quests easy to rearrange, and `/ar` debug commands can reproduce any state.
 
 ### D4 — Per-player reveal (veil)
@@ -113,14 +113,18 @@ advancement grants the Requiem.
 Each stage gives you something **playable**. We don't start the next stage until the current one meets its "done
 when" criteria. Stage numbers follow the order of work, not the order of the story.
 
-### Stage 0 — Identity & design ✅ (this change)
+### Stage 0 — Identity & design ✅
 - Rename to Ashen Requiem. Write STORY / CINEMATICS / ROADMAP.
 
-### Stage 1 — Foundation
-- New `core` module: registry helpers, networking, data attachments, SavedData, events, `/ar` commands, KubeJS
+### Stage 1 — Foundation ✅
+- New `core` module: data attachments, SavedData, networking (progress sync), events, `/ar` commands, KubeJS
   bindings (`AR.*`).
-- Apply D1: the Dead Lands become their own dimension, first-join teleport, respawn rules.
-- **Done when:** a new world puts you in the Dead Lands. `/ar hush set 3`, `/ar requiem grant|revoke`, `/ar tp deadlands|overworld` work, and state survives death and relogging.
+- Apply D1: the Dead Lands become their own dimension, first-join teleport, respawn rules, no Nether portals there.
+- The `ashen_requiem` world preset has no End, so D7 is already half done (strongholds and recipes are left).
+- **Done when:** a new world puts you in the Dead Lands. `/ar hush set 3`, `/ar requiem grant|revoke`, `/ar tp <dimension>` work, and state survives death and relogging.
+- Debug commands: `/ar state [targets]`, `/ar hush get|set <0-5>`, `/ar gate <true|false>`,
+  `/ar requiem grant|revoke [targets]`, `/ar reset [targets]`, `/ar tp <dimension> [targets]`.
+- Test loop: `./gradlew :dev:runServer` (headless, RCON on 25575) plus `./gradlew :dev:runClient -PquickPlay=localhost`.
 
 ### Stage 2 — Cinematic engine v1
 - JSON scene loader, timeline, overlay/camera/audio/control tracks, the post-fx track with 3 shaders (blur,
