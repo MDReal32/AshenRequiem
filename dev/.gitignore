@@ -1,6 +1,6 @@
 pack/.vscode
 pack/config/*
-!pack/config/boundless-hozizons/
+!pack/config/ashen-requiem/
 !pack/config/ftbquests/
 pack/crash-reports
 pack/datapacks

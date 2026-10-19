@@ -1,0 +1,10 @@
+{
+  "generator.ashen_requiem_world.deadlands": "Dead Lands",
+
+  "block.ashen_requiem_world.ashen_dirt": "Ashen Dirt",
+  "block.ashen_requiem_world.ashen_grass": "Ashen Grass",
+  "block.ashen_requiem_world.ashen_stone": "Ashen Stone",
+  "block.ashen_requiem_world.ashen_cobblestone": "Ashen Cobblestone",
+
+  "creative_tab.ashen_requiem_world.world": "Ashen Requiem: World"
+}

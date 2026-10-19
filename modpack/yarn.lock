@@ -1103,9 +1103,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@boundless-horizons/modpack@workspace:.":
+"@ashen-requiem/modpack@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@boundless-horizons/modpack@workspace:."
+  resolution: "@ashen-requiem/modpack@workspace:."
   dependencies:
     "@kubejs/plugin": "npm:^1.2.11"
     "@trivago/prettier-plugin-sort-imports": "npm:^5.2.2"

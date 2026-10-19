@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "up": "ashen_requiem_world:block/ashen_dirt/top",
+    "down": "ashen_requiem_world:block/ashen_dirt/bottom",
+    "north": "ashen_requiem_world:block/ashen_dirt/side",
+    "south": "ashen_requiem_world:block/ashen_dirt/side",
+    "west": "ashen_requiem_world:block/ashen_dirt/side",
+    "east": "ashen_requiem_world:block/ashen_dirt/side",
+    "particle": "ashen_requiem_world:block/ashen_dirt/side"
+  }
+}

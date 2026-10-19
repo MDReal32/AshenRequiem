@@ -1,5 +1,5 @@
 import java.io.File
-rootProject.name = "BoundlessHorizons"
+rootProject.name = "AshenRequiem"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
