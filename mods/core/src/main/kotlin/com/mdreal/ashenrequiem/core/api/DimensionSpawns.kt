@@ -22,13 +22,14 @@ object DimensionSpawns {
 
     fun resolve(level: ServerLevel): BlockPos {
         resolvers[level.dimension()]?.let { return it(level) }
-        val spawn = level.sharedSpawnPos
+        val spawn = level.respawnData.globalPos().pos()
         return safeSurface(level, spawn.x, spawn.z)
     }
 
-    fun teleport(player: ServerPlayer, level: ServerLevel) {
-        val pos = resolve(level)
-        player.teleportTo(level, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, player.yRot, player.xRot)
+    fun teleport(player: ServerPlayer, level: ServerLevel) = teleport(player, level, resolve(level))
+
+    fun teleport(player: ServerPlayer, level: ServerLevel, pos: BlockPos) {
+        player.teleportTo(level, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, emptySet(), player.yRot, player.xRot, true)
     }
 
     /**
@@ -56,8 +57,8 @@ object DimensionSpawns {
             return BlockPos(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z)
         }
         // Ceiling dimensions: the heightmap points at the roof, so scan up for an air pocket instead.
-        val top = level.minBuildHeight + level.logicalHeight - 2
-        val cursor = BlockPos.MutableBlockPos(x, level.minBuildHeight + 1, z)
+        val top = level.minY + level.logicalHeight - 2
+        val cursor = BlockPos.MutableBlockPos(x, level.minY + 1, z)
         while (cursor.y < top) {
             val below = cursor.below()
             val standable = level.getBlockState(below).isFaceSturdy(level, below, Direction.UP)

@@ -17,7 +17,7 @@ staged spread, veil and scars, performance budgets, and the mod list.
 | Java/Kotlin package | `com.mdreal.ashenrequiem.<module>` |
 | Debug command | `/ar …` |
 | KubeJS global | `AR` |
-| Target | Minecraft 1.21.1, NeoForge 21.1.x, Kotlin for Forge |
+| Target | Minecraft 26.1.2, NeoForge 26.1.2.x, Java 25, Kotlin for Forge 6.4 |
 
 ## 2. Module layout
 
@@ -94,7 +94,7 @@ Remove strongholds from structure sets, and remove the Eye of Ender and End port
 plus a datapack). Add a "Sealed Door" lore item in place of any loot that would have pointed to the End.
 
 ### D8 — Twilight gating
-Twilight Forest (the NeoForge 1.21.1 build) is required. The portal pool only works if the **Ember of Waking** is thrown
+Twilight Forest (the NeoForge 26.1.2 build) is required. The portal pool only works if the **Ember of Waking** is thrown
 in together with the diamond (we hook TF's portal-activation event, with a KubeJS fallback). The Snow Queen kill
 advancement grants the Requiem.
 
@@ -240,10 +240,13 @@ pity path). Currencies: `ash_memory` (Act I), `requiem_shard` (Act III).
 
 ## 7. Third-party mods
 
-Already in dev: FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS + ProbeJS, JEI, JourneyMap, Waystones,
+Already in dev: FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, Twilight Forest, JEI, JourneyMap, Waystones,
 Sodium, Lithium, ModernFix, FerriteCore, and others.
 
-To add: **Twilight Forest** (required), **Lootr** (single-player loot per chest in multiplayer).
+Dropped in the 26.1.2 move (no build yet): ProbeJS, Cosmetic Armor Reworked, Sodium Dynamic Lights, Sodium Options API,
+PandaLib, GPU Memory Leak Fix, Fast Async World Save. Re-add them when they update.
+
+To add: **Lootr** (single-player loot per chest in multiplayer).
 
 Wishlist from the old plan, to review in Stage 11 for fit and balance: AE2 *or* Refined Storage (pick one),
 Sophisticated Backpacks, Storage Drawers, Farming for Blockheads + Pam's HarvestCraft, Ender Storage (rename it in

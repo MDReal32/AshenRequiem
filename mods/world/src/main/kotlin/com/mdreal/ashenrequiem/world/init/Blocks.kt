@@ -10,7 +10,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object Blocks {
-    val BLOCKS: DeferredRegister<Block> = DeferredRegister.createBlocks(WorldConfig.MOD_ID)
+    val BLOCKS: DeferredRegister.Blocks = DeferredRegister.createBlocks(WorldConfig.MOD_ID)
 
     fun hook(bus: IEventBus) {
         BLOCKS.register(bus)

@@ -14,7 +14,6 @@ import net.minecraft.world.level.StructureManager
 import net.minecraft.world.level.biome.BiomeSource
 import net.minecraft.world.level.chunk.ChunkAccess
 import net.minecraft.world.level.chunk.ChunkGenerator
-import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
@@ -57,9 +56,8 @@ class DeadlandsChunkGenerator(
         random: RandomState,
         biomeManager: net.minecraft.world.level.biome.BiomeManager,
         structureManager: StructureManager,
-        chunk: ChunkAccess,
-        step: GenerationStep.Carving
-    ) = vanilla.applyCarvers(region, seed, random, biomeManager, structureManager, chunk, step)
+        chunk: ChunkAccess
+    ) = vanilla.applyCarvers(region, seed, random, biomeManager, structureManager, chunk)
 
     override fun buildSurface(
         region: WorldGenRegion,

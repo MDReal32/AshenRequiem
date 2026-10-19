@@ -1,7 +1,7 @@
 package com.mdreal.ashenrequiem.core.state
 
 import com.mdreal.ashenrequiem.core.CoreConfig
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -14,9 +14,9 @@ object Attachments {
         DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, CoreConfig.MOD_ID)
 
     val PLAYER_PROGRESS: DeferredHolder<AttachmentType<*>, AttachmentType<PlayerProgress>> =
-        ATTACHMENT_TYPES.register("player_progress") { _: ResourceLocation ->
+        ATTACHMENT_TYPES.register("player_progress") { _: Identifier ->
             AttachmentType.builder(Supplier { PlayerProgress() })
-                .serialize(PlayerProgress.CODEC)
+                .serialize(PlayerProgress.MAP_CODEC)
                 .copyOnDeath()
                 .build()
         }
