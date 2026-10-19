@@ -54,6 +54,32 @@ object ArCommand {
                         Commands.argument("dimension", DimensionArgument.dimension()).withTargets(::tp)
                     )
                 )
+                .then(
+                    Commands.literal("debug").then(
+                        Commands.literal("biomes").then(
+                            Commands.argument("dimension", DimensionArgument.dimension())
+                                .executes { biomes(it, 2048, 64, null) }
+                                .then(
+                                    Commands.argument("radius", IntegerArgumentType.integer(64, 20000))
+                                        .executes { biomes(it, IntegerArgumentType.getInteger(it, "radius"), 64, null) }
+                                        .then(
+                                            Commands.argument("step", IntegerArgumentType.integer(16, 4096))
+                                                .executes { biomes(it, IntegerArgumentType.getInteger(it, "radius"), IntegerArgumentType.getInteger(it, "step"), null) }
+                                                .then(
+                                                    Commands.argument("seeds", IntegerArgumentType.integer(1, 200))
+                                                        .executes {
+                                                            biomes(
+                                                                it, IntegerArgumentType.getInteger(it, "radius"),
+                                                                IntegerArgumentType.getInteger(it, "step"),
+                                                                IntegerArgumentType.getInteger(it, "seeds")
+                                                            )
+                                                        }
+                                                )
+                                        )
+                                )
+                        )
+                    )
+                )
         )
     }
 
@@ -111,6 +137,23 @@ object ArCommand {
         players.forEach(AshenRequiem::resetPlayer)
         ctx.reply("Reset story progress for ${players.size} player(s)")
         return players.size
+    }
+
+    /** `/ar debug biomes <dimension> [radius] [step] [seeds]`: biome share and nearest distance, no chunks generated. */
+    private fun biomes(ctx: Ctx, radius: Int, step: Int, seeds: Int?): Int {
+        val level = DimensionArgument.getDimension(ctx, "dimension")
+        val started = System.nanoTime()
+        val stats = BiomeSampler.sample(level, radius, step, seeds)
+        val ms = (System.nanoTime() - started) / 1_000_000
+        ctx.reply("Biomes in ${level.dimension().identifier()} within $radius (step $step, ${seeds ?: "world"} seed(s), ${ms}ms):")
+        stats.forEach {
+            ctx.reply(
+                "  %-45s %5.1f%% (%.1f-%.1f)  in %d seed(s)  nearest %d-%d".format(
+                    it.biome, it.meanShare, it.minShare, it.maxShare, it.seedsFound, it.nearestMin, it.nearestMax
+                )
+            )
+        }
+        return stats.size
     }
 
     private fun tp(ctx: Ctx, players: Collection<ServerPlayer>): Int {

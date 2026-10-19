@@ -113,8 +113,13 @@ The last living place of *Home*, kept alive and hidden by the Departed. It's gen
 from the Cradle on the way to Vigil Station, so every player crosses it in Act I without noticing. A marked player
 sees it appear during C09 (per player, through the D4 veil). Goal: *"that wasn't here... how did I not see it?"*
 - **Placement:** one per world. A wrapper biome source (`ashen_requiem_world:veiled_region`) puts
-  `deadlands/last_garden` in an irregular, noise-edged blob around a point chosen from the seed, on the line from
+  `deadlands/last_garden` in an irregular, wavy-edged blob (radius 112) around a point chosen from the seed, on the line from
   the Cradle to the station (D5). Everything else falls through to the normal multi-noise source.
+  - Biome sources never see the seed, so the bearing is hashed from far-away climate samples, which are built from it.
+  - The blob must fall entirely on its `disguise` biomes (Ash Plains or Petrified Forest; both have the garden's ground
+    blocks). The search swings ±180° around the bearing, then shrinks the blob to 2/3, then looks out to 1600 blocks.
+    Over 100 seeds it never needed the last-resort spot.
+  - Until Stage 7, `last_garden.json` is an exact copy of Ash Plains (only F3 can tell).
 - **Terrain is not different.** The density functions don't know about the garden, so hills and valleys match the
   neighbours exactly. Only what sits *on* the ground differs, so collision never has to lie about solid ground.
 - **What the unmarked player gets** (every channel that could leak it):
@@ -168,7 +173,12 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
   Grey Marsh pools and rare springs. Underground is almost solid: no carvers, no aquifers, no vanilla ore veins; ores
   come from our own features. The floor is `ashen_bedrock`.
 - **Biomes (first pass):** Ash Plains, Bone Desert, Petrified Forest, Grey Marsh, Shattered Highlands, Ash Ocean (dry
-  basin).
+  basin), plus the hidden Last Garden (D10).
+  - Share over 100 seeds within 6000 blocks: Ash Ocean 30%, Ash Plains 28%, Petrified Forest 12%, Shattered
+    Highlands 11%, Bone Desert 10%, Grey Marsh 8%. Ash Ocean is vanilla's ocean area, so it only shrinks if the
+    terrain changes.
+  - Measure with `/ar debug biomes <dimension> [radius] [step] [seeds]`. It asks the biome source directly
+    (no chunks are generated), so 100 seeds take seconds.
 - **Blocks:** about 25 (ashen soil/stone sets, petrified wood set, bone sand, grey marsh mud, ruin concrete, rusted
   metal, glass, Signal Relay). Every texture is original and follows one locked palette (§6).
 - **Mobs (first pass):** Hushed Wanderer (slow, silent), Ash Crawler (ambush), Hollow Hound (pack, night), Ash Strider

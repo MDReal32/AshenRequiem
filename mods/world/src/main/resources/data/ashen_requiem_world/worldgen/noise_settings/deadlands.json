@@ -496,7 +496,8 @@
                 "type": "minecraft:biome",
                 "biome_is": [
                   "ashen_requiem_world:deadlands/ash_plains",
-                  "ashen_requiem_world:deadlands/petrified_forest"
+                  "ashen_requiem_world:deadlands/petrified_forest",
+                  "ashen_requiem_world:deadlands/last_garden"
                 ]
               },
               "then_run": {

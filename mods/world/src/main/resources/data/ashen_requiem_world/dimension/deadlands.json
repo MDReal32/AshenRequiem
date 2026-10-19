@@ -3,225 +3,398 @@
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
-      "type": "minecraft:multi_noise",
-      "biomes": [
-        {
-          "biome": "ashen_requiem_world:deadlands/ash_ocean",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              -1.0,
-              1.0
-            ],
-            "continentalness": [
-              -1.2,
-              -0.19
-            ],
-            "erosion": [
-              -1.0,
-              1.0
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
+      "type": "ashen_requiem_world:veiled_region",
+      "biome": "ashen_requiem_world:deadlands/last_garden",
+      "disguise": [
+        "ashen_requiem_world:deadlands/ash_plains",
+        "ashen_requiem_world:deadlands/petrified_forest"
+      ],
+      "min_distance": 300,
+      "max_distance": 800,
+      "radius": 112,
+      "base": {
+        "type": "minecraft:multi_noise",
+        "biomes": [
+          {
+            "biome": "ashen_requiem_world:deadlands/ash_ocean",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                -1.0,
+                1.0
+              ],
+              "continentalness": [
+                -1.2,
+                -0.19
+              ],
+              "erosion": [
+                -1.0,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/shattered_highlands",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                -1.0,
+                1.0
+              ],
+              "continentalness": [
+                -0.19,
+                0.3
+              ],
+              "erosion": [
+                -1.0,
+                -0.375
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/shattered_highlands",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                -1.0,
+                1.0
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                -1.0,
+                -0.2
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/bone_desert",
+            "parameters": {
+              "temperature": [
+                0.0,
+                1.0
+              ],
+              "humidity": [
+                -1.0,
+                -0.1
+              ],
+              "continentalness": [
+                -0.19,
+                0.3
+              ],
+              "erosion": [
+                -0.375,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/ash_plains",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                0.0
+              ],
+              "humidity": [
+                -1.0,
+                -0.1
+              ],
+              "continentalness": [
+                -0.19,
+                0.3
+              ],
+              "erosion": [
+                -0.375,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/ash_plains",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                -0.1,
+                0.1
+              ],
+              "continentalness": [
+                -0.19,
+                0.3
+              ],
+              "erosion": [
+                -0.375,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/grey_marsh",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                0.1,
+                1.0
+              ],
+              "continentalness": [
+                -0.19,
+                0.3
+              ],
+              "erosion": [
+                0.25,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/grey_marsh",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                0.1,
+                1.0
+              ],
+              "continentalness": [
+                -0.19,
+                -0.05
+              ],
+              "erosion": [
+                -0.375,
+                0.25
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/petrified_forest",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                0.1,
+                1.0
+              ],
+              "continentalness": [
+                -0.05,
+                0.3
+              ],
+              "erosion": [
+                -0.375,
+                0.25
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/bone_desert",
+            "parameters": {
+              "temperature": [
+                0.0,
+                1.0
+              ],
+              "humidity": [
+                -1.0,
+                -0.1
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                -0.2,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/ash_plains",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                0.0
+              ],
+              "humidity": [
+                -1.0,
+                -0.1
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                -0.2,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/ash_plains",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                -0.1,
+                0.1
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                -0.2,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/grey_marsh",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                0.1,
+                1.0
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                0.25,
+                1.0
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
+          },
+          {
+            "biome": "ashen_requiem_world:deadlands/petrified_forest",
+            "parameters": {
+              "temperature": [
+                -1.0,
+                1.0
+              ],
+              "humidity": [
+                0.1,
+                1.0
+              ],
+              "continentalness": [
+                0.3,
+                1.0
+              ],
+              "erosion": [
+                -0.2,
+                0.25
+              ],
+              "weirdness": [
+                -1.0,
+                1.0
+              ],
+              "depth": 0.0,
+              "offset": 0.0
+            }
           }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/shattered_highlands",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              -1.0,
-              1.0
-            ],
-            "continentalness": [
-              -0.19,
-              1.0
-            ],
-            "erosion": [
-              -1.0,
-              -0.375
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/bone_desert",
-          "parameters": {
-            "temperature": [
-              0.0,
-              1.0
-            ],
-            "humidity": [
-              -1.0,
-              -0.1
-            ],
-            "continentalness": [
-              -0.19,
-              1.0
-            ],
-            "erosion": [
-              -0.375,
-              1.0
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/ash_plains",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              0.0
-            ],
-            "humidity": [
-              -1.0,
-              -0.1
-            ],
-            "continentalness": [
-              -0.19,
-              1.0
-            ],
-            "erosion": [
-              -0.375,
-              1.0
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/ash_plains",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              -0.1,
-              0.1
-            ],
-            "continentalness": [
-              -0.19,
-              1.0
-            ],
-            "erosion": [
-              -0.375,
-              1.0
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/grey_marsh",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              0.1,
-              1.0
-            ],
-            "continentalness": [
-              -0.19,
-              1.0
-            ],
-            "erosion": [
-              0.25,
-              1.0
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/grey_marsh",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              0.1,
-              1.0
-            ],
-            "continentalness": [
-              -0.19,
-              -0.05
-            ],
-            "erosion": [
-              -0.375,
-              0.25
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        },
-        {
-          "biome": "ashen_requiem_world:deadlands/petrified_forest",
-          "parameters": {
-            "temperature": [
-              -1.0,
-              1.0
-            ],
-            "humidity": [
-              0.1,
-              1.0
-            ],
-            "continentalness": [
-              -0.05,
-              1.0
-            ],
-            "erosion": [
-              -0.375,
-              0.25
-            ],
-            "weirdness": [
-              -1.0,
-              1.0
-            ],
-            "depth": 0.0,
-            "offset": 0.0
-          }
-        }
-      ]
+        ]
+      }
     },
     "settings": "ashen_requiem_world:deadlands"
   }
