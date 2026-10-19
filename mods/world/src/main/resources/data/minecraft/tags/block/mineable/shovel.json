@@ -1,5 +1,9 @@
 {
   "values": [
-    "ashen_requiem_world:ashen_dirt"
+    "ashen_requiem_world:ashen_dirt",
+    "ashen_requiem_world:ashen_grass",
+    "ashen_requiem_world:ash",
+    "ashen_requiem_world:bone_sand",
+    "ashen_requiem_world:grey_marsh_mud"
   ]
 }

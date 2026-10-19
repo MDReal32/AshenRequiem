@@ -8,16 +8,16 @@
         "tick_delay": 6000
       }
     },
-    "minecraft:visual/fog_color": "#7f7f7f",
-    "minecraft:visual/sky_color": "#828282",
-    "minecraft:visual/water_fog_color": "#232317"
+    "minecraft:visual/fog_color": "#5f6660",
+    "minecraft:visual/sky_color": "#707670",
+    "minecraft:visual/water_fog_color": "#2a302b"
   },
   "carvers": [],
   "downfall": 0.0,
   "effects": {
-    "foliage_color": "#5f5f5f",
-    "grass_color": "#646464",
-    "water_color": "#353433"
+    "foliage_color": "#525a53",
+    "grass_color": "#5a625b",
+    "water_color": "#3d453f"
   },
   "features": [],
   "has_precipitation": false,
@@ -30,5 +30,5 @@
     "water_ambient": [],
     "misc": []
   },
-  "temperature": 2.0
+  "temperature": 0.5
 }

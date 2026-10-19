@@ -6,6 +6,16 @@
   "block.ashen_requiem_world.ashen_stone": "Ashen Stone",
   "block.ashen_requiem_world.ashen_cobblestone": "Ashen Cobblestone",
   "block.ashen_requiem_world.ashen_bedrock": "Ashen Bedrock",
+  "block.ashen_requiem_world.ash": "Ash",
+  "block.ashen_requiem_world.bone_sand": "Bone Sand",
+  "block.ashen_requiem_world.grey_marsh_mud": "Grey Marsh Mud",
 
-  "creative_tab.ashen_requiem_world.world": "Ashen Requiem: World"
+  "creative_tab.ashen_requiem_world.world": "Ashen Requiem: World",
+
+  "biome.ashen_requiem_world.deadlands.ash_plains": "Ash Plains",
+  "biome.ashen_requiem_world.deadlands.bone_desert": "Bone Desert",
+  "biome.ashen_requiem_world.deadlands.petrified_forest": "Petrified Forest",
+  "biome.ashen_requiem_world.deadlands.grey_marsh": "Grey Marsh",
+  "biome.ashen_requiem_world.deadlands.shattered_highlands": "Shattered Highlands",
+  "biome.ashen_requiem_world.deadlands.ash_ocean": "Ash Ocean"
 }
