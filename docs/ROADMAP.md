@@ -108,6 +108,35 @@ advancement grants the Requiem.
   how far the track has played).
 - Loop corridors are seamless teleports between two identical corridor segments.
 
+### D10 — The Last Garden (hidden biome)
+The last living place of *Home*, kept alive and hidden by the Departed. It's generated with the world, 300–800 blocks
+from the Cradle on the way to Vigil Station, so every player crosses it in Act I without noticing. A marked player
+sees it appear during C09 (per player, through the D4 veil). Goal: *"that wasn't here... how did I not see it?"*
+- **Placement:** one per world. A wrapper biome source (`ashen_requiem_world:veiled_region`) puts
+  `deadlands/last_garden` in an irregular, noise-edged blob around a point chosen from the seed, on the line from
+  the Cradle to the station (D5). Everything else falls through to the normal multi-noise source.
+- **Terrain is not different.** The density functions don't know about the garden, so hills and valleys match the
+  neighbours exactly. Only what sits *on* the ground differs, so collision never has to lie about solid ground.
+- **What the unmarked player gets** (every channel that could leak it):
+
+  | Channel | Hidden by |
+  |---|---|
+  | Ground blocks (living grass, soil) | Decoy veil: renders, sounds, drops and maps as the neighbour biome's block |
+  | Trees, flowers, ruins, benches | Air veil: no model, empty collision and outline, no particles |
+  | Shadows | Veiled blocks let skylight through and block no light (`propagatesSkylightDown`, light block 0) |
+  | Light | No light-emitting veiled blocks. Garden glow is emissive rendering that only starts after the reveal |
+  | Weather / ash particles | Our ash weather uses its own heightmap that skips veiled blocks |
+  | Water | No fluids in the veil. The garden ponds are dry hollows that fill (server-side) on the reveal |
+  | Sky, fog, grass colour, ambience, F3 biome name | The server sends the disguise biome id in chunk data to unmarked players |
+  | Vanilla map items | Veiled blocks report the decoy's map colour |
+  | `/locate biome` | The garden is left out of locate for non-ops |
+  | Mob spawning and pathing | Mobs treat air veils as air. No spawns on garden-only blocks |
+- **Breadcrumbs that only make sense afterwards:** a stone path that runs into empty plain and stops, a lone fence
+  gate, a bench facing nothing, a terminal line in the Cradle about "the garden". They're visible to everyone and
+  easy to shrug off in Act I.
+- **On reveal (C09):** the wave sweeps out, chunks around the player re-render, the true biome is re-sent, the ponds
+  fill, and the first green the player has seen in the Dead Lands rises out of ground they've walked a dozen times.
+
 ## 4. Development stages
 
 Each stage gives you something **playable**. We don't start the next stage until the current one meets its "done
@@ -177,6 +206,8 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 ### Stage 7 — Reveal system (Act III start)
 - D4 veil/decoy/scar system, reveal wave (C09), veiled structures in the Dead Lands (bridges, inscriptions, hidden
   rooms, the Archive's door), Requiem-only biome visuals (true sky and fog when marked).
+- The Last Garden's veil and reveal (D10). Its placement and disguised generation land earlier, in Stage 3, so that
+  every Act I playtest world already contains it.
 - **Done when:** on a 2-player server, one marked and one unmarked player stand in the same spot and see, collide with,
   and loot different things, with no desync.
 
