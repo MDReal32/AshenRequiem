@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "ashen_requiem_world:block/ashen_dirt" }
+    "": [
+      { "model": "ashen_requiem_world:block/ashen_dirt" },
+      { "model": "ashen_requiem_world:block/ashen_dirt", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_dirt", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_dirt", "y": 270 }
+    ]
   }
 }

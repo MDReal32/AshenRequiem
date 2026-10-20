@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": { "model": "ashen_requiem_world:block/grey_marsh_mud" }
+    "": [
+      { "model": "ashen_requiem_world:block/grey_marsh_mud" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 270 }
+    ]
   }
 }
