@@ -22,3 +22,8 @@
 /time set minecraft:
 /time set minecraft:noon
 /time set minecraft:midnight
+/probejs
+/probejs dump
+/probejs enable
+/probejs complete_dump
+/probejs dump

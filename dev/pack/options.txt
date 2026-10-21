@@ -199,10 +199,10 @@ key_key.ftbchunks.keys.zoom_out:key.keyboard.minus
 key_key.ftbchunks.keys.claim_manager:key.keyboard.unknown
 key_key.ftbchunks.keys.add_waypoint:key.keyboard.unknown
 key_key.ftbchunks.keys.waypoint_manager:key.keyboard.unknown
-key_key.twilightforest.red_thread_vision:key.keyboard.unknown
+key_key.twilightforest.zoom:key.keyboard.z
 key_key.twilightforest.item_display_map_cycle:key.keyboard.c
 key_key.twilightforest.swap_hotbar:key.keyboard.v
-key_key.twilightforest.zoom:key.keyboard.z
+key_key.twilightforest.red_thread_vision:key.keyboard.unknown
 key_key.corpse.death_history:key.keyboard.u
 key_key.ftbquests.keys.quests:key.keyboard.unknown
 key_key.ftbquests.keys.cycle_pinned_tracker:key.keyboard.unknown
