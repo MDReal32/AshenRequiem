@@ -6,10 +6,13 @@ import com.mdreal.ashenrequiem.world.utils.registerBlockWithItem
 import net.minecraft.world.level.block.Block
 import net.minecraft.util.ColorRGBA
 import net.minecraft.world.level.block.ColoredFallingBlock
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.LeavesBlock
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument
 import net.minecraft.world.level.block.Blocks as VanillaBlocks
 import net.minecraft.world.level.material.MapColor
+import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -44,6 +47,27 @@ object Blocks {
     )
     val GREY_MARSH_MUD = registerBlockWithItem(
         "grey_marsh_mud", { it.mapColor(MapColor.TERRACOTTA_GRAY).strength(0.5f).sound(SoundType.MUD) }
+    )
+    /** Bare, sun-bleached trunks of the trees that died with Home. Grows nowhere; only generated. */
+    val DEAD_LOG = registerBlockWithItem(
+        "dead_log", { it.mapColor(MapColor.COLOR_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0f).sound(SoundType.WOOD) },
+        factory = ::RotatedPillarBlock
+    )
+    val DEAD_WOOD = registerBlockWithItem(
+        "dead_wood", { it.mapColor(MapColor.COLOR_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0f).sound(SoundType.WOOD) },
+        factory = ::RotatedPillarBlock
+    )
+    val DEAD_PLANKS = registerBlockWithItem(
+        "dead_planks", { it.mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0f, 3.0f).sound(SoundType.WOOD) }
+    )
+    /** The last withered leaves still clinging to dead crowns. Generated persistent, so they never tick. */
+    val DEAD_LEAVES = registerBlockWithItem(
+        "dead_leaves", {
+            it.mapColor(MapColor.COLOR_BROWN).strength(0.2f).randomTicks().sound(SoundType.GRASS).noOcclusion()
+                .isValidSpawn(VanillaBlocks::ocelotOrParrot).isSuffocating { _, _, _ -> false }.isViewBlocking { _, _, _ -> false }
+                .ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor { _, _, _ -> false }
+        },
+        factory = ::LeavesBlock
     )
     /** The Dead Lands floor; replaces vanilla bedrock there. */
     val ASHEN_BEDROCK = registerBlockWithItem(

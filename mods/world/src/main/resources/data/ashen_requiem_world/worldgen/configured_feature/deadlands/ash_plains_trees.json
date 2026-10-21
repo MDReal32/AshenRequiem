@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": {
+      "feature": "ashen_requiem_world:deadlands/dead_oak",
+      "placement": []
+    },
+    "features": [
+      {
+        "chance": 0.3,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/dead_snag",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.2,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/dead_forked_tree",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.15,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/dead_fancy_oak",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.08,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/fallen_dead_log",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.05,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/dead_withered_oak",
+          "placement": []
+        }
+      }
+    ]
+  }
+}

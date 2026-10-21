@@ -22,7 +22,7 @@ object BiomeSampler {
             listOf(level.chunkSource.randomState().sampler())
         } else {
             val noise = generator as? NoiseBasedChunkGenerator
-                ?: error("${level.dimension().identifier()} is not noise-based; it can only be sampled with its own seed")
+                ?: error("${level.dimension().location()} is not noise-based; it can only be sampled with its own seed")
             val noises = level.server.registryAccess().lookupOrThrow(Registries.NOISE)
             (1..seeds).map { RandomState.create(noise.generatorSettings().value(), noises, it.toLong()).sampler() }
         }
@@ -35,7 +35,7 @@ object BiomeSampler {
             var total = 0
             for (x in -radius..radius step step) for (z in -radius..radius step step) {
                 val holder = generator.biomeSource.getNoiseBiome(QuartPos.fromBlock(x), qy, QuartPos.fromBlock(z), sampler)
-                val id = holder.unwrapKey().map { it.identifier().toString() }.orElse("?")
+                val id = holder.unwrapKey().map { it.location().toString() }.orElse("?")
                 count.merge(id, 1, Int::plus)
                 val dist = sqrt((x.toDouble() * x + z.toDouble() * z)).toInt()
                 near.merge(id, dist, ::minOf)

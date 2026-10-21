@@ -8,12 +8,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.portal.TeleportTransition
-import net.minecraft.world.level.storage.LevelData
+import net.minecraft.world.level.portal.DimensionTransition
 import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
@@ -28,7 +27,7 @@ import net.neoforged.neoforge.event.level.BlockEvent
  */
 object DeadlandsArrival {
     val DEADLANDS: ResourceKey<Level> =
-        ResourceKey.create(Registries.DIMENSION, Identifier.fromNamespaceAndPath(WorldConfig.MOD_ID, "deadlands"))
+        ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(WorldConfig.MOD_ID, "deadlands"))
 
     /** Story location key for the spawn point in the Dead Lands. */
     const val CRADLE = "cradle"
@@ -54,13 +53,13 @@ object DeadlandsArrival {
     private fun onRespawnPosition(event: PlayerRespawnPositionEvent) {
         if (event.isFromEndFight) return
         val player = event.entity as? ServerPlayer ?: return
-        if (AshenRequiem.isGateRepaired(player.level().server)) return
-        if (event.teleportTransition.newLevel().dimension() == DEADLANDS) return
+        if (AshenRequiem.isGateRepaired(player.server)) return
+        if (event.dimensionTransition.newLevel().dimension() == DEADLANDS) return
         val level = deadlands(player) ?: return
         val pos = cradle(level)
-        setRespawn(player, pos)
-        event.teleportTransition = TeleportTransition(
-            level, Vec3.atBottomCenterOf(pos), Vec3.ZERO, player.yRot, player.xRot, TeleportTransition.DO_NOTHING
+        player.setRespawnPosition(DEADLANDS, pos, 0f, true, false)
+        event.dimensionTransition = DimensionTransition(
+            level, Vec3.atBottomCenterOf(pos), Vec3.ZERO, player.yRot, player.xRot, DimensionTransition.DO_NOTHING
         )
     }
 
@@ -71,13 +70,8 @@ object DeadlandsArrival {
 
     private fun sendToCradle(player: ServerPlayer, level: ServerLevel) {
         val pos = cradle(level)
-        setRespawn(player, pos)
-        DimensionSpawns.teleport(player, level, pos)
-    }
-
-    private fun setRespawn(player: ServerPlayer, pos: BlockPos) {
-        val data = LevelData.RespawnData(GlobalPos.of(DEADLANDS, pos), 0f, 0f)
-        player.setRespawnPosition(ServerPlayer.RespawnConfig(data, true), false)
+        player.setRespawnPosition(DEADLANDS, pos, 0f, true, false)
+        player.teleportTo(level, pos.x + 0.5, pos.y.toDouble(), pos.z + 0.5, player.yRot, player.xRot)
     }
 
     /** The Cradle is chosen once per world and remembered. A real Cradle structure replaces this in Stage 3. */
@@ -89,7 +83,7 @@ object DeadlandsArrival {
     }
 
     private fun deadlands(player: ServerPlayer): ServerLevel? =
-        player.level().server.getLevel(DEADLANDS).also {
-            if (it == null) LOGGER.error("Dead Lands dimension {} is missing; is the datapack loaded?", DEADLANDS.identifier())
+        player.server.getLevel(DEADLANDS).also {
+            if (it == null) LOGGER.error("Dead Lands dimension {} is missing; is the datapack loaded?", DEADLANDS.location())
         }
 }

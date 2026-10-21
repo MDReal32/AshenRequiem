@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
-    id 'org.jetbrains.kotlin.jvm' version '2.4.0'
+    id 'org.jetbrains.kotlin.jvm' version '2.2.0'
 }
 
 version = mod_version
@@ -12,13 +12,13 @@ base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-kotlin.jvmToolchain(25)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+kotlin.jvmToolchain(21)
 
 def cfProjectId = (findProperty('curseforge.projectId') ?: System.getenv('CURSEFORGE_PROJECT_ID')) as String
 def tokenProvider = providers.environmentVariable('CURSEFORGE_TOKEN')
 def cfLoader = (findProperty('curseforge.loader') ?: 'neoforge') as String
-def cfVersionsRaw = (findProperty('curseforge.gameVersions') ?: '26.1.2') as String
+def cfVersionsRaw = (findProperty('curseforge.gameVersions') ?: '1.21.1') as String
 def cfReleaseType = (findProperty('curseforge.releaseType') ?: 'release') as String
 def cfChangelog = (findProperty('curseforge.changelogFile') ?: 'CHANGELOG.md') as String
 
@@ -26,10 +26,14 @@ def cfVersions = cfVersionsRaw.split(/[,\n]/)*.trim().findAll { it }
 
 neoForge {
     version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
 }
 
 dependencies {
-    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:2.4.0'
     implementation project(':mods:core')
 }
 

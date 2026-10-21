@@ -11,8 +11,8 @@ import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen
 import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.levelgen.presets.WorldPreset
 
 /**
@@ -28,7 +28,7 @@ class MinimalDeadlandsCreateWorldScreen private constructor(
     }
 
     private val PRESET_KEY: ResourceKey<WorldPreset> = ResourceKey.create(
-        Registries.WORLD_PRESET, Identifier.fromNamespaceAndPath(WorldConfig.MOD_ID, "ashen_requiem")
+        Registries.WORLD_PRESET, ResourceLocation.fromNamespaceAndPath(WorldConfig.MOD_ID, "ashen_requiem")
     )
 
     private val ui get() = sourceScreen.uiState
@@ -46,8 +46,8 @@ class MinimalDeadlandsCreateWorldScreen private constructor(
     fun <T : AbstractWidget> widget(id: String): T? = widgets[id] as? T
 
     private fun setDefaultWorldPreset() {
-        val presets = ui.settings.worldgenRegistries().compositeAccess().lookupOrThrow(Registries.WORLD_PRESET)
-        val holder = presets.get(PRESET_KEY)
+        val presets = ui.settings.worldgenRegistries().compositeAccess().registryOrThrow(Registries.WORLD_PRESET)
+        val holder = presets.getHolder(PRESET_KEY)
             .orElseThrow { IllegalStateException("Ashen Requiem preset not found: $PRESET_KEY") }
 
         ui.worldType = WorldCreationUiState.WorldTypeEntry(holder)
@@ -85,12 +85,12 @@ class MinimalDeadlandsCreateWorldScreen private constructor(
         val y = height / 2 - 10
 
         widgets["gameMode"] = addRenderableWidget(
-            CycleButton.builder({ mode: WorldCreationUiState.SelectedGameMode -> mode.displayName }, ui.gameMode)
+            CycleButton.builder { mode: WorldCreationUiState.SelectedGameMode -> mode.displayName }
                 .withValues(
                     WorldCreationUiState.SelectedGameMode.SURVIVAL,
                     WorldCreationUiState.SelectedGameMode.HARDCORE,
                     WorldCreationUiState.SelectedGameMode.CREATIVE
-                ).create(x, y, w, 20, Component.translatable("selectWorld.gameMode")) { _, v ->
+                ).withInitialValue(ui.gameMode).create(x, y, w, 20, Component.translatable("selectWorld.gameMode")) { _, v ->
                     ui.gameMode = v
                 }
         )

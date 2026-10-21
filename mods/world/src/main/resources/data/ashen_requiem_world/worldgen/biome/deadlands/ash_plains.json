@@ -1,27 +1,21 @@
 {
-  "attributes": {
-    "minecraft:audio/ambient_sounds": {
-      "mood": {
-        "block_search_extent": 8,
-        "offset": 2.0,
-        "sound": "minecraft:ambient.cave",
-        "tick_delay": 6000
-      }
-    },
-    "minecraft:visual/fog_color": "#9a9893",
-    "minecraft:visual/sky_color": "#8a8884",
-    "minecraft:visual/water_fog_color": "#282828"
-  },
-  "carvers": [],
+  "has_precipitation": false,
+  "temperature": 0.6,
   "downfall": 0.0,
   "effects": {
-    "foliage_color": "#5b5b5b",
-    "grass_color": "#626262",
-    "water_color": "#3a3a3a"
+    "sky_color": 9078916,
+    "fog_color": 10131603,
+    "water_color": 3815994,
+    "water_fog_color": 2631720,
+    "grass_color": 6447714,
+    "foliage_color": 5987163,
+    "mood_sound": {
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2.0
+    }
   },
-  "features": [],
-  "has_precipitation": false,
-  "spawn_costs": {},
   "spawners": {
     "monster": [],
     "creature": [],
@@ -30,5 +24,20 @@
     "water_ambient": [],
     "misc": []
   },
-  "temperature": 0.6
+  "spawn_costs": {},
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "ashen_requiem_world:deadlands/ash_plains_trees"
+    ]
+  ]
 }

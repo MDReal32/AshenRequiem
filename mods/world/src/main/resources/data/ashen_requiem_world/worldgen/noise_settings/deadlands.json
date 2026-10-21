@@ -26,7 +26,6 @@
     "continents": "ashen_requiem_world:deadlands/continents",
     "depth": "ashen_requiem_world:deadlands/depth",
     "erosion": "ashen_requiem_world:deadlands/erosion",
-    "ridges": "ashen_requiem_world:deadlands/ridges",
     "final_density": {
       "type": "minecraft:squeeze",
       "argument": {
@@ -89,12 +88,73 @@
       "xz_scale": 1,
       "y_scale": 0.7142857
     },
+    "initial_density_without_jaggedness": {
+      "type": "minecraft:add",
+      "argument1": 0.1171875,
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 0,
+          "from_y": -64,
+          "to_value": 1,
+          "to_y": -40
+        },
+        "argument2": {
+          "type": "minecraft:add",
+          "argument1": -0.1171875,
+          "argument2": {
+            "type": "minecraft:add",
+            "argument1": -0.078125,
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": {
+                "type": "minecraft:y_clamped_gradient",
+                "from_value": 1,
+                "from_y": 240,
+                "to_value": 0,
+                "to_y": 256
+              },
+              "argument2": {
+                "type": "minecraft:add",
+                "argument1": 0.078125,
+                "argument2": {
+                  "type": "minecraft:clamp",
+                  "input": {
+                    "type": "minecraft:add",
+                    "argument1": -0.703125,
+                    "argument2": {
+                      "type": "minecraft:mul",
+                      "argument1": 4,
+                      "argument2": {
+                        "type": "minecraft:quarter_negative",
+                        "argument": {
+                          "type": "minecraft:mul",
+                          "argument1": "minecraft:overworld/depth",
+                          "argument2": {
+                            "type": "minecraft:cache_2d",
+                            "argument": "minecraft:overworld/factor"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "max": 64,
+                  "min": -64
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "lava": {
       "type": "minecraft:noise",
       "noise": "minecraft:aquifer_lava",
       "xz_scale": 1,
       "y_scale": 1
     },
+    "ridges": "ashen_requiem_world:deadlands/ridges",
     "temperature": {
       "type": "minecraft:shifted_noise",
       "noise": "minecraft:temperature",
@@ -178,110 +238,6 @@
           "y_scale": 1.5
         },
         "when_out_of_range": 0
-      }
-    },
-    "preliminary_surface_level": {
-      "type": "minecraft:find_top_surface",
-      "cell_height": 8,
-      "density": {
-        "type": "minecraft:add",
-        "argument1": -0.390625,
-        "argument2": {
-          "type": "minecraft:add",
-          "argument1": 0.1171875,
-          "argument2": {
-            "type": "minecraft:mul",
-            "argument1": {
-              "type": "minecraft:y_clamped_gradient",
-              "from_value": 0,
-              "from_y": -64,
-              "to_value": 1,
-              "to_y": -40
-            },
-            "argument2": {
-              "type": "minecraft:add",
-              "argument1": -0.1171875,
-              "argument2": {
-                "type": "minecraft:add",
-                "argument1": -0.078125,
-                "argument2": {
-                  "type": "minecraft:mul",
-                  "argument1": {
-                    "type": "minecraft:y_clamped_gradient",
-                    "from_value": 1,
-                    "from_y": 240,
-                    "to_value": 0,
-                    "to_y": 256
-                  },
-                  "argument2": {
-                    "type": "minecraft:add",
-                    "argument1": 0.078125,
-                    "argument2": {
-                      "type": "minecraft:clamp",
-                      "input": {
-                        "type": "minecraft:add",
-                        "argument1": -0.703125,
-                        "argument2": {
-                          "type": "minecraft:mul",
-                          "argument1": 4,
-                          "argument2": {
-                            "type": "minecraft:quarter_negative",
-                            "argument": {
-                              "type": "minecraft:mul",
-                              "argument1": "minecraft:overworld/depth",
-                              "argument2": {
-                                "type": "minecraft:cache_2d",
-                                "argument": "minecraft:overworld/factor"
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "max": 64,
-                      "min": -64
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "lower_bound": -64,
-      "upper_bound": {
-        "type": "minecraft:clamp",
-        "input": {
-          "type": "minecraft:add",
-          "argument1": 128.0,
-          "argument2": {
-            "type": "minecraft:mul",
-            "argument1": -128.0,
-            "argument2": {
-              "type": "minecraft:add",
-              "argument1": {
-                "type": "minecraft:mul",
-                "argument1": 0.2734375,
-                "argument2": {
-                  "type": "minecraft:invert",
-                  "argument": {
-                    "type": "minecraft:cache_2d",
-                    "argument": "minecraft:overworld/factor"
-                  }
-                }
-              },
-              "argument2": {
-                "type": "minecraft:mul",
-                "argument1": -1.0,
-                "argument2": {
-                  "type": "minecraft:cache_2d",
-                  "argument": "minecraft:overworld/offset"
-                }
-              }
-            }
-          }
-        },
-        "max": 320.0,
-        "min": -40.0
       }
     }
   },
