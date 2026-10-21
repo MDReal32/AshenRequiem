@@ -285,10 +285,8 @@ pity path). Currencies: `ash_memory` (Act I), `requiem_shard` (Act III).
 
 ## 7. Third-party mods
 
-Already in dev: FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, ProbeJS, JEI, JourneyMap, Waystones,
-Sodium, Lithium, ModernFix, FerriteCore, and others.
-
-Missing since the move back to 1.21.1: Twilight Forest (needs its 1.21.1 build added to `dev/pack/mods`).
+Already in dev (installed through CurseForge): FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, ProbeJS,
+Twilight Forest, Create, JEI, JourneyMap, Waystones, Sodium, Lithium, ModernFix, FerriteCore, and others.
 
 To add: **Lootr** (single-player loot per chest in multiplayer).
 
