@@ -3,6 +3,12 @@
   "temperature": 2.0,
   "downfall": 0.0,
   "effects": {
+    "particle": {
+      "options": {
+        "type": "minecraft:white_ash"
+      },
+      "probability": 0.002
+    },
     "sky_color": 11907235,
     "fog_color": 13617592,
     "water_color": 4867904,
