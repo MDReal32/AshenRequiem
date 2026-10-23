@@ -69,7 +69,7 @@ object Blocks {
         },
         factory = ::LeavesBlock
     )
-    /** The Dead Lands floor; replaces vanilla bedrock there. */
+    /** The old Dead Lands floor. No longer generated (the floor is vanilla bedrock); kept so older worlds keep theirs. */
     val ASHEN_BEDROCK = registerBlockWithItem(
         "ashen_bedrock", {
             it.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0f, 3600000.0f)

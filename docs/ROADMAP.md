@@ -171,7 +171,8 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - **Worldgen decisions:** vanilla-like terrain mix, fully data-driven (no custom chunk generator). No seas: low
   ground is dry basin (`default_fluid` air, `sea_level` -64 so no lava either), and murky water only appears as
   Grey Marsh pools and rare springs. Underground is almost solid: no carvers, no aquifers, no vanilla ore veins; ores
-  come from our own features. The floor is `ashen_bedrock`.
+  come from our own features. The floor is vanilla bedrock (`ashen_bedrock` stays registered so older test
+  worlds keep their floor).
 - **Biomes (first pass):** Ash Plains, Bone Desert, Petrified Forest, Grey Marsh, Shattered Highlands, Ash Ocean (dry
   basin), plus the hidden Last Garden (D10).
   - Share over 100 seeds within 6000 blocks: Ash Ocean 30%, Ash Plains 28%, Petrified Forest 12%, Shattered

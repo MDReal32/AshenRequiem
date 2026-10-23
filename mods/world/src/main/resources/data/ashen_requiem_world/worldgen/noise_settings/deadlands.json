@@ -270,7 +270,7 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "ashen_requiem_world:ashen_bedrock"
+            "Name": "minecraft:bedrock"
           }
         }
       },
