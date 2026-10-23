@@ -26,7 +26,7 @@ object ArCommand {
 
     private fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
-            Commands.literal("ar").requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
+            Commands.literal("ar").requires { it.hasPermission(2) }
                 .then(Commands.literal("state").withTargets(::state))
                 .then(
                     Commands.literal("hush")
@@ -101,7 +101,7 @@ object ArCommand {
                 "finale=${AshenRequiem.isFinaleWon(server)}"
         )
         AshenRequiem.locations(server).forEach { (key, pos) ->
-            ctx.reply("  $key -> ${pos.dimension().identifier()} ${pos.pos().toShortString()}")
+            ctx.reply("  $key -> ${pos.dimension().location()} ${pos.pos().toShortString()}")
         }
         players.forEach { ctx.reply("${it.scoreboardName}: ${AshenRequiem.progress(it)}") }
         return players.size
@@ -145,7 +145,7 @@ object ArCommand {
         val started = System.nanoTime()
         val stats = BiomeSampler.sample(level, radius, step, seeds)
         val ms = (System.nanoTime() - started) / 1_000_000
-        ctx.reply("Biomes in ${level.dimension().identifier()} within $radius (step $step, ${seeds ?: "world"} seed(s), ${ms}ms):")
+        ctx.reply("Biomes in ${level.dimension().location()} within $radius (step $step, ${seeds ?: "world"} seed(s), ${ms}ms):")
         stats.forEach {
             ctx.reply(
                 "  %-45s %5.1f%% (%.1f-%.1f)  in %d seed(s)  nearest %d-%d".format(
@@ -159,7 +159,7 @@ object ArCommand {
     private fun tp(ctx: Ctx, players: Collection<ServerPlayer>): Int {
         val level = DimensionArgument.getDimension(ctx, "dimension")
         players.forEach { DimensionSpawns.teleport(it, level) }
-        ctx.reply("Sent ${players.size} player(s) to ${level.dimension().identifier()}")
+        ctx.reply("Sent ${players.size} player(s) to ${level.dimension().location()}")
         return players.size
     }
 }

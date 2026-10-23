@@ -10,6 +10,11 @@
   "block.ashen_requiem_world.bone_sand": "Bone Sand",
   "block.ashen_requiem_world.grey_marsh_mud": "Grey Marsh Mud",
 
+  "block.ashen_requiem_world.dead_log": "Dead Log",
+  "block.ashen_requiem_world.dead_wood": "Dead Wood",
+  "block.ashen_requiem_world.dead_planks": "Dead Planks",
+  "block.ashen_requiem_world.dead_leaves": "Dead Leaves",
+
   "creative_tab.ashen_requiem_world.world": "Ashen Requiem: World",
 
   "biome.ashen_requiem_world.deadlands.ash_plains": "Ash Plains",

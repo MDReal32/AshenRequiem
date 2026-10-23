@@ -1,7 +1,6 @@
 package com.mdreal.ashenrequiem.core.state
 
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 
 /**
@@ -15,7 +14,7 @@ data class PlayerProgress(
     val seenCinematics: Set<String> = emptySet(),
 ) {
     companion object {
-        val MAP_CODEC: MapCodec<PlayerProgress> = RecordCodecBuilder.mapCodec { i ->
+        val CODEC: Codec<PlayerProgress> = RecordCodecBuilder.create { i ->
             i.group(
                 Codec.BOOL.optionalFieldOf("awakened", false).forGetter(PlayerProgress::awakened),
                 Codec.BOOL.optionalFieldOf("requiem", false).forGetter(PlayerProgress::requiem),
@@ -24,6 +23,5 @@ data class PlayerProgress(
                     .optionalFieldOf("seen_cinematics", emptySet()).forGetter(PlayerProgress::seenCinematics),
             ).apply(i) { awakened, requiem, chapter, seen -> PlayerProgress(awakened, requiem, chapter, seen) }
         }
-        val CODEC: Codec<PlayerProgress> = MAP_CODEC.codec()
     }
 }

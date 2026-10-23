@@ -23,3 +23,5 @@ waypoints
 minecraftinstance.json
 user-prefs.json
 user*cache.json
+.probe
+saves

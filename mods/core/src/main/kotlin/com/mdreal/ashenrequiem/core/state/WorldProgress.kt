@@ -1,15 +1,14 @@
 package com.mdreal.ashenrequiem.core.state
 
-import com.mdreal.ashenrequiem.core.CoreConfig
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.GlobalPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.saveddata.SavedData
-import net.minecraft.world.level.saveddata.SavedDataType
 
 /** World-global story state, saved with the Overworld. Mutate it only through the API. */
-class WorldProgress() : SavedData() {
+class WorldProgress : SavedData() {
     var hushStage: Int = 0
         internal set
     var gateRepaired: Boolean = false
@@ -20,27 +19,35 @@ class WorldProgress() : SavedData() {
     /** Named key locations (Cradle, Vigil Station, the Wound, ...). */
     internal val locations: MutableMap<String, GlobalPos> = mutableMapOf()
 
-    private constructor(hushStage: Int, gateRepaired: Boolean, finaleWon: Boolean, locations: Map<String, GlobalPos>) : this() {
-        this.hushStage = hushStage
-        this.gateRepaired = gateRepaired
-        this.finaleWon = finaleWon
-        this.locations.putAll(locations)
+    override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
+        tag.putInt("hush_stage", hushStage)
+        tag.putBoolean("gate_repaired", gateRepaired)
+        tag.putBoolean("finale_won", finaleWon)
+        val locs = CompoundTag()
+        locations.forEach { (key, pos) ->
+            GlobalPos.CODEC.encodeStart(NbtOps.INSTANCE, pos).result().ifPresent { locs.put(key, it) }
+        }
+        tag.put("locations", locs)
+        return tag
     }
 
     companion object {
-        private val CODEC: Codec<WorldProgress> = RecordCodecBuilder.create { i ->
-            i.group(
-                Codec.INT.optionalFieldOf("hush_stage", 0).forGetter(WorldProgress::hushStage),
-                Codec.BOOL.optionalFieldOf("gate_repaired", false).forGetter(WorldProgress::gateRepaired),
-                Codec.BOOL.optionalFieldOf("finale_won", false).forGetter(WorldProgress::finaleWon),
-                Codec.unboundedMap(Codec.STRING, GlobalPos.CODEC)
-                    .optionalFieldOf("locations", emptyMap()).forGetter { it.locations },
-            ).apply(i) { hush, gate, finale, locs -> WorldProgress(hush, gate, finale, locs) }
-        }
+        private const val NAME = "ashen_requiem_progress"
 
-        private val TYPE = SavedDataType(CoreConfig.id("progress"), ::WorldProgress, CODEC)
+        private val FACTORY = SavedData.Factory(::WorldProgress, ::load, null)
+
+        private fun load(tag: CompoundTag, registries: HolderLookup.Provider): WorldProgress =
+            WorldProgress().apply {
+                hushStage = tag.getInt("hush_stage")
+                gateRepaired = tag.getBoolean("gate_repaired")
+                finaleWon = tag.getBoolean("finale_won")
+                val locs = tag.getCompound("locations")
+                locs.allKeys.forEach { key ->
+                    GlobalPos.CODEC.parse(NbtOps.INSTANCE, locs.get(key)).result().ifPresent { locations[key] = it }
+                }
+            }
 
         fun get(server: MinecraftServer): WorldProgress =
-            server.overworld().dataStorage.computeIfAbsent(TYPE)
+            server.overworld().dataStorage.computeIfAbsent(FACTORY, NAME)
     }
 }

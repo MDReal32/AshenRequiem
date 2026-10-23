@@ -1,0 +1,19 @@
+{
+  "type": "ashen_requiem_world:fallen_log",
+  "config": {
+    "log": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "ashen_requiem_world:dead_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    },
+    "length": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 6
+    }
+  }
+}

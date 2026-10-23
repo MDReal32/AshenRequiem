@@ -17,7 +17,7 @@ staged spread, veil and scars, performance budgets, and the mod list.
 | Java/Kotlin package | `com.mdreal.ashenrequiem.<module>` |
 | Debug command | `/ar …` |
 | KubeJS global | `AR` |
-| Target | Minecraft 26.1.2, NeoForge 26.1.2.x, Java 25, Kotlin for Forge 6.4 |
+| Target | Minecraft 1.21.1, NeoForge 21.1.264, Java 21, Kotlin for Forge 5.10 (kept on 1.21.1 for KubeJS + ProbeJS) |
 
 ## 2. Module layout
 
@@ -94,7 +94,7 @@ Remove strongholds from structure sets, and remove the Eye of Ender and End port
 plus a datapack). Add a "Sealed Door" lore item in place of any loot that would have pointed to the End.
 
 ### D8 — Twilight gating
-Twilight Forest (the NeoForge 26.1.2 build) is required. The portal pool only works if the **Ember of Waking** is thrown
+Twilight Forest (the NeoForge 1.21.1 build) is required. The portal pool only works if the **Ember of Waking** is thrown
 in together with the diamond (we hook TF's portal-activation event, with a KubeJS fallback). The Snow Queen kill
 advancement grants the Requiem.
 
@@ -171,7 +171,8 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - **Worldgen decisions:** vanilla-like terrain mix, fully data-driven (no custom chunk generator). No seas: low
   ground is dry basin (`default_fluid` air, `sea_level` -64 so no lava either), and murky water only appears as
   Grey Marsh pools and rare springs. Underground is almost solid: no carvers, no aquifers, no vanilla ore veins; ores
-  come from our own features. The floor is `ashen_bedrock`.
+  come from our own features. The floor is vanilla bedrock (`ashen_bedrock` stays registered so older test
+  worlds keep their floor).
 - **Biomes (first pass):** Ash Plains, Bone Desert, Petrified Forest, Grey Marsh, Shattered Highlands, Ash Ocean (dry
   basin), plus the hidden Last Garden (D10).
   - Share over 100 seeds within 6000 blocks: Ash Ocean 30%, Ash Plains 28%, Petrified Forest 12%, Shattered
@@ -264,7 +265,7 @@ pity path). Currencies: `ash_memory` (Act I), `requiem_shard` (Act III).
 ### 5.3 Performance budgets
 - Content tick cost ≤ 2 ms/tick when you're in a Hush zone. The Dead Lands have no ticking blocks except authored
   machines.
-- Worldgen per chunk: trees 0–3, ruins about 1 per 10 chunks, Waystations about 1 per 60.
+- Worldgen per chunk: trees 0–4 (most in the Petrified Forest), ruins about 1 per 10 chunks, Waystations about 1 per 60.
 - Light-emitting blocks are capped at level 7 in the Dead Lands. Particles are client-side and scale with distance.
 - Shaders: each scene uses at most 2 post-fx passes at once.
 
@@ -285,11 +286,8 @@ pity path). Currencies: `ash_memory` (Act I), `requiem_shard` (Act III).
 
 ## 7. Third-party mods
 
-Already in dev: FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, Twilight Forest, JEI, JourneyMap, Waystones,
-Sodium, Lithium, ModernFix, FerriteCore, and others.
-
-Dropped in the 26.1.2 move (no build yet): ProbeJS, Cosmetic Armor Reworked, Sodium Dynamic Lights, Sodium Options API,
-PandaLib, GPU Memory Leak Fix, Fast Async World Save. Re-add them when they update.
+Already in dev (installed through CurseForge): FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, ProbeJS,
+Twilight Forest, Create, JEI, JourneyMap, Waystones, Sodium, Lithium, ModernFix, FerriteCore, and others.
 
 To add: **Lootr** (single-player loot per chest in multiplayer).
 

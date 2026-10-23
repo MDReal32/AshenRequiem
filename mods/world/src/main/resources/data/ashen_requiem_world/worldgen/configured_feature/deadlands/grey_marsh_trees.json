@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": {
+      "feature": "ashen_requiem_world:deadlands/dead_snag",
+      "placement": []
+    },
+    "features": [
+      {
+        "chance": 0.45,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/dead_oak",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.12,
+        "feature": {
+          "feature": "ashen_requiem_world:deadlands/fallen_dead_log",
+          "placement": []
+        }
+      }
+    ]
+  }
+}
