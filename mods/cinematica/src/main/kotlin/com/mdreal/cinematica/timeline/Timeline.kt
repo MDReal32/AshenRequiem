@@ -1,7 +1,9 @@
 package com.mdreal.cinematica.timeline
 
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.cos
+import kotlin.math.exp
 import kotlin.math.floor
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -87,8 +89,8 @@ data class Pose(
 
 /**
  * A camera keyframe. [pos] is where the eye is, relative to the scene origin unless the scene is absolute. [ground]
- * (0..1) is how much of its height counts from the ground under the first camera key instead of from the origin: 1
- * keeps the key as high above that ground as the first key is, 0 leaves it on the origin. See [Scene.lifted].
+ * (0..1) is how much of its height counts from the ground under it instead of from the origin: 1 flies that high
+ * above the land, 0 stays on the origin. See [Scene.onGround].
  */
 data class CameraKey(
     val t: Int,
@@ -143,12 +145,32 @@ data class Scene(
     val grounded: Boolean get() = camera.any { it.ground > 0f }
 
     /**
-     * The scene with each camera key raised by [lift] (how far the ground under the first camera key is above the
-     * origin) times its [CameraKey.ground] weight, ready to play: the weights are spent.
+     * The scene with each camera key raised by its [CameraKey.ground] weight times how far the ground under it is
+     * above the origin, ready to play: the weights are spent. [groundAt] measures that for a key. Along the path the
+     * ground is smoothed, so the camera glides over the land instead of copying every block, and only ever upward:
+     * no key ends up nearer the ground under it than its own height says.
      */
-    fun lifted(lift: Double): Scene = if (!grounded) this else copy(camera = camera.map {
-        if (it.ground == 0f) it else it.copy(pos = it.pos + Vec(0.0, lift * it.ground, 0.0), ground = 0f)
-    })
+    fun onGround(groundAt: (CameraKey) -> Double): Scene {
+        if (!grounded) return this
+        val keys = camera.sortedBy { it.t }
+        val raw = keys.map(groundAt)
+        fun near(i: Int) = keys.indices.filter { abs(keys[it].t - keys[i].t) <= GROUND_REACH }
+        // Every key within reach of a high point lifts to it, then a bell curve over the same reach rounds that off.
+        val high = keys.indices.map { i -> near(i).maxOf { raw[it] } }
+        val smooth = keys.indices.map { i ->
+            val weights = near(i).associateWith { j -> (keys[j].t - keys[i].t).toDouble().let { exp(-it * it / (2 * GROUND_SIGMA * GROUND_SIGMA)) } }
+            weights.entries.sumOf { (j, w) -> high[j] * w } / weights.values.sum()
+        }
+        return copy(camera = keys.mapIndexed { i, key ->
+            if (key.ground == 0f) key else key.copy(pos = key.pos + Vec(0.0, smooth[i] * key.ground, 0.0), ground = 0f)
+        })
+    }
+
+    companion object {
+        /** Ticks along the path over which the ground under the camera is smoothed. */
+        const val GROUND_REACH = 24
+        private const val GROUND_SIGMA = GROUND_REACH / 3.0
+    }
 }
 
 data class CameraState(val pos: Vec, val yaw: Float, val pitch: Float, val roll: Float, val fov: Float?)

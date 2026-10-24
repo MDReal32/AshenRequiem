@@ -156,18 +156,23 @@ object Sessions {
     }
 
     /**
-     * Lifts the keys that ask for it ([CameraKey.ground]) by how far the first block under the first camera key is
-     * above the origin, so a camera that starts far out flies over the land there rather than at the player's height.
-     * Done once here, so the client draws and the server loads the same path.
+     * Lifts the keys that ask for it ([CameraKey.ground]) by how far the land under each is above the origin, so a
+     * camera far out flies over the land there rather than at the player's height. Done once here, so the client draws
+     * and the server loads the same path.
      */
     private fun onGround(player: ServerPlayer, scene: Scene, origin: Vec, dimension: ResourceKey<Level>): Scene {
         if (!scene.grounded) return scene
-        val first = scene.camera.minBy { it.t }
         val level = player.server.getLevel(dimension) ?: return scene
-        val x = Mth.floor(origin.x + first.pos.x)
-        val z = Mth.floor(origin.z + first.pos.z)
-        return scene.lifted(level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - origin.y)
+        return scene.onGround { key ->
+            // The highest top block in a small patch under the key, so the slope of a hill beside it counts too.
+            val x = Mth.floor(origin.x + key.pos.x)
+            val z = Mth.floor(origin.z + key.pos.z)
+            GROUND_PATCH.maxOf { (dx, dz) -> level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + dx, z + dz) } - origin.y
+        }
     }
+
+    /** Where around a camera key the ground is measured: a 3 by 3 grid two blocks apart. */
+    private val GROUND_PATCH = (-2..2 step 2).flatMap { dx -> (-2..2 step 2).map { dz -> dx to dz } }
 
     private fun tick(event: ServerTickEvent.Post) {
         if (active.isEmpty()) return

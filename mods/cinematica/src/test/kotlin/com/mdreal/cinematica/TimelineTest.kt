@@ -170,18 +170,28 @@ class TimelineTest {
     }
 
     @Test
-    fun `a lift raises camera keys by their ground weight and spends the weights`() {
+    fun `ground raises camera keys by their weight and spends the weights`() {
         val scene = Scene(listOf(
             CameraKey(0, Vec(0.0, 90.0, 300.0), 0f, 0f, ground = 1f),
             CameraKey(10, Vec(0.0, 40.0, 100.0), 0f, 0f, ground = 0.5f),
             CameraKey(20, Vec(0.0, 2.0, 0.0), 0f, 0f),
         ))
         assertTrue(scene.grounded)
-        val lifted = scene.lifted(-12.0)
+        val lifted = scene.onGround { -12.0 }
         assertEquals(listOf(78.0, 34.0, 2.0), lifted.camera.map { it.pos.y })
         assertTrue(!lifted.grounded)
         val flat = Scene(listOf(CameraKey(0, Vec.ZERO, 0f, 0f)))
-        assertTrue(flat.lifted(5.0) === flat)
+        assertTrue(flat.onGround { 5.0 } === flat)
+    }
+
+    @Test
+    fun `ground under the path is smoothed but never let below a key`() {
+        // flat land with one 10 block hill under the key at t50
+        val scene = Scene((0..20).map { CameraKey(it * 5, Vec(0.0, 12.0, it * -5.0), 0f, 0f, ground = 1f) })
+        val lifted = scene.onGround { if (it.t == 50) 10.0 else 0.0 }.camera.associate { it.t to it.pos.y - 12.0 }
+        assertTrue(lifted.getValue(50) >= 10.0, "camera dipped into the hill")
+        assertTrue(lifted.getValue(40) > 0.0 && lifted.getValue(40) < lifted.getValue(50) + 1e-9, "no rise before the hill")
+        close(0.0, lifted.getValue(0))
     }
 
     @Test
