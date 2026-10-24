@@ -27,3 +27,5 @@
 /probejs enable
 /probejs complete_dump
 /probejs dump
+/gamemode survival
+/gamemode creative
