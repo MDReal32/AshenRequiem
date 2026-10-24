@@ -149,6 +149,9 @@ data class Scene(
      * above the origin, ready to play: the weights are spent. [groundAt] measures that for a key. Along the path the
      * ground is smoothed, so the camera glides over the land instead of copying every block, and only ever upward:
      * no key ends up nearer the ground under it than its own height says.
+     *
+     * Where the weight is fading, the part that still counts is from the land where it was last full, so a valley or
+     * hill under the fade doesn't bend the path. Such a key is still held [CLEARANCE] above the land under it.
      */
     fun onGround(groundAt: (CameraKey) -> Double): Scene {
         if (!grounded) return this
@@ -161,14 +164,28 @@ data class Scene(
             val weights = near(i).associateWith { j -> (keys[j].t - keys[i].t).toDouble().let { exp(-it * it / (2 * GROUND_SIGMA * GROUND_SIGMA)) } }
             weights.entries.sumOf { (j, w) -> high[j] * w } / weights.values.sum()
         }
+        var held: Double? = null
         return copy(camera = keys.mapIndexed { i, key ->
-            if (key.ground == 0f) key else key.copy(pos = key.pos + Vec(0.0, smooth[i] * key.ground, 0.0), ground = 0f)
+            if (key.ground == 0f) {
+                held = null
+                return@mapIndexed key
+            }
+            val y = if (key.ground >= 1f) {
+                held = smooth[i]
+                key.pos.y + smooth[i]
+            } else {
+                maxOf(key.pos.y + (held ?: smooth[i]) * key.ground, smooth[i] + CLEARANCE)
+            }
+            key.copy(pos = Vec(key.pos.x, y, key.pos.z), ground = 0f)
         })
     }
 
     companion object {
         /** Ticks along the path over which the ground under the camera is smoothed. */
         const val GROUND_REACH = 24
+
+        /** How near the land under it a key whose ground weight is fading may come. */
+        const val CLEARANCE = 2.0
         private const val GROUND_SIGMA = GROUND_REACH / 3.0
     }
 }

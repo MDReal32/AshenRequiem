@@ -195,6 +195,20 @@ class TimelineTest {
     }
 
     @Test
+    fun `a fading ground weight counts from the land where it was full and keeps clear of the land under it`() {
+        // keys far enough apart that the land under each isn't smoothed into the others
+        fun lifted(landAt30: Double) = Scene(listOf(
+            CameraKey(0, Vec(0.0, 14.0, 0.0), 0f, 0f, ground = 1f),
+            CameraKey(30, Vec(0.0, 8.0, -30.0), 0f, 0f, ground = 0.5f),
+            CameraKey(60, Vec(0.0, 2.0, -60.0), 0f, 0f),
+        )).onGround { mapOf(0 to -8.0, 30 to landAt30).getOrDefault(it.t, 0.0) }.camera.map { it.pos.y }
+        // over a valley it carries on from where the full weight ended: 8 + 0.5 * -8
+        assertEquals(listOf(6.0, 4.0, 2.0), lifted(-24.0))
+        // over a hill it stays above the land
+        assertEquals(listOf(6.0, 10.0 + Scene.CLEARANCE, 2.0), lifted(10.0))
+    }
+
+    @Test
     fun `an empty camera track has no camera`() {
         assertNull(Timeline(Scene(emptyList()), start).camera(0.0))
     }
