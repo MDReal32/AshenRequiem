@@ -5,7 +5,34 @@ Every crossing between worlds and every big reveal is a scripted moment, never a
 
 ---
 
-## 1. Cinematic engine (lives in `ashen_requiem_core`)
+## 1. Cinematic engine: Cinematica Studio (`mods/cinematica`)
+
+The engine is its own mod, **Cinematica Studio** (`cinematica_studio`), with no Ashen Requiem dependency, so other
+modpacks can use it too. Ashen Requiem only decides *when* a scene plays (`Cinematica.play(player, id)`) and continues
+on `SceneEndEvent`.
+
+### 1.0 What v0.1 does today
+- **Scenes** are JSON: datapack `data/<ns>/cinematica/scenes/<path>.json` (id `<ns>:<path>`) or recordings in
+  `<server dir>/cinematica/scenes/<name>.json` (id `local:<name>`, or just `<name>` in commands). Recordings are not a
+  datapack: to ship one (C01), copy the file into the Ashen Requiem datapack.
+- **Tracks:** `camera` (eye position, yaw, pitch, roll, fov), `actor` (feet position, yaw, six bones in `pose`, whole
+  body tilt in `root`), `fade` (black, 0..1). Each key has `t` in ticks and an optional `ease` for the segment it
+  starts (`linear`, `in_sine`, `out_sine`, `in_out_sine`, `in_cubic`, `out_cubic`, `in_out_cubic`). Paths are smooth
+  (Catmull-Rom), and yaw always turns the short way.
+- **Coordinates** are relative to the player's feet when the scene starts, unless `"absolute": true`.
+- **Ending:** after the last key the camera glides into the actor's eyes over `handoff` ticks (default 20), and the
+  player gets control back where the actor stands. Other options: `duration`, `letterbox` (default on), `show_actor`.
+- **Playback:** the player becomes a spectator and the server moves their body along the camera path, so chunks load
+  where the camera is. The client shows a stand-in in the player's own skin. Game mode and position are restored at
+  the end, and on the next login if the game crashed mid-scene.
+- **Recorder:** `/cinematica record <name>`. Fly as a spectator and drop keys at a time cursor: `K` camera key from
+  your view, `J` actor key where you hover, `O` actor pose, `U` ease, `B` fade, `Del` delete, arrows move the cursor
+  or jump between keys, `G` previews, `Enter` saves. `/cinematica stop` leaves. Keys can be rebound in Controls.
+- **Commands:** `/cinematica play <scene> [targets]`, `stop [targets]`, `record <name>`, `list` (op level 2).
+- **Known limits:** only the watching player sees the actor (others see nothing, since the player is a spectator); no
+  overlay text, eyelids, shaders, audio or skip yet. Those are in the target design below.
+
+The rest of this section is the **target design** for later versions.
 
 ### 1.1 Flow
 ```

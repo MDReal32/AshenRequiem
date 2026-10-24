@@ -23,7 +23,9 @@ staged spread, veil and scars, performance budgets, and the mod list.
 
 ```
 mods/
-  core/      ashen_requiem_core     framework: progression state, Requiem mark, cinematic engine,
+  cinematica/ cinematica_studio    standalone cutscene engine (camera, posable actor, recorder), usable
+                                    by any modpack; no Ashen Requiem dependency
+  core/      ashen_requiem_core     framework: progression state, Requiem mark, scene triggers,
                                     networking, KubeJS bindings, /ar commands, shared shaders
   world/     ashen_requiem_world    Dead Lands dimension, biomes, blocks, mobs, Cradle, Vigil Station,
                                     Gate, veil/reveal system, Quiet Archive, Ash Maze, Sweeper
@@ -161,6 +163,9 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - Test loop: `./gradlew :dev:runServer` (headless, RCON on 25575) plus `./gradlew :dev:runClient -PquickPlay=localhost`.
 
 ### Stage 2 — Cinematic engine v1
+- The engine is **Cinematica Studio** (`mods/cinematica`), see [CINEMATICS.md](CINEMATICS.md) §1.0. v0.1 has the
+  timeline, camera/actor/fade tracks, server-driven playback that loads chunks, the in-game recorder and
+  `/cinematica`. Still to do here: overlay text and eyelids, post-fx, audio, skip rules, and wiring C01 to first join.
 - JSON scene loader, timeline, overlay/camera/audio/control tracks, the post-fx track with 3 shaders (blur,
   desaturate, tunnel), server authority, skip rules.
 - Ship **C01 Waking** fully, including placeholder sounds.
