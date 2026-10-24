@@ -180,15 +180,26 @@ class Timeline(val scene: Scene, private val start: ActorState) {
         if (cameraKeys.isEmpty()) return null
         val handoffStart = scene.length.toDouble()
         if (time >= handoffStart && scene.handoff > 0) {
+            // The glide keeps the speed the camera arrives with and settles in the eyes, so there is no stop before it.
             val from = cameraAt(handoffStart)
+            val before = cameraAt(handoffStart - 1.0)
             val to = actor(handoffStart).eye()
-            val u = Ease.IN_OUT_SINE.apply(((time - handoffStart) / scene.handoff).coerceIn(0.0, 1.0))
+            val span = scene.handoff.toDouble()
+            val u = ((time - handoffStart) / span).coerceIn(0.0, 1.0)
+            fun glide(a: Double, b: Double, rate: Double) = settle(a, b, rate * span, u)
+            fun glide(a: Float, b: Float, rate: Float) = glide(a.toDouble(), b.toDouble(), rate.toDouble()).toFloat()
+            val velocity = from.pos - before.pos
             return CameraState(
-                from.pos + (to.pos - from.pos) * u,
-                lerp(from.yaw, from.yaw + wrapDegrees(to.yaw - from.yaw), u),
-                lerp(from.pitch, to.pitch, u),
-                lerp(from.roll, 0f, u),
-                from.fov?.let { lerp(it, to.fov ?: it, u) }
+                Vec(
+                    glide(from.pos.x, to.pos.x, velocity.x),
+                    glide(from.pos.y, to.pos.y, velocity.y),
+                    glide(from.pos.z, to.pos.z, velocity.z)
+                ),
+                glide(from.yaw, nearest(from.yaw, to.yaw), from.yaw - nearest(from.yaw, before.yaw)),
+                glide(from.pitch, to.pitch, from.pitch - before.pitch),
+                // A camera that rolled full turns ends at the nearest upright one instead of spinning back.
+                glide(from.roll, from.roll - wrapDegrees(from.roll), from.roll - before.roll),
+                from.fov?.let { lerp(it, to.fov ?: it, Ease.IN_OUT_SINE.apply(u)) }
             )
         }
         return cameraAt(time)
@@ -251,6 +262,13 @@ class Timeline(val scene: Scene, private val start: ActorState) {
             val u3 = u2 * u
             return (2 * u3 - 3 * u2 + 1) * values[i] + (u3 - 2 * u2 + u) * m0 +
                 (-2 * u3 + 3 * u2) * values[i + 1] + (u3 - u2) * m1
+        }
+
+        /** Hermite from [a] leaving at [m0] (per whole segment) to [b], arriving at rest. */
+        fun settle(a: Double, b: Double, m0: Double, u: Double): Double {
+            val u2 = u * u
+            val u3 = u2 * u
+            return (2 * u3 - 3 * u2 + 1) * a + (u3 - 2 * u2 + u) * m0 + (-2 * u3 + 3 * u2) * b
         }
 
         private fun tangent(times: List<Int>, values: List<Double>, i: Int): Double {

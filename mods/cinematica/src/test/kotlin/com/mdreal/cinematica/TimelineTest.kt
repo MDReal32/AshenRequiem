@@ -93,6 +93,21 @@ class TimelineTest {
     }
 
     @Test
+    fun `handoff keeps the camera's speed and never unrolls a full turn`() {
+        val camera = listOf(
+            CameraKey(0, Vec(0.0, 1.62, -4.0), 0f, 0f, 0f),
+            CameraKey(40, Vec(0.0, 1.62, -2.0), 0f, 0f, 360f),
+        )
+        val scene = Scene(camera, listOf(ActorKey(0, Vec.ZERO, 0f)), handoff = 20)
+        val timeline = Timeline(scene, start)
+        val arriving = timeline.camera(40.0)!!.pos.z - timeline.camera(39.0)!!.pos.z
+        val leaving = timeline.camera(41.0)!!.pos.z - timeline.camera(40.0)!!.pos.z
+        close(arriving, leaving, 0.01)
+        assertTrue(timeline.camera(50.0)!!.roll > 359f, "roll spun back")
+        close(360.0, timeline.camera(scene.end.toDouble())!!.roll.toDouble(), 1e-3)
+    }
+
+    @Test
     fun `without actor keys the actor stays where the player started`() {
         val scene = Scene(listOf(CameraKey(0, Vec.ZERO, 0f, 0f)))
         assertEquals(start, Timeline(scene, start).actor(5.0))
