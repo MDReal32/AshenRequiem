@@ -45,10 +45,9 @@ object Keys {
     val STEP_FORWARD = key("step_forward", GLFW.GLFW_KEY_RIGHT, WhilePlaying)
     val SNAPSHOT = key("snapshot", GLFW.GLFW_KEY_V, WhilePlaying)
 
-    val ALL = listOf(
-        CAMERA, ACTOR, POSE, EASE, FADE, DELETE, BACK, FORWARD, PREV_KEY, NEXT_KEY, PREVIEW, SAVE,
-        PLAY_PAUSE, STEP_BACK, STEP_FORWARD, SNAPSHOT,
-    )
+    val RECORDER = listOf(CAMERA, ACTOR, POSE, EASE, FADE, DELETE, BACK, FORWARD, PREV_KEY, NEXT_KEY, PREVIEW, SAVE)
+    val PLAYER = listOf(PLAY_PAUSE, STEP_BACK, STEP_FORWARD, SNAPSHOT)
+    val ALL = RECORDER + PLAYER
 
     /** Number of presses since the last call, so held keys and quick taps both count. */
     fun KeyMapping.presses(): Int {

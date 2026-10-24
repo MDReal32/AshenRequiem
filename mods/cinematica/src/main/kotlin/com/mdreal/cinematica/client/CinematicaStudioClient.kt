@@ -27,6 +27,7 @@ import net.neoforged.neoforge.client.event.RenderFrameEvent
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent
 import net.neoforged.neoforge.client.event.RenderHandEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
+import net.neoforged.neoforge.client.event.ScreenEvent
 import net.neoforged.neoforge.client.event.ViewportEvent
 import net.neoforged.neoforge.common.NeoForge
 import java.util.UUID
@@ -65,6 +66,7 @@ class CinematicaStudioClient(modBus: IEventBus) {
             }
         }
         bus.addListener<InputEvent.MouseScrollingEvent> { if (Director.active) it.isCanceled = true }
+        bus.addListener<ScreenEvent.Opening> { if (!Director.allowsScreen(it.currentScreen, it.newScreen)) it.isCanceled = true }
         bus.addListener<ClientPlayerNetworkEvent.LoggingOut> {
             Recorder.stop()
             Director.stop()

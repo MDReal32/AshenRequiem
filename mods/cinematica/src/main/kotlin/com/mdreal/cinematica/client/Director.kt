@@ -19,6 +19,13 @@ import net.minecraft.client.CameraType
 import net.minecraft.client.Minecraft
 import net.minecraft.client.Screenshot
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.screens.DeathScreen
+import net.minecraft.client.gui.screens.DisconnectedScreen
+import net.minecraft.client.gui.screens.GenericMessageScreen
+import net.minecraft.client.gui.screens.PauseScreen
+import net.minecraft.client.gui.screens.ProgressScreen
+import net.minecraft.client.gui.screens.ReceivingLevelScreen
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.neoforged.neoforge.client.event.ViewportEvent
 import net.neoforged.neoforge.network.PacketDistributor
@@ -87,6 +94,9 @@ object Director {
     /** A snapshot waits for one frame drawn without the control bar, then grabs it. */
     private var shotPending = false
     private var lastTime = 0.0
+
+    /** Paused because another screen opened over the scene; it plays on once that closes. */
+    private var heldByScreen = false
     private var finishedSent = false
     private var camera: ActorEntity? = null
     private var cameraState: CameraState? = null
@@ -114,6 +124,7 @@ object Director {
         showTicks = 0
         flashTicks = 0
         shotPending = false
+        heldByScreen = false
         finishedSent = false
         cameraState = null
         camera = null
@@ -131,7 +142,17 @@ object Director {
     fun tick() {
         val run = run ?: return
         val mc = Minecraft.getInstance()
-        if (mc.level == null || mc.isPaused) return
+        if (mc.level == null) return
+        // The pause menu, or a screen it leads to, holds the scene until the player is back.
+        val away = mc.screen != null && mc.screen !is PlayerScreen
+        if (away && !paused && !run.preview) {
+            setPaused(run, true)
+            heldByScreen = true
+        } else if (!away && heldByScreen) {
+            heldByScreen = false
+            if (paused) setPaused(run, false)
+        }
+        if (mc.isPaused) return
         if (noteTicks > 0 && --noteTicks == 0) note = null
         if (showTicks > 0) showTicks--
         if (flashTicks > 0) flashTicks--
@@ -202,6 +223,17 @@ object Director {
         val mc = Minecraft.getInstance()
         if (paused && mc.screen == null) mc.setScreen(PlayerScreen())
         if (!paused && mc.screen is PlayerScreen) mc.setScreen(null)
+    }
+
+    /**
+     * While a scene plays only Escape's pause menu may open over it (and what that menu leads to), no chat, inventory
+     * or map. Screens the game itself shows, such as a lost connection, always may.
+     */
+    fun allowsScreen(current: Screen?, next: Screen?): Boolean {
+        val run = run ?: return true
+        if (run.preview || current != null || next == null) return true
+        return next is PauseScreen || next is PlayerScreen || next is DisconnectedScreen || next is DeathScreen ||
+            next is ProgressScreen || next is GenericMessageScreen || next is ReceivingLevelScreen
     }
 
     private fun reveal() {

@@ -99,8 +99,9 @@ object Recorder {
     fun scene() = base.copy(camera = camera.sortedBy { it.t }, actor = actor.sortedBy { it.t }, fade = fade.sortedBy { it.t })
 
     fun tick() {
+        // Presses made while the recorder can't use them are dropped; the player keys are the Director's.
         if (!active) {
-            Keys.ALL.forEach { it.presses() }
+            Keys.RECORDER.forEach { it.presses() }
             return
         }
         val player = Minecraft.getInstance().player ?: return
@@ -108,7 +109,7 @@ object Recorder {
             if (Director.isPreview) Director.stop() else preview(player)
         }
         if (Director.active) {
-            Keys.ALL.forEach { it.presses() }
+            Keys.RECORDER.forEach { it.presses() }
             return
         }
         repeat(Keys.CAMERA.presses()) { cameraKey(player) }
