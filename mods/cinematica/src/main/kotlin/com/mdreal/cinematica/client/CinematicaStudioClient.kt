@@ -80,7 +80,7 @@ class CinematicaStudioClient(modBus: IEventBus) {
                 Mode.RECORD -> Recorder.start(payload)
                 Mode.PLAY -> {
                     val start = ActorState(payload.start, payload.yaw, Pose(head = Rot(payload.pitch, 0f, 0f)), Rot.ZERO)
-                    Director.play(Timeline(payload.scene, start), payload.origin, showActor = payload.scene.showActor)
+                    Director.play(payload.name, Timeline(payload.scene, start), payload.origin, showActor = payload.scene.showActor)
                 }
             }
         }

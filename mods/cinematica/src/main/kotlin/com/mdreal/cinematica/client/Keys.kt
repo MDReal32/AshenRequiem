@@ -6,7 +6,10 @@ import net.minecraft.client.Minecraft
 import net.neoforged.neoforge.client.settings.IKeyConflictContext
 import org.lwjgl.glfw.GLFW
 
-/** Recorder keys. Defaults are keys vanilla leaves unbound, and they only count while the recorder is open. */
+/**
+ * Recorder and playback keys. Each only counts while the recorder is open or a scene plays, so they can share keys
+ * with vanilla ones that do nothing then.
+ */
 object Keys {
     private const val CATEGORY = "key.categories.cinematica_studio"
 
@@ -15,8 +18,13 @@ object Keys {
         override fun conflicts(other: IKeyConflictContext) = other === this
     }
 
-    private fun key(name: String, code: Int) =
-        KeyMapping("key.cinematica_studio.$name", WhileRecording, InputConstants.Type.KEYSYM, code, CATEGORY)
+    private object WhilePlaying : IKeyConflictContext {
+        override fun isActive() = Director.active && !Recorder.active && Minecraft.getInstance().screen == null
+        override fun conflicts(other: IKeyConflictContext) = other === this
+    }
+
+    private fun key(name: String, code: Int, context: IKeyConflictContext = WhileRecording) =
+        KeyMapping("key.cinematica_studio.$name", context, InputConstants.Type.KEYSYM, code, CATEGORY)
 
     val CAMERA = key("camera_key", GLFW.GLFW_KEY_K)
     val ACTOR = key("actor_key", GLFW.GLFW_KEY_J)
@@ -31,7 +39,16 @@ object Keys {
     val PREVIEW = key("preview", GLFW.GLFW_KEY_G)
     val SAVE = key("save", GLFW.GLFW_KEY_ENTER)
 
-    val ALL = listOf(CAMERA, ACTOR, POSE, EASE, FADE, DELETE, BACK, FORWARD, PREV_KEY, NEXT_KEY, PREVIEW, SAVE)
+    // Playback controls, only while watching a scene.
+    val PLAY_PAUSE = key("play_pause", GLFW.GLFW_KEY_SPACE, WhilePlaying)
+    val STEP_BACK = key("step_back", GLFW.GLFW_KEY_LEFT, WhilePlaying)
+    val STEP_FORWARD = key("step_forward", GLFW.GLFW_KEY_RIGHT, WhilePlaying)
+    val SNAPSHOT = key("snapshot", GLFW.GLFW_KEY_V, WhilePlaying)
+
+    val ALL = listOf(
+        CAMERA, ACTOR, POSE, EASE, FADE, DELETE, BACK, FORWARD, PREV_KEY, NEXT_KEY, PREVIEW, SAVE,
+        PLAY_PAUSE, STEP_BACK, STEP_FORWARD, SNAPSHOT,
+    )
 
     /** Number of presses since the last call, so held keys and quick taps both count. */
     fun KeyMapping.presses(): Int {

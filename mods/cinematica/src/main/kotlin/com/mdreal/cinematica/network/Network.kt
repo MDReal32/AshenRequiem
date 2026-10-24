@@ -128,6 +128,20 @@ object FinishedPayload : CustomPacketPayload {
     override fun type() = TYPE
 }
 
+/** Client to server: the watcher paused, resumed or stepped; the server's clock follows so it keeps loading the right chunks. */
+data class ControlPayload(val time: Int, val paused: Boolean) : CustomPacketPayload {
+    override fun type(): CustomPacketPayload.Type<ControlPayload> = TYPE
+
+    companion object {
+        val TYPE = CustomPacketPayload.Type<ControlPayload>(CinematicaStudio.id("control"))
+        val STREAM_CODEC: StreamCodec<ByteBuf, ControlPayload> = StreamCodec.composite(
+            ByteBufCodecs.VAR_INT, ControlPayload::time,
+            ByteBufCodecs.BOOL, ControlPayload::paused,
+            ::ControlPayload
+        )
+    }
+}
+
 /** Client to server: save the recorder's scene under the name the record command was given. */
 data class SavePayload(val scene: Scene) : CustomPacketPayload {
     override fun type(): CustomPacketPayload.Type<SavePayload> = TYPE
@@ -163,7 +177,7 @@ object ClientBridge {
 }
 
 object Network {
-    private const val PROTOCOL = "2"
+    private const val PROTOCOL = "3"
 
     fun hook(bus: IEventBus) {
         bus.addListener(::onRegister)
@@ -179,6 +193,9 @@ object Network {
             }
             .playToServer(FinishedPayload.TYPE, FinishedPayload.STREAM_CODEC) { _, ctx ->
                 (ctx.player() as? ServerPlayer)?.let(Sessions::onClientFinished)
+            }
+            .playToServer(ControlPayload.TYPE, ControlPayload.STREAM_CODEC) { payload, ctx ->
+                (ctx.player() as? ServerPlayer)?.let { Sessions.onControl(it, payload.time, payload.paused) }
             }
             .playToServer(SavePayload.TYPE, SavePayload.STREAM_CODEC) { payload, ctx ->
                 (ctx.player() as? ServerPlayer)?.let { Sessions.onSave(it, payload.scene) }

@@ -140,7 +140,7 @@ object Recorder {
             return
         }
         val from = if (cursor >= scene.length) 0 else cursor
-        Director.play(timeline, origin, from.toDouble(), preview = true)
+        Director.play(name, timeline, origin, from.toDouble(), preview = true)
     }
 
     private fun cameraKey(player: LocalPlayer) {

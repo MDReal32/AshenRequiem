@@ -71,6 +71,7 @@ object Sessions {
     ) {
         val timeline = Timeline(scene, start)
         var time = 0
+        var paused = false
 
         /** Other players currently shown this scene's actor. */
         val witnesses = HashSet<UUID>()
@@ -105,6 +106,12 @@ object Sessions {
 
     fun onClientFinished(player: ServerPlayer) {
         if (active[player.uuid]?.mode == Mode.PLAY) finish(player, true)
+    }
+
+    fun onControl(player: ServerPlayer, time: Int, paused: Boolean) {
+        val session = active[player.uuid]?.takeIf { it.mode == Mode.PLAY } ?: return
+        session.time = time.coerceIn(0, session.scene.end)
+        session.paused = paused
     }
 
     fun onSave(player: ServerPlayer, scene: Scene) {
@@ -149,7 +156,7 @@ object Sessions {
         active.entries.toList().forEach { (uuid, session) ->
             val player = players.getPlayer(uuid) ?: return@forEach run { active.remove(uuid) }
             if (session.mode != Mode.PLAY) return@forEach
-            session.time++
+            if (!session.paused) session.time++
             val camera = session.timeline.camera(session.time.toDouble())
             if (camera != null) {
                 // The player's body follows the camera so its chunks are loaded and sent.
