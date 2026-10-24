@@ -238,7 +238,8 @@ class Timeline(val scene: Scene, private val start: ActorState) {
             hermite(times, cameraKeys.map { it.pos }, i, e),
             hermite1(times, cameraKeys.map { it.yaw.toDouble() }, i, e).toFloat(),
             hermite1(times, cameraKeys.map { it.pitch.toDouble() }, i, e).toFloat(),
-            lerp(a.roll, b.roll, e),
+            // Roll follows a curve like the angles above: straight lines between keys jerk at every key of a fast roll.
+            hermite1(times, cameraKeys.map { it.roll.toDouble() }, i, e).toFloat(),
             if (a.fov != null && b.fov != null) lerp(a.fov, b.fov, e) else a.fov ?: b.fov
         )
     }

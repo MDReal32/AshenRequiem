@@ -94,6 +94,16 @@ class TimelineTest {
     }
 
     @Test
+    fun `roll keeps its speed through a key`() {
+        val camera = listOf(0f, 10f, 40f, 90f).mapIndexed { i, roll -> CameraKey(i * 5, Vec.ZERO, 0f, 0f, roll) }
+        val timeline = Timeline(Scene(camera), start)
+        // degrees per tick just before and just after the key at t5 (straight lines would jump from 2 to 6)
+        val before = (timeline.camera(5.0)!!.roll - timeline.camera(4.99)!!.roll) / 0.01
+        val after = (timeline.camera(5.01)!!.roll - timeline.camera(5.0)!!.roll) / 0.01
+        close(before, after, 0.1)
+    }
+
+    @Test
     fun `handoff keeps the camera's speed and never unrolls a full turn`() {
         val camera = listOf(
             CameraKey(0, Vec(0.0, 1.62, -4.0), 0f, 0f, 0f),
