@@ -19,7 +19,6 @@ import net.minecraft.client.CameraType
 import net.minecraft.client.Minecraft
 import net.minecraft.client.Screenshot
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.neoforged.neoforge.client.event.ViewportEvent
 import net.neoforged.neoforge.network.PacketDistributor
@@ -27,6 +26,7 @@ import java.nio.file.Files
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
 /**
  * Runs a timeline on the client: the camera, the actor, letterbox and fade. Used for real playback (the server ends
@@ -55,6 +55,12 @@ object Director {
 
     /** Played part of the progress track. */
     private const val ACCENT = 0xE0703A
+
+    /** The progress track's distance from the screen's sides. */
+    private const val MARGIN = 10
+
+    /** Ticks a step key moves; with Shift, while paused, one. */
+    const val STEP = 20
 
     /** How long the "snapshot saved" note stays on screen. */
     private const val NOTE_TICKS = 50
@@ -115,6 +121,7 @@ object Director {
         mc.player?.let { if (mc.cameraEntity !== it) mc.setCameraEntity(it) }
         savedCameraType?.let { mc.options.cameraType = it }
         savedCameraType = null
+        if (mc.screen is PlayerScreen) mc.setScreen(null)
         if (!Recorder.active) Stage.remove()
     }
 
@@ -143,31 +150,62 @@ object Director {
         if (time >= end + GIVE_UP) stop()
     }
 
-    /** Pause, step and snapshot. Stepping works while playing too; it pauses so the moment can be looked at. */
+    /**
+     * The playback keys while the scene plays. Once paused, [PlayerScreen] is open and takes the keys and the mouse
+     * itself.
+     */
     private fun controls(run: Run) {
         // Like a video player, moving the mouse brings the controls up.
         val mouse = Minecraft.getInstance().mouseHandler
-        if (abs(mouse.xpos() - mouseX) + abs(mouse.ypos() - mouseY) > 4) showTicks = max(showTicks, SHOW_TICKS)
+        if (abs(mouse.xpos() - mouseX) + abs(mouse.ypos() - mouseY) > 4) reveal()
         mouseX = mouse.xpos()
         mouseY = mouse.ypos()
-        val toggles = Keys.PLAY_PAUSE.presses()
-        val step = if (Screen.hasShiftDown()) 1 else 20
-        val delta = (Keys.STEP_FORWARD.presses() - Keys.STEP_BACK.presses()) * step
-        val snapshots = Keys.SNAPSHOT.presses()
-        if (toggles % 2 == 1) {
-            paused = !paused
-            flashTicks = FLASH_TICKS
-        }
-        if (toggles > 0 || delta != 0 || snapshots > 0) showTicks = max(showTicks, SHOW_TICKS)
-        if (delta != 0) {
-            paused = true
-            val last = run.timeline.scene.end - run.from.toInt() - 1
-            ticks = (ticks + delta).coerceIn(0, last)
-        }
-        if ((toggles % 2 == 1 || delta != 0) && !run.preview) {
-            PacketDistributor.sendToServer(ControlPayload(run.from.toInt() + ticks, paused))
-        }
-        if (snapshots > 0) shotPending = true
+        if (run.preview) return
+        if (Keys.PLAY_PAUSE.presses() % 2 == 1) togglePause()
+        val delta = (Keys.STEP_FORWARD.presses() - Keys.STEP_BACK.presses()) * STEP
+        if (delta != 0) step(delta)
+        if (Keys.SNAPSHOT.presses() > 0) snapshot()
+    }
+
+    fun togglePause() {
+        val run = run ?: return
+        setPaused(run, !paused)
+        flashTicks = FLASH_TICKS
+    }
+
+    /** Moves [delta] ticks from where the scene is and pauses there, so the moment can be looked at. */
+    fun step(delta: Int) {
+        val run = run ?: return
+        seek(run.from.toInt() + ticks + delta)
+    }
+
+    /** Jumps to scene tick [tick] and pauses there. */
+    fun seek(tick: Int) {
+        val run = run ?: return
+        ticks = (tick - run.from.toInt()).coerceIn(0, run.timeline.scene.end - run.from.toInt() - 1)
+        setPaused(run, true)
+    }
+
+    /** Saves this moment once the next frame is drawn. */
+    fun snapshot() {
+        if (run == null) return
+        shotPending = true
+        reveal()
+    }
+
+    /** The server's clock follows, so it keeps the right chunks loaded; paused, the mouse is let go for the bar. */
+    private fun setPaused(run: Run, paused: Boolean) {
+        this.paused = paused
+        reveal()
+        if (run.preview) return
+        PacketDistributor.sendToServer(ControlPayload(run.from.toInt() + ticks, paused))
+        val mc = Minecraft.getInstance()
+        if (paused && mc.screen == null) mc.setScreen(PlayerScreen())
+        if (!paused && mc.screen is PlayerScreen) mc.setScreen(null)
+    }
+
+    private fun reveal() {
+        showTicks = max(showTicks, SHOW_TICKS)
     }
 
     /** Called after every frame. A pending snapshot grabs this frame, which was drawn without the control bar. */
@@ -175,14 +213,14 @@ object Director {
         val run = run ?: return
         if (!shotPending) return
         shotPending = false
-        snapshot(run, lastTime)
+        saveSnapshot(run, lastTime)
     }
 
     /**
      * Saves where the scene is right now, so it can be talked about exactly: a screenshot in `screenshots/` and the
      * camera and actor state as JSON in `cinematica/snapshots/`, both named after the scene and tick.
      */
-    private fun snapshot(run: Run, time: Double) {
+    private fun saveSnapshot(run: Run, time: Double) {
         val mc = Minecraft.getInstance()
         val tick = time.toInt()
         val base = "${run.name.replace(Regex("[^a-z0-9_-]"), "_")}_t$tick"
@@ -309,10 +347,10 @@ object Director {
         graphics.fillGradient(0, height - 48, width, height, c(0, 0f), c(0, 0.75f))
         val scene = run.timeline.scene
         val end = scene.end.toDouble()
-        val left = 10
-        val right = width - 10
-        val y = height - 25
-        fun at(t: Double) = left + ((right - left) * (t / end).coerceIn(0.0, 1.0)).toInt()
+        val left = MARGIN
+        val right = width - MARGIN
+        val y = trackY(height)
+        fun at(t: Double) = trackX(t, end, width)
         graphics.fill(left, y, right, y + 3, c(0xFFFFFF, 0.3f))
         val head = at(time)
         graphics.fill(left, y, head, y + 3, c(ACCENT))
@@ -331,11 +369,41 @@ object Director {
         graphics.drawString(font, info, x, row, c(0xAAAAAA))
         x += font.width(info)
         val hint = Component.translatable(
-            "cinematica_studio.player.hint",
+            if (paused) "cinematica_studio.player.hint_paused" else "cinematica_studio.player.hint",
             Keys.PLAY_PAUSE.label(), Keys.STEP_BACK.label(), Keys.STEP_FORWARD.label(), Keys.SNAPSHOT.label()
         )
         val hintX = right - font.width(hint)
         if (hintX > x + 12) graphics.drawString(font, hint, hintX, row, c(0xAAAAAA))
+    }
+
+    private fun trackY(height: Int) = height - 25
+
+    private fun trackX(time: Double, end: Double, width: Int) =
+        MARGIN + ((width - 2 * MARGIN) * (time / end).coerceIn(0.0, 1.0)).toInt()
+
+    /** Whether a point on screen is on the progress track, with some room around it for the mouse. */
+    fun overTrack(x: Double, y: Double, width: Int, height: Int) =
+        x in MARGIN - 4.0..width - MARGIN + 4.0 && y in trackY(height) - 6.0..trackY(height) + 9.0
+
+    /** The scene tick under [x] on the progress track. */
+    fun tickAt(x: Double, width: Int): Int {
+        val end = run?.timeline?.scene?.end ?: return 0
+        return ((x - MARGIN) / (width - 2 * MARGIN) * end).roundToInt().coerceIn(0, end)
+    }
+
+    /** While the mouse is over the track: a line where it points and the time there. */
+    fun hover(graphics: GuiGraphics, mouseX: Int, mouseY: Int, width: Int, height: Int) {
+        val run = run ?: return
+        if (shotPending || !overTrack(mouseX.toDouble(), mouseY.toDouble(), width, height)) return
+        val font = Minecraft.getInstance().font
+        val tick = tickAt(mouseX.toDouble(), width)
+        val x = trackX(tick.toDouble(), run.timeline.scene.end.toDouble(), width)
+        val y = trackY(height)
+        graphics.fill(x, y - 3, x + 1, y + 6, 0xFFFFFFFF.toInt())
+        val label = "${clock(tick.toDouble())}  tick $tick"
+        val labelX = (x - font.width(label) / 2).coerceIn(4, width - font.width(label) - 4)
+        graphics.fill(labelX - 3, y - 18, labelX + font.width(label) + 3, y - 6, color(0, 0.75f))
+        graphics.drawString(font, label, labelX, y - 16, 0xFFFFFFFF.toInt())
     }
 
     /** A play triangle or a pause sign, [size] tall, with its top left at [x], [y]. */
