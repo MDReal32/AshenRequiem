@@ -1,0 +1,23 @@
+{
+  // Types come from ProbeJS (8.x), which dumps them into the pack's .probe folder when the game loads a world.
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    // ProbeJS can't generate fully TS-compatible typings.
+    "skipLibCheck": true,
+    // KubeJS has its own `console`; Node's types would clash with it.
+    "types": [],
+    "paths": {
+      "@package": ["../dev/pack/.probe/@package"],
+      "@package/*": ["../dev/pack/.probe/@package/*"],
+      "@side-only/*": ["../dev/pack/.probe/@side-only/*"],
+      "@special": ["../dev/pack/.probe/@special"],
+      "@special/*": ["../dev/pack/.probe/@special/*"]
+    }
+  }
+}

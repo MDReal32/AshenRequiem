@@ -1,11 +1,12 @@
 {
-  "extends": "@kubejs/plugin/tsconfig.json",
-  "compilerOptions": { "composite": true },
+  "extends": "./tsconfig.base.json",
   "include": [
-    "./node_modules/.kubejs/types/startup.globals.d.ts",
     "src/startup.ts",
     "src/startup/**/*",
     "src/shared/startup/**/*",
-    "src/shared/common/**/*"
+    "src/shared/common/**/*",
+    "../dev/pack/.probe/@package/**/*.d.ts",
+    "../dev/pack/.probe/@special/**/*.d.ts",
+    "../dev/pack/.probe/@side-only/startup/**/*.d.ts"
   ]
 }

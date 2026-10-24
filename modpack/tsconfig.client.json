@@ -1,10 +1,12 @@
 {
-  "extends": "@kubejs/plugin/tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "include": [
-    "./node_modules/.kubejs/types/client.globals.d.ts",
     "src/client.ts",
     "src/client/**/*",
     "src/shared/client/**/*",
-    "src/shared/common/**/*"
+    "src/shared/common/**/*",
+    "../dev/pack/.probe/@package/**/*.d.ts",
+    "../dev/pack/.probe/@special/**/*.d.ts",
+    "../dev/pack/.probe/@side-only/client/**/*.d.ts"
   ]
 }

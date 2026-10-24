@@ -10,14 +10,14 @@ const DELAY = 1;
 
 PlayerEvents.loggedIn(event => {
   const player = event.player;
-  if (player.tags.contains(SEEN)) return;
+  if (player.stages.has(SEEN)) return;
   const server = event.server;
-  const uuid = player.uuid;
+  const name = player.getGameProfile().getName();
 
   server.scheduleInTicks(DELAY, () => {
-    const online = server.playerList.getPlayer(uuid);
-    if (online == null || online.tags.contains(SEEN)) return;
-    if (Cinematica.play(online, SCENE)) online.addTag(SEEN);
+    const online = server.getPlayerList().getPlayerByName(name);
+    if (online == null || online.stages.has(SEEN)) return;
+    if (Cinematica.play(online, SCENE)) online.stages.add(SEEN);
     else console.error(`First-join scene ${SCENE} is missing`);
   });
 });
