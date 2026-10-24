@@ -5,6 +5,7 @@ import com.mdreal.cinematica.entity.ModEntities
 import com.mdreal.cinematica.network.ClientBridge
 import com.mdreal.cinematica.network.Mode
 import com.mdreal.cinematica.network.StartPayload
+import com.mdreal.cinematica.network.WitnessPayload
 import com.mdreal.cinematica.timeline.ActorState
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
@@ -28,6 +29,7 @@ import net.neoforged.neoforge.client.event.RenderHandEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import net.neoforged.neoforge.client.event.ViewportEvent
 import net.neoforged.neoforge.common.NeoForge
+import java.util.UUID
 
 @Mod(value = CinematicaStudio.MOD_ID, dist = [Dist.CLIENT])
 class CinematicaStudioClient(modBus: IEventBus) {
@@ -41,10 +43,13 @@ class CinematicaStudioClient(modBus: IEventBus) {
         bus.addListener<ClientTickEvent.Post> {
             Recorder.tick()
             Director.tick()
+            Witnesses.tick()
         }
         bus.addListener<RenderFrameEvent.Pre> {
+            val partialTick = it.partialTick.getGameTimeDeltaPartialTick(true)
             Recorder.frame()
-            Director.frame(it.partialTick.getGameTimeDeltaPartialTick(true))
+            Director.frame(partialTick)
+            Witnesses.frame(partialTick)
         }
         bus.addListener<ViewportEvent.ComputeCameraAngles> { Director.angles(it) }
         bus.addListener<ViewportEvent.ComputeFov> { Director.fov(it) }
@@ -63,6 +68,7 @@ class CinematicaStudioClient(modBus: IEventBus) {
             Recorder.stop()
             Director.stop()
             Stage.remove()
+            Witnesses.clear()
         }
     }
 
@@ -83,6 +89,10 @@ class CinematicaStudioClient(modBus: IEventBus) {
             Recorder.stop()
             Director.stop()
         }
+
+        override fun witness(payload: WitnessPayload) = Witnesses.start(payload)
+
+        override fun witnessEnd(owner: UUID) = Witnesses.end(owner)
     }
 
     private object Overlay : LayeredDraw.Layer {

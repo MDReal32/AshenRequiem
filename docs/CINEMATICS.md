@@ -25,12 +25,13 @@ on `SceneEndEvent`.
 - **Playback:** the player becomes a spectator and the server moves their body along the camera path, so chunks load
   where the camera is. The client shows a stand-in in the player's own skin. Game mode and position are restored at
   the end, and on the next login if the game crashed mid-scene.
+- **Others nearby:** players within 64 blocks of the actor see it play the scene in the watcher's skin (no camera
+  or letterbox), since the watcher's real body is an invisible spectator. It goes away when the watcher is back.
 - **Recorder:** `/cinematica record <name>`. Fly as a spectator and drop keys at a time cursor: `K` camera key from
   your view, `J` actor key where you hover, `O` actor pose, `U` ease, `B` fade, `Del` delete, arrows move the cursor
   or jump between keys, `G` previews, `Enter` saves. `/cinematica stop` leaves. Keys can be rebound in Controls.
 - **Commands:** `/cinematica play <scene> [targets]`, `stop [targets]`, `record <name>`, `list` (op level 2).
-- **Known limits:** only the watching player sees the actor (others see nothing, since the player is a spectator); no
-  overlay text, eyelids, shaders, audio or skip yet. Those are in the target design below.
+- **Known limits:** no overlay text, eyelids, shaders, audio or skip yet. Those are in the target design below.
 
 The rest of this section is the **target design** for later versions.
 

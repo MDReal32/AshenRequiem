@@ -6,12 +6,14 @@ import com.mdreal.cinematica.server.Sessions
 import com.mdreal.cinematica.timeline.Scene
 import com.mdreal.cinematica.timeline.Vec
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.UUIDUtil
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import java.util.UUID
 
 enum class Mode { PLAY, RECORD }
 
@@ -58,6 +60,60 @@ data class StartPayload(
     }
 }
 
+/**
+ * Server to client: another player nearby, [owner], is watching a scene. Show their actor playing it in the world,
+ * [time] ticks in. Fields as in [StartPayload].
+ */
+data class WitnessPayload(
+    val owner: UUID,
+    val scene: Scene,
+    val origin: Vec,
+    val start: Vec,
+    val yaw: Float,
+    val pitch: Float,
+    val time: Int,
+) : CustomPacketPayload {
+    override fun type(): CustomPacketPayload.Type<WitnessPayload> = TYPE
+
+    companion object {
+        val TYPE = CustomPacketPayload.Type<WitnessPayload>(CinematicaStudio.id("witness"))
+        private val SCENE = ByteBufCodecs.fromCodecTrusted(SceneCodecs.SCENE)
+        val STREAM_CODEC: StreamCodec<ByteBuf, WitnessPayload> = StreamCodec.of(
+            { buf, p ->
+                UUIDUtil.STREAM_CODEC.encode(buf, p.owner)
+                SCENE.encode(buf, p.scene)
+                VEC.encode(buf, p.origin)
+                VEC.encode(buf, p.start)
+                ByteBufCodecs.FLOAT.encode(buf, p.yaw)
+                ByteBufCodecs.FLOAT.encode(buf, p.pitch)
+                ByteBufCodecs.VAR_INT.encode(buf, p.time)
+            },
+            { buf ->
+                WitnessPayload(
+                    UUIDUtil.STREAM_CODEC.decode(buf),
+                    SCENE.decode(buf),
+                    VEC.decode(buf),
+                    VEC.decode(buf),
+                    ByteBufCodecs.FLOAT.decode(buf),
+                    ByteBufCodecs.FLOAT.decode(buf),
+                    ByteBufCodecs.VAR_INT.decode(buf)
+                )
+            }
+        )
+    }
+}
+
+/** Server to client: stop showing [owner]'s actor; they are back in the world, or out of sight. */
+data class WitnessEndPayload(val owner: UUID) : CustomPacketPayload {
+    override fun type(): CustomPacketPayload.Type<WitnessEndPayload> = TYPE
+
+    companion object {
+        val TYPE = CustomPacketPayload.Type<WitnessEndPayload>(CinematicaStudio.id("witness_end"))
+        val STREAM_CODEC: StreamCodec<ByteBuf, WitnessEndPayload> =
+            UUIDUtil.STREAM_CODEC.map(::WitnessEndPayload, WitnessEndPayload::owner)
+    }
+}
+
 /** Server to client: the scene or recording is over, give the camera back. */
 object EndPayload : CustomPacketPayload {
     val TYPE = CustomPacketPayload.Type<EndPayload>(CinematicaStudio.id("end"))
@@ -98,6 +154,8 @@ object ClientBridge {
     interface Sink {
         fun start(payload: StartPayload)
         fun end()
+        fun witness(payload: WitnessPayload)
+        fun witnessEnd(owner: UUID)
     }
 
     @Volatile
@@ -105,7 +163,7 @@ object ClientBridge {
 }
 
 object Network {
-    private const val PROTOCOL = "1"
+    private const val PROTOCOL = "2"
 
     fun hook(bus: IEventBus) {
         bus.addListener(::onRegister)
@@ -115,6 +173,10 @@ object Network {
         event.registrar(PROTOCOL)
             .playToClient(StartPayload.TYPE, StartPayload.STREAM_CODEC) { payload, _ -> ClientBridge.sink?.start(payload) }
             .playToClient(EndPayload.TYPE, EndPayload.STREAM_CODEC) { _, _ -> ClientBridge.sink?.end() }
+            .playToClient(WitnessPayload.TYPE, WitnessPayload.STREAM_CODEC) { payload, _ -> ClientBridge.sink?.witness(payload) }
+            .playToClient(WitnessEndPayload.TYPE, WitnessEndPayload.STREAM_CODEC) { payload, _ ->
+                ClientBridge.sink?.witnessEnd(payload.owner)
+            }
             .playToServer(FinishedPayload.TYPE, FinishedPayload.STREAM_CODEC) { _, ctx ->
                 (ctx.player() as? ServerPlayer)?.let(Sessions::onClientFinished)
             }

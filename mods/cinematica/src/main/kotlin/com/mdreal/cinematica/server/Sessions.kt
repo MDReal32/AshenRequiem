@@ -5,6 +5,8 @@ import com.mdreal.cinematica.api.SceneEndEvent
 import com.mdreal.cinematica.network.EndPayload
 import com.mdreal.cinematica.network.Mode
 import com.mdreal.cinematica.network.StartPayload
+import com.mdreal.cinematica.network.WitnessEndPayload
+import com.mdreal.cinematica.network.WitnessPayload
 import com.mdreal.cinematica.scene.Scenes
 import com.mdreal.cinematica.timeline.ActorState
 import com.mdreal.cinematica.timeline.Pose
@@ -14,6 +16,8 @@ import com.mdreal.cinematica.timeline.Timeline
 import com.mdreal.cinematica.timeline.Vec
 import com.mojang.logging.LogUtils
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.Level
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.GameType
@@ -51,15 +55,25 @@ object Sessions {
             AttachmentType.builder(Supplier { RestoreState.NONE }).serialize(RestoreState.CODEC).build()
         }
 
+    /** Players closer than this to a scene's actor see it play out in the world. */
+    private const val WITNESS_RANGE = 64.0
+
+    /** How often, in ticks, the server looks for players who came into or left a scene's range. */
+    private const val WITNESS_CHECK = 10
+
     private class Session(
         val mode: Mode,
         val id: ResourceLocation,
         val scene: Scene,
         val origin: Vec,
         val start: ActorState,
+        val dimension: ResourceKey<Level>,
     ) {
         val timeline = Timeline(scene, start)
         var time = 0
+
+        /** Other players currently shown this scene's actor. */
+        val witnesses = HashSet<UUID>()
     }
 
     private val active = HashMap<UUID, Session>()
@@ -110,7 +124,10 @@ object Sessions {
 
     private fun begin(player: ServerPlayer, mode: Mode, id: ResourceLocation, scene: Scene) {
         // A scene started while another runs replaces it but keeps the first restore state.
-        active.remove(player.uuid)?.let { fireEnd(player, it, false) }
+        active.remove(player.uuid)?.let {
+            endWitnesses(player, it)
+            fireEnd(player, it, false)
+        }
         if (!player.hasData(RESTORE)) player.setData(RESTORE, RestoreState.of(player))
         val restore = player.getData(RESTORE)
 
@@ -119,7 +136,7 @@ object Sessions {
         val start = ActorState(feet - origin, restore.yaw, Pose(head = Rot(restore.pitch, 0f, 0f)), Rot.ZERO)
 
         player.setGameMode(GameType.SPECTATOR)
-        active[player.uuid] = Session(mode, id, scene, origin, start)
+        active[player.uuid] = Session(mode, id, scene, origin, start, restore.dimension)
         PacketDistributor.sendToPlayer(
             player,
             StartPayload(mode, id.toString(), scene, origin, start.pos, restore.yaw, restore.pitch)
@@ -141,8 +158,43 @@ object Sessions {
                 val z = session.origin.z + camera.pos.z
                 if (player.distanceToSqr(x, y, z) > 0.25) player.connection.teleport(x, y, z, player.yRot, player.xRot)
             }
+            if (session.time % WITNESS_CHECK == 1) updateWitnesses(player, session)
             if (session.time > session.scene.end + TIMEOUT) finish(player, true)
         }
+    }
+
+    /**
+     * The watching player is an invisible spectator, so everyone else nearby is shown their actor instead: lying,
+     * waking, standing up where the scene says. Players are added as they come close and dropped as they leave.
+     */
+    private fun updateWitnesses(owner: ServerPlayer, session: Session) {
+        if (!session.scene.showActor || session.time > session.scene.length) return
+        val actor = session.timeline.actor(session.time.toDouble()).pos + session.origin
+        val players = owner.server.playerList
+        session.witnesses.removeIf { players.getPlayer(it) == null }
+        players.players.forEach { other ->
+            if (other === owner) return@forEach
+            val near = other.level().dimension() == session.dimension &&
+                other.distanceToSqr(actor.x, actor.y, actor.z) < WITNESS_RANGE * WITNESS_RANGE
+            val shown = other.uuid in session.witnesses
+            if (near && !shown) {
+                session.witnesses += other.uuid
+                val start = session.start
+                PacketDistributor.sendToPlayer(
+                    other,
+                    WitnessPayload(owner.uuid, session.scene, session.origin, start.pos, start.yaw, start.pose.head.x, session.time)
+                )
+            } else if (!near && shown) {
+                session.witnesses -= other.uuid
+                PacketDistributor.sendToPlayer(other, WitnessEndPayload(owner.uuid))
+            }
+        }
+    }
+
+    private fun endWitnesses(owner: ServerPlayer, session: Session) {
+        val players = owner.server.playerList
+        session.witnesses.forEach { uuid -> players.getPlayer(uuid)?.let { PacketDistributor.sendToPlayer(it, WitnessEndPayload(owner.uuid)) } }
+        session.witnesses.clear()
     }
 
     /** Ends the player's session, if any. A completed scene with an actor leaves the player where the actor ended. */
@@ -155,6 +207,7 @@ object Sessions {
         } else {
             null
         }
+        endWitnesses(player, session)
         restore(player, target)
         PacketDistributor.sendToPlayer(player, EndPayload)
         fireEnd(player, session, completed)
