@@ -38,6 +38,10 @@ object SceneCodecs {
             ROT.optionalFieldOf("left_arm", Rot.ZERO).forGetter(Pose::leftArm),
             ROT.optionalFieldOf("right_leg", Rot.ZERO).forGetter(Pose::rightLeg),
             ROT.optionalFieldOf("left_leg", Rot.ZERO).forGetter(Pose::leftLeg),
+            ROT.optionalFieldOf("right_elbow", Rot.ZERO).forGetter(Pose::rightElbow),
+            ROT.optionalFieldOf("left_elbow", Rot.ZERO).forGetter(Pose::leftElbow),
+            ROT.optionalFieldOf("right_knee", Rot.ZERO).forGetter(Pose::rightKnee),
+            ROT.optionalFieldOf("left_knee", Rot.ZERO).forGetter(Pose::leftKnee),
         ).apply(i, ::Pose)
     }
 

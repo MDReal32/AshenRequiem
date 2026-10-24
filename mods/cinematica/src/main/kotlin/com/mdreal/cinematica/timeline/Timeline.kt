@@ -53,7 +53,11 @@ enum class Ease(val serialName: String) {
     }
 }
 
-/** The six bones of the player model, in degrees. `head` is relative to the body, like an armor stand. */
+/**
+ * The bones of the actor, in degrees. `head` is relative to the body, like an armor stand. Arms and legs bend in the
+ * middle: elbows and knees turn the lower half relative to the upper one (negative x bends an elbow forward, positive x
+ * bends a knee back).
+ */
 data class Pose(
     val head: Rot = Rot.ZERO,
     val body: Rot = Rot.ZERO,
@@ -61,17 +65,22 @@ data class Pose(
     val leftArm: Rot = Rot.ZERO,
     val rightLeg: Rot = Rot.ZERO,
     val leftLeg: Rot = Rot.ZERO,
+    val rightElbow: Rot = Rot.ZERO,
+    val leftElbow: Rot = Rot.ZERO,
+    val rightKnee: Rot = Rot.ZERO,
+    val leftKnee: Rot = Rot.ZERO,
 ) {
-    /** The 18 bone angles in a fixed order, for smooth interpolation. */
+    /** All bone angles in a fixed order, for smooth interpolation. */
     fun channels(): List<Float> =
-        listOf(head, body, rightArm, leftArm, rightLeg, leftLeg).flatMap { listOf(it.x, it.y, it.z) }
+        listOf(head, body, rightArm, leftArm, rightLeg, leftLeg, rightElbow, leftElbow, rightKnee, leftKnee)
+            .flatMap { listOf(it.x, it.y, it.z) }
 
     companion object {
         val STANDING = Pose()
 
         fun fromChannels(values: List<Float>, offset: Int = 0): Pose {
             fun rot(bone: Int) = (offset + bone * 3).let { Rot(values[it], values[it + 1], values[it + 2]) }
-            return Pose(rot(0), rot(1), rot(2), rot(3), rot(4), rot(5))
+            return Pose(rot(0), rot(1), rot(2), rot(3), rot(4), rot(5), rot(6), rot(7), rot(8), rot(9))
         }
     }
 }
@@ -161,7 +170,7 @@ class Timeline(val scene: Scene, private val start: ActorState) {
         )
     }
 
-    /** Per-channel values of every actor key: yaw, root x/y/z, then the pose's 18 bone angles. */
+    /** Per-channel values of every actor key: yaw, root x/y/z, then the pose's bone angles. */
     private val actorChannels: List<List<Double>> = run {
         val rows = actorKeys.map { listOf(it.yaw, it.root.x, it.root.y, it.root.z) + it.pose.channels() }
         if (rows.isEmpty()) emptyList() else rows[0].indices.map { c -> rows.map { it[c].toDouble() } }

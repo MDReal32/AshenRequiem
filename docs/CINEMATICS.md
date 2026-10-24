@@ -15,7 +15,7 @@ on `SceneEndEvent`.
 - **Scenes** are JSON: datapack `data/<ns>/cinematica/scenes/<path>.json` (id `<ns>:<path>`) or recordings in
   `<server dir>/cinematica/scenes/<name>.json` (id `local:<name>`, or just `<name>` in commands). Recordings are not a
   datapack: to ship one (C01), copy the file into the Ashen Requiem datapack.
-- **Tracks:** `camera` (eye position, yaw, pitch, roll, fov), `actor` (feet position, yaw, six bones in `pose`, whole
+- **Tracks:** `camera` (eye position, yaw, pitch, roll, fov), `actor` (feet position, yaw, six bones plus elbows and knees in `pose`, whole
   body tilt in `root`), `fade` (black, 0..1). Each key has `t` in ticks and an optional `ease` for the segment it
   starts (`linear`, `in_sine`, `out_sine`, `in_out_sine`, `in_cubic`, `out_cubic`, `in_out_cubic`). Paths are smooth
   (Catmull-Rom), and yaw always turns the short way.

@@ -39,7 +39,7 @@ object Recorder {
             rightArm = Rot(-36f, 0f, 0f), leftArm = Rot(-36f, 0f, 0f),
             rightLeg = Rot(-81f, 18f, 4f), leftLeg = Rot(-81f, -18f, -4f)
         ),
-        "kneeling" to Pose(rightLeg = Rot(-90f, 0f, 0f), leftLeg = Rot(-10f, 0f, 0f)),
+        "kneeling" to Pose(rightLeg = Rot(-90f, 0f, 0f), rightKnee = Rot(90f, 0f, 0f), leftKnee = Rot(90f, 0f, 0f)),
         "lying on back" to Pose.STANDING,
         "lying face down" to Pose.STANDING,
     )
@@ -55,6 +55,7 @@ object Recorder {
     private fun dropOf(preset: String) = when (preset) {
         "lying on back", "lying face down" -> 0.58
         "sitting" -> 0.6
+        "kneeling" -> 0.35
         else -> 0.0
     }
 

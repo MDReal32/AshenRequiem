@@ -116,6 +116,16 @@ class TimelineTest {
     }
 
     @Test
+    fun `elbows and knees animate like the other bones`() {
+        val bent = Pose(rightElbow = Rot(-100f, 0f, 0f), leftKnee = Rot(80f, 0f, 0f))
+        assertEquals(bent, Pose.fromChannels(bent.channels()))
+        val actor = listOf(ActorKey(0, Vec.ZERO, 0f), ActorKey(20, Vec.ZERO, 0f, bent))
+        val half = Timeline(Scene(emptyList(), actor), start).actor(10.0).pose
+        close(-50.0, half.rightElbow.x.toDouble(), 1e-3)
+        close(40.0, half.leftKnee.x.toDouble(), 1e-3)
+    }
+
+    @Test
     fun `fade interpolates and holds at the ends`() {
         val scene = Scene(emptyList(), fade = listOf(FadeKey(0, 1f), FadeKey(20, 0f)))
         val timeline = Timeline(scene, start)
