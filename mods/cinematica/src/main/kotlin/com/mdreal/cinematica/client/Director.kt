@@ -190,6 +190,16 @@ object Director {
         if (Keys.SNAPSHOT.presses() > 0) snapshot()
     }
 
+    /** A left click on the playing scene pauses it, like clicking a video. Returns whether the click was used. */
+    fun clickToPause(): Boolean {
+        val run = run ?: return false
+        val mc = Minecraft.getInstance()
+        // Not when the click only gives the mouse back to the game window.
+        if (run.preview || mc.screen != null || !mc.mouseHandler.isMouseGrabbed) return false
+        togglePause()
+        return true
+    }
+
     fun togglePause() {
         val run = run ?: return
         setPaused(run, !paused)

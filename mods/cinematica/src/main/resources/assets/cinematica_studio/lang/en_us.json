@@ -10,7 +10,7 @@
   "cinematica_studio.save.failed": "Couldn't save the scene: %s",
   "cinematica_studio.save.too_large": "Scene has %s keys; the limit is %s",
   "cinematica_studio.recorder.no_camera": "Place at least one camera key first (K)",
-  "cinematica_studio.player.hint": "%s pause    %s %s 1s    %s snapshot",
+  "cinematica_studio.player.hint": "click / %s pause    %s %s 1s    %s snapshot",
   "cinematica_studio.player.hint_paused": "click / %s play    drag the bar to seek    %s %s 1s  (Shift: 1 tick)    %s snapshot",
   "cinematica_studio.player.title": "Scene paused",
   "cinematica_studio.player.snapshot": "Snapshot %s saved: %ss (tick %s)",
