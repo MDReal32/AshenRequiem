@@ -2,6 +2,7 @@ package com.mdreal.cinematica.server
 
 import com.mdreal.cinematica.CinematicaStudio
 import com.mdreal.cinematica.api.SceneEndEvent
+import com.mdreal.cinematica.api.SceneStartEvent
 import com.mdreal.cinematica.network.EndPayload
 import com.mdreal.cinematica.network.Mode
 import com.mdreal.cinematica.network.StartPayload
@@ -155,6 +156,7 @@ object Sessions {
             player,
             StartPayload(mode, id.toString(), scene, origin, start.pos, restore.yaw, restore.pitch)
         )
+        if (mode == Mode.PLAY) NeoForge.EVENT_BUS.post(SceneStartEvent(player, id))
     }
 
     /**

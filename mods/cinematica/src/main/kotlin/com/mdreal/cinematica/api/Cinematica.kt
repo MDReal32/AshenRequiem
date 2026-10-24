@@ -33,6 +33,9 @@ object Cinematica {
     fun sceneIds(server: MinecraftServer): List<ResourceLocation> = Scenes.ids(server)
 }
 
+/** Posted on `NeoForge.EVENT_BUS` when a scene starts playing for a player (not for the recorder). */
+class SceneStartEvent(val player: ServerPlayer, val sceneId: ResourceLocation) : Event()
+
 /**
  * Posted on `NeoForge.EVENT_BUS` when a scene ends for a player, after they have their game mode and position back.
  * [completed] is false when it was stopped, replaced by another scene or the player left.

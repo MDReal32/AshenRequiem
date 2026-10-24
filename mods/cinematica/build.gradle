@@ -24,7 +24,15 @@ neoForge {
     }
 }
 
+repositories {
+    maven { url = 'https://maven.latvian.dev/releases'; content { includeGroup 'dev.latvian.mods' } }
+}
+
 dependencies {
+    // KubeJS is optional; with it installed, scripts get the Cinematica binding and CinematicaEvents.
+    compileOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
+    compileOnly "dev.latvian.mods:rhino:${rhino_version}"
+
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     // Minecraft's own versions, so the scene codecs can be tested without starting the game
     testImplementation 'com.mojang:datafixerupper:8.0.16'
