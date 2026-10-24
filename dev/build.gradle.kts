@@ -48,4 +48,11 @@ val syncServerMods by tasks.registering(Sync::class) {
     into("server/mods")
 }
 
-tasks.matching { it.name == "runServer" }.configureEach { dependsOn(syncServerMods) }
+// The server runs the pack's server scripts and KubeJS data too (build them first with `yarn build` in modpack).
+val syncServerScripts by tasks.registering(Sync::class) {
+    from("pack/kubejs") { include("server_scripts/**", "startup_scripts/**", "data/**") }
+    into("server/kubejs")
+    preserve { exclude("server_scripts/**", "startup_scripts/**", "data/**") }
+}
+
+tasks.matching { it.name == "runServer" }.configureEach { dependsOn(syncServerMods, syncServerScripts) }
