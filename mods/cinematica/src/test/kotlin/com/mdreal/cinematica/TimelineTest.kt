@@ -5,6 +5,7 @@ import com.mdreal.cinematica.timeline.ActorState
 import com.mdreal.cinematica.timeline.CameraKey
 import com.mdreal.cinematica.timeline.Ease
 import com.mdreal.cinematica.timeline.FadeKey
+import com.mdreal.cinematica.timeline.FogKey
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
 import com.mdreal.cinematica.timeline.Scene
@@ -147,6 +148,15 @@ class TimelineTest {
         close(1.0, timeline.fade(-5.0).toDouble())
         close(0.5, timeline.fade(10.0).toDouble())
         close(0.0, timeline.fade(30.0).toDouble())
+    }
+
+    @Test
+    fun `fog leaves the world alone without keys and scales between them`() {
+        assertNull(Timeline(Scene(emptyList()), start).fog(10.0))
+        val timeline = Timeline(Scene(emptyList(), fog = listOf(FogKey(0, 3f), FogKey(20, 1f))), start)
+        close(3.0, timeline.fog(-5.0)!!.toDouble())
+        close(2.0, timeline.fog(10.0)!!.toDouble())
+        close(1.0, timeline.fog(30.0)!!.toDouble())
     }
 
     @Test

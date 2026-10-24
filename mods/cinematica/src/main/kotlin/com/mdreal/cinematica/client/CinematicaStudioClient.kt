@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.LayeredDraw
 import net.neoforged.api.distmarker.Dist
+import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent
@@ -24,7 +25,7 @@ import net.neoforged.neoforge.client.event.InputEvent
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent
 import net.neoforged.neoforge.client.event.RenderFrameEvent
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent
+import net.neoforged.neoforge.client.event.RenderGuiEvent
 import net.neoforged.neoforge.client.event.RenderHandEvent
 import net.neoforged.neoforge.client.event.RenderPlayerEvent
 import net.neoforged.neoforge.client.event.ScreenEvent
@@ -58,7 +59,15 @@ class CinematicaStudioClient(modBus: IEventBus) {
         // While the camera is elsewhere, the real (spectator) player must not show up or get in the way.
         bus.addListener<RenderPlayerEvent.Pre> { if (Director.active && it.entity === Minecraft.getInstance().player) it.isCanceled = true }
         bus.addListener<RenderHandEvent> { if (Director.active) it.isCanceled = true }
-        bus.addListener<RenderGuiLayerEvent.Pre> { if (Director.active && it.name != Overlay.ID) it.isCanceled = true }
+        // During a scene nothing of the HUD is drawn (other mods' minimaps included), only the scene's own overlay.
+        bus.addListener(EventPriority.HIGHEST, false, RenderGuiEvent.Pre::class.java) {
+            if (Director.active) {
+                Director.overlay(it.guiGraphics, it.partialTick.getGameTimeDeltaPartialTick(true))
+                it.isCanceled = true
+            }
+        }
+        // After the world's own fog, which this scales.
+        bus.addListener(EventPriority.LOWEST, true, ViewportEvent.RenderFog::class.java) { Director.fog(it) }
         bus.addListener<InputEvent.InteractionKeyMappingTriggered> {
             if (Director.active) {
                 it.setSwingHand(false)
@@ -102,8 +111,6 @@ class CinematicaStudioClient(modBus: IEventBus) {
         val ID = CinematicaStudio.id("overlay")
 
         override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
-            val partialTick = deltaTracker.getGameTimeDeltaPartialTick(true)
-            Director.overlay(graphics, partialTick)
             if (Recorder.active && !Director.active) Recorder.hud(graphics)
         }
     }

@@ -19,6 +19,8 @@ import net.minecraft.client.CameraType
 import net.minecraft.client.Minecraft
 import net.minecraft.client.Screenshot
 import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.renderer.FogRenderer
+import net.minecraft.world.level.material.FogType
 import net.minecraft.client.gui.screens.DeathScreen
 import net.minecraft.client.gui.screens.DisconnectedScreen
 import net.minecraft.client.gui.screens.GenericMessageScreen
@@ -335,6 +337,20 @@ object Director {
         cameraState?.let { event.roll = it.roll }
     }
 
+    /**
+     * Pushes the terrain fog out (or in) by the scene's fog track, on top of whatever the world set, so a camera far
+     * from the player can see the land. Never past the render distance, where there is nothing left to show.
+     */
+    fun fog(event: ViewportEvent.RenderFog) {
+        val run = run ?: return
+        if (event.mode != FogRenderer.FogMode.FOG_TERRAIN || event.type != FogType.NONE) return
+        val scale = run.timeline.fog(lastTime) ?: return
+        val far = min(event.farPlaneDistance * scale, Minecraft.getInstance().gameRenderer.renderDistance)
+        event.nearPlaneDistance = min(event.nearPlaneDistance * scale, far * 0.8f)
+        event.farPlaneDistance = far
+        event.isCanceled = true
+    }
+
     fun fov(event: ViewportEvent.ComputeFov) {
         cameraState?.fov?.let { event.fov = it.toDouble() }
     }
@@ -405,7 +421,7 @@ object Director {
             Keys.PLAY_PAUSE.label(), Keys.STEP_BACK.label(), Keys.STEP_FORWARD.label(), Keys.SNAPSHOT.label()
         )
         val hintX = right - font.width(hint)
-        if (hintX > x + 12) graphics.drawString(font, hint, hintX, row, c(0xAAAAAA))
+        graphics.drawString(font, hint, hintX, if (hintX > x + 12) row else y - 13, c(0xAAAAAA))
     }
 
     private fun trackY(height: Int) = height - 25

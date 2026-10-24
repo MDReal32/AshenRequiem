@@ -6,6 +6,7 @@ import com.mdreal.cinematica.timeline.ActorKey
 import com.mdreal.cinematica.timeline.CameraKey
 import com.mdreal.cinematica.timeline.Ease
 import com.mdreal.cinematica.timeline.FadeKey
+import com.mdreal.cinematica.timeline.FogKey
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
 import com.mdreal.cinematica.timeline.Scene
@@ -30,6 +31,7 @@ class SceneCodecsTest {
             ),
             actor = listOf(ActorKey(0, Vec.ZERO, 45f, Pose(rightArm = Rot(-90f, 0f, 0f), rightElbow = Rot(-60f, 0f, 0f), leftKnee = Rot(45f, 0f, 0f)), Rot(90f, 0f, 0f), Ease.OUT_CUBIC)),
             fade = listOf(FadeKey(0, 1f), FadeKey(20, 0f, Ease.IN_SINE)),
+            fog = listOf(FogKey(0, 3f), FogKey(30, 1f, Ease.IN_OUT_SINE)),
             duration = 60,
             handoff = 30,
             absolute = true,

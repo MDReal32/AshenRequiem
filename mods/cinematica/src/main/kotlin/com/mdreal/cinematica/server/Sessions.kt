@@ -116,7 +116,7 @@ object Sessions {
 
     fun onSave(player: ServerPlayer, scene: Scene) {
         val session = active[player.uuid]?.takeIf { it.mode == Mode.RECORD } ?: return
-        val keys = scene.camera.size + scene.actor.size + scene.fade.size
+        val keys = scene.camera.size + scene.actor.size + scene.fade.size + scene.fog.size
         if (keys > MAX_KEYS) {
             player.sendSystemMessage(Component.translatable("cinematica_studio.save.too_large", keys, MAX_KEYS))
             return

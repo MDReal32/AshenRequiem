@@ -4,6 +4,7 @@ import com.mdreal.cinematica.timeline.ActorKey
 import com.mdreal.cinematica.timeline.CameraKey
 import com.mdreal.cinematica.timeline.Ease
 import com.mdreal.cinematica.timeline.FadeKey
+import com.mdreal.cinematica.timeline.FogKey
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
 import com.mdreal.cinematica.timeline.Scene
@@ -76,18 +77,27 @@ object SceneCodecs {
         ).apply(i, ::FadeKey)
     }
 
+    val FOG_KEY: Codec<FogKey> = RecordCodecBuilder.create { i ->
+        i.group(
+            Codec.INT.fieldOf("t").forGetter(FogKey::t),
+            Codec.floatRange(0.05f, 16f).fieldOf("scale").forGetter(FogKey::scale),
+            EASE.optionalFieldOf("ease", Ease.LINEAR).forGetter(FogKey::ease),
+        ).apply(i, ::FogKey)
+    }
+
     val SCENE: Codec<Scene> = RecordCodecBuilder.create { i ->
         i.group(
             CAMERA_KEY.listOf().optionalFieldOf("camera", emptyList()).forGetter(Scene::camera),
             ACTOR_KEY.listOf().optionalFieldOf("actor", emptyList()).forGetter(Scene::actor),
             FADE_KEY.listOf().optionalFieldOf("fade", emptyList()).forGetter(Scene::fade),
+            FOG_KEY.listOf().optionalFieldOf("fog", emptyList()).forGetter(Scene::fog),
             Codec.intRange(0, Int.MAX_VALUE).optionalFieldOf("duration").forGetter { Optional.ofNullable(it.duration) },
             Codec.intRange(0, 1200).optionalFieldOf("handoff", 20).forGetter(Scene::handoff),
             Codec.BOOL.optionalFieldOf("absolute", false).forGetter(Scene::absolute),
             Codec.BOOL.optionalFieldOf("letterbox", true).forGetter(Scene::letterbox),
             Codec.BOOL.optionalFieldOf("show_actor", true).forGetter(Scene::showActor),
-        ).apply(i) { camera, actor, fade, duration, handoff, absolute, letterbox, showActor ->
-            Scene(camera, actor, fade, duration.orElse(null), handoff, absolute, letterbox, showActor)
+        ).apply(i) { camera, actor, fade, fog, duration, handoff, absolute, letterbox, showActor ->
+            Scene(camera, actor, fade, fog, duration.orElse(null), handoff, absolute, letterbox, showActor)
         }
     }
 }

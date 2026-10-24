@@ -111,10 +111,14 @@ data class ActorKey(
 
 data class FadeKey(val t: Int, val alpha: Float, val ease: Ease = Ease.LINEAR)
 
+/** How far the fog sits, as a multiple of what the world sets there: 1 is the world's own, 3 three times as far. */
+data class FogKey(val t: Int, val scale: Float, val ease: Ease = Ease.LINEAR)
+
 data class Scene(
     val camera: List<CameraKey>,
     val actor: List<ActorKey> = emptyList(),
     val fade: List<FadeKey> = emptyList(),
+    val fog: List<FogKey> = emptyList(),
     /** Scene length in ticks; defaults to the last keyframe of any track. */
     val duration: Int? = null,
     /** Ticks spent gliding from the last camera keyframe into the actor's eyes before control returns. */
@@ -125,7 +129,7 @@ data class Scene(
     val showActor: Boolean = true,
 ) {
     val length: Int
-        get() = duration ?: maxOf(camera.lastOrNull()?.t ?: 0, actor.lastOrNull()?.t ?: 0, fade.lastOrNull()?.t ?: 0)
+        get() = duration ?: maxOf(camera.lastOrNull()?.t ?: 0, actor.lastOrNull()?.t ?: 0, fade.lastOrNull()?.t ?: 0, fog.lastOrNull()?.t ?: 0)
 
     /** When the player gets control back. */
     val end: Int get() = length + handoff
@@ -154,6 +158,7 @@ class Timeline(val scene: Scene, private val start: ActorState) {
     private val cameraKeys = scene.camera.sortedBy { it.t }.let(::unwrapCamera)
     private val actorKeys = scene.actor.sortedBy { it.t }.let(::unwrapActor)
     private val fadeKeys = scene.fade.sortedBy { it.t }
+    private val fogKeys = scene.fog.sortedBy { it.t }
 
     fun actor(time: Double): ActorState {
         if (actorKeys.isEmpty()) return start
@@ -223,12 +228,16 @@ class Timeline(val scene: Scene, private val start: ActorState) {
     }
 
     /** Black-screen opacity, 0..1. Before the first fade key the first value holds. */
-    fun fade(time: Double): Float {
-        if (fadeKeys.isEmpty()) return 0f
-        val (i, u) = locate(fadeKeys.map { it.t }, time)
-            ?: return if (time < fadeKeys.first().t) fadeKeys.first().alpha else fadeKeys.last().alpha
-        val a = fadeKeys[i]
-        return lerp(a.alpha, fadeKeys[i + 1].alpha, a.ease.apply(u))
+    fun fade(time: Double): Float =
+        if (fadeKeys.isEmpty()) 0f else track(fadeKeys, time, FadeKey::t, FadeKey::alpha, FadeKey::ease)
+
+    /** Fog distance as a multiple of the world's, or null to leave the world's fog alone. Holds like [fade]. */
+    fun fog(time: Double): Float? =
+        if (fogKeys.isEmpty()) null else track(fogKeys, time, FogKey::t, FogKey::scale, FogKey::ease)
+
+    private fun <K> track(keys: List<K>, time: Double, t: (K) -> Int, value: (K) -> Float, ease: (K) -> Ease): Float {
+        val (i, u) = locate(keys.map(t), time) ?: return value(if (time < t(keys.first())) keys.first() else keys.last())
+        return lerp(value(keys[i]), value(keys[i + 1]), ease(keys[i]).apply(u))
     }
 
     private fun CameraKey.state() = CameraState(pos, yaw, pitch, roll, fov)
