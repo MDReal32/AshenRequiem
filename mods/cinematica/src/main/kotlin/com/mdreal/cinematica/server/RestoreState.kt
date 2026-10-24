@@ -18,6 +18,8 @@ data class RestoreState(
     val pos: Vec3,
     val yaw: Float,
     val pitch: Float,
+    /** Spectators always fly, and going back to creative keeps that, so whether they were flying is restored too. */
+    val flying: Boolean = false,
 ) {
     companion object {
         val CODEC: Codec<RestoreState> = RecordCodecBuilder.create { i ->
@@ -27,6 +29,7 @@ data class RestoreState(
                 Vec3.CODEC.fieldOf("pos").forGetter(RestoreState::pos),
                 Codec.FLOAT.fieldOf("yaw").forGetter(RestoreState::yaw),
                 Codec.FLOAT.fieldOf("pitch").forGetter(RestoreState::pitch),
+                Codec.BOOL.optionalFieldOf("flying", false).forGetter(RestoreState::flying),
             ).apply(i, ::RestoreState)
         }
 
@@ -38,7 +41,8 @@ data class RestoreState(
             player.level().dimension(),
             player.position(),
             player.yRot,
-            player.xRot
+            player.xRot,
+            player.abilities.flying
         )
     }
 }

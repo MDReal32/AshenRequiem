@@ -228,6 +228,8 @@ object Sessions {
         val place = target ?: Placement(state.pos, state.yaw, state.pitch)
         player.teleportTo(level, place.pos.x, place.pos.y, place.pos.z, place.yaw, place.pitch)
         player.setGameMode(state.gameMode)
+        player.abilities.flying = state.flying && player.abilities.mayfly
+        player.onUpdateAbilities()
         player.resetFallDistance()
     }
 }
