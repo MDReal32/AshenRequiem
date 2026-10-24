@@ -24,7 +24,7 @@ neoForge {
                 programArguments.addAll("--quickPlayMultiplayer", it)
             }
         }
-        // Headless test server. Shared mods (Kotlin for Forge, KubeJS, ...) must be copied into server/mods.
+        // Headless test server. Its mods come from the client pack, see syncServerMods.
         create("server") {
             server()
             gameDirectory = file("server")
@@ -32,3 +32,20 @@ neoForge {
         }
     }
 }
+
+// Mods that only run on the client (file names start with these). Everything else in pack/mods the server needs too.
+val clientOnlyMods = listOf(
+    "BadOptimizations", "better-advanced-tooltips", "configured", "Controlling", "darkmodeeverywhere", "gpumemleakfix",
+    "jmi-", "JustEnoughResources", "MouseTweaks", "ProbeJS", "Searchables", "sodium",
+)
+
+// The server always runs the client pack's shared mods: added, updated and removed ones alike.
+val syncServerMods by tasks.registering(Sync::class) {
+    from("pack/mods") {
+        include("*.jar")
+        exclude(clientOnlyMods.map { "$it*" })
+    }
+    into("server/mods")
+}
+
+tasks.matching { it.name == "runServer" }.configureEach { dependsOn(syncServerMods) }
