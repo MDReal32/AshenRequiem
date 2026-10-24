@@ -209,6 +209,20 @@ class TimelineTest {
     }
 
     @Test
+    fun `keys that follow the land don't climb a hill only the fading keys after them fly over`() {
+        // a valley 20 down under the following keys, the land back up at the origin's height under the fading ones
+        // after key 4 it comes down from 30 over the land to 2 over the origin, the weight going as it does
+        val scene = Scene((0..8).map { i ->
+            val down = ((i - 4) / 4.0).coerceAtLeast(0.0)
+            CameraKey(i * 5, Vec(0.0, 30.0 - 28.0 * down, 40.0 - i * 5), 0f, 0f, ground = (1 - down).toFloat())
+        })
+        val lifted = scene.onGround { if (it.t <= 20) -20.0 else 0.0 }.camera.map { it.pos.y }
+        // the last following key stays 30 over the valley, and from there the fade only comes down
+        close(10.0, lifted[4])
+        assertTrue(lifted.zipWithNext().drop(4).all { (a, b) -> b <= a + 1e-9 }, "climbed after the fade began: $lifted")
+    }
+
+    @Test
     fun `an empty camera track has no camera`() {
         assertNull(Timeline(Scene(emptyList()), start).camera(0.0))
     }

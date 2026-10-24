@@ -152,18 +152,15 @@ data class Scene(
      *
      * Where the weight is fading, the part that still counts is from the land where it was last full, so a valley or
      * hill under the fade doesn't bend the path. Such a key is still held [CLEARANCE] above the land under it.
+     * A key that follows the land fully only looks at the land under the keys that do too, so it doesn't climb a hill
+     * ahead that the camera will fly over by then on its own heights.
      */
     fun onGround(groundAt: (CameraKey) -> Double): Scene {
         if (!grounded) return this
         val keys = camera.sortedBy { it.t }
         val raw = keys.map(groundAt)
-        fun near(i: Int) = keys.indices.filter { abs(keys[it].t - keys[i].t) <= GROUND_REACH }
-        // Every key within reach of a high point lifts to it, then a bell curve over the same reach rounds that off.
-        val high = keys.indices.map { i -> near(i).maxOf { raw[it] } }
-        val smooth = keys.indices.map { i ->
-            val weights = near(i).associateWith { j -> (keys[j].t - keys[i].t).toDouble().let { exp(-it * it / (2 * GROUND_SIGMA * GROUND_SIGMA)) } }
-            weights.entries.sumOf { (j, w) -> high[j] * w } / weights.values.sum()
-        }
+        val under = smoothGround(keys, raw, keys.indices.toList())
+        val follow = smoothGround(keys, raw, keys.indices.filter { keys[it].ground >= 1f })
         var held: Double? = null
         return copy(camera = keys.mapIndexed { i, key ->
             if (key.ground == 0f) {
@@ -171,13 +168,26 @@ data class Scene(
                 return@mapIndexed key
             }
             val y = if (key.ground >= 1f) {
-                held = smooth[i]
-                key.pos.y + smooth[i]
+                held = follow[i]
+                key.pos.y + follow[i]
             } else {
-                maxOf(key.pos.y + (held ?: smooth[i]) * key.ground, smooth[i] + CLEARANCE)
+                maxOf(key.pos.y + (held ?: under[i]) * key.ground, under[i] + CLEARANCE)
             }
             key.copy(pos = Vec(key.pos.x, y, key.pos.z), ground = 0f)
         })
+    }
+
+    /**
+     * The land under each key, smoothed over the keys [among] within reach: every key within reach of a high point lifts
+     * to it, then a bell curve over the same reach rounds that off. A key among them never comes out below its own land.
+     */
+    private fun smoothGround(keys: List<CameraKey>, raw: List<Double>, among: List<Int>): List<Double> {
+        fun near(i: Int) = among.filter { abs(keys[it].t - keys[i].t) <= GROUND_REACH }
+        val high = keys.indices.map { i -> near(i).maxOfOrNull { raw[it] } ?: raw[i] }
+        return keys.indices.map { i ->
+            val weights = near(i).associateWith { j -> (keys[j].t - keys[i].t).toDouble().let { exp(-it * it / (2 * GROUND_SIGMA * GROUND_SIGMA)) } }
+            if (weights.isEmpty()) high[i] else weights.entries.sumOf { (j, w) -> high[j] * w } / weights.values.sum()
+        }
     }
 
     companion object {
