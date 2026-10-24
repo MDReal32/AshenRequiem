@@ -4,6 +4,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 // Pure math, no Minecraft types: everything here is unit tested.
 
@@ -11,6 +12,7 @@ data class Vec(val x: Double, val y: Double, val z: Double) {
     operator fun plus(o: Vec) = Vec(x + o.x, y + o.y, z + o.z)
     operator fun minus(o: Vec) = Vec(x - o.x, y - o.y, z - o.z)
     operator fun times(s: Double) = Vec(x * s, y * s, z * s)
+    fun distanceTo(o: Vec) = sqrt((x - o.x) * (x - o.x) + (y - o.y) * (y - o.y) + (z - o.z) * (z - o.z))
 
     companion object {
         val ZERO = Vec(0.0, 0.0, 0.0)
@@ -60,13 +62,17 @@ data class Pose(
     val rightLeg: Rot = Rot.ZERO,
     val leftLeg: Rot = Rot.ZERO,
 ) {
-    fun lerp(o: Pose, t: Double) = Pose(
-        lerp(head, o.head, t), lerp(body, o.body, t), lerp(rightArm, o.rightArm, t),
-        lerp(leftArm, o.leftArm, t), lerp(rightLeg, o.rightLeg, t), lerp(leftLeg, o.leftLeg, t)
-    )
+    /** The 18 bone angles in a fixed order, for smooth interpolation. */
+    fun channels(): List<Float> =
+        listOf(head, body, rightArm, leftArm, rightLeg, leftLeg).flatMap { listOf(it.x, it.y, it.z) }
 
     companion object {
         val STANDING = Pose()
+
+        fun fromChannels(values: List<Float>, offset: Int = 0): Pose {
+            fun rot(bone: Int) = (offset + bone * 3).let { Rot(values[it], values[it + 1], values[it + 2]) }
+            return Pose(rot(0), rot(1), rot(2), rot(3), rot(4), rot(5))
+        }
     }
 }
 
@@ -81,7 +87,10 @@ data class CameraKey(
     val ease: Ease = Ease.LINEAR,
 )
 
-/** An actor keyframe. [pos] is the actor's feet; [yaw] turns the whole body, [root] tilts it (e.g. lying down). */
+/**
+ * An actor keyframe. [pos] is where the actor's feet are when standing; [yaw] turns the whole body, [root] tilts it
+ * around the hips (e.g. `[90, 0, 0]` lies on the back, about 0.6 lower than standing so the back touches the ground).
+ */
 data class ActorKey(
     val t: Int,
     val pos: Vec,
@@ -122,6 +131,9 @@ data class ActorState(val pos: Vec, val yaw: Float, val pose: Pose, val root: Ro
 
     companion object {
         const val EYE_HEIGHT = 1.62
+
+        /** [ActorKey.root] tilts the body around this height above the feet, so sitting up bends at the hips. */
+        const val HIP_HEIGHT = 0.7
     }
 }
 
@@ -137,15 +149,22 @@ class Timeline(val scene: Scene, private val start: ActorState) {
     fun actor(time: Double): ActorState {
         if (actorKeys.isEmpty()) return start
         val (i, u) = locate(actorKeys.map { it.t }, time) ?: return actorKeys.last().state()
-        val a = actorKeys[i]
-        val b = actorKeys[i + 1]
-        val e = a.ease.apply(u)
+        val e = actorKeys[i].ease.apply(u)
+        val times = actorKeys.map { it.t }
+        // Bones follow the same smooth curves as positions, so motion flows through keys instead of jerking at each.
+        val channels = actorChannels.map { values -> hermite1(times, values, i, e).toFloat() }
         return ActorState(
-            hermite(actorKeys.map { it.t }, actorKeys.map { it.pos }, i, e),
-            lerp(a.yaw, b.yaw, e),
-            a.pose.lerp(b.pose, e),
-            lerp(a.root, b.root, e)
+            hermite(times, actorKeys.map { it.pos }, i, e),
+            channels[0],
+            Pose.fromChannels(channels, 4),
+            Rot(channels[1], channels[2], channels[3])
         )
+    }
+
+    /** Per-channel values of every actor key: yaw, root x/y/z, then the pose's 18 bone angles. */
+    private val actorChannels: List<List<Double>> = run {
+        val rows = actorKeys.map { listOf(it.yaw, it.root.x, it.root.y, it.root.z) + it.pose.channels() }
+        if (rows.isEmpty()) emptyList() else rows[0].indices.map { c -> rows.map { it[c].toDouble() } }
     }
 
     fun camera(time: Double): CameraState? {
@@ -256,5 +275,3 @@ class Timeline(val scene: Scene, private val start: ActorState) {
 }
 
 internal fun lerp(a: Float, b: Float, t: Double): Float = (a + (b - a) * t).toFloat()
-
-internal fun lerp(a: Rot, b: Rot, t: Double) = Rot(lerp(a.x, b.x, t), lerp(a.y, b.y, t), lerp(a.z, b.z, t))

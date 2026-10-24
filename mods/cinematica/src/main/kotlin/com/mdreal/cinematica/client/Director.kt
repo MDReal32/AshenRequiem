@@ -22,8 +22,8 @@ object Director {
     /** Client ticks past the end before playback gives up waiting for the server. */
     private const val GIVE_UP = 260
 
-    /** The actor disappears for this last part of the handoff, so the camera never sees the inside of its head. */
-    private const val HIDE_AT = 0.7
+    /** During the handoff the actor disappears once the camera is this close to its eyes, before entering its head. */
+    private const val HIDE_WITHIN = 0.6
 
     private class Run(val timeline: Timeline, val origin: Vec, val from: Double, val preview: Boolean, val showActor: Boolean)
 
@@ -101,8 +101,10 @@ object Director {
         }
 
         if (run.showActor) {
-            val handoff = if (scene.handoff > 0) (time - scene.length) / scene.handoff else 0.0
-            Stage.show(run.timeline.actor(time), run.origin, hidden = state != null && handoff > HIDE_AT)
+            val actor = run.timeline.actor(time)
+            // Only during the handoff: close-ups elsewhere may come near the head on purpose.
+            val handoff = state != null && time > scene.length && actor.eye().pos.distanceTo(state.pos) < HIDE_WITHIN
+            Stage.show(actor, run.origin, hidden = handoff)
         } else if (!Recorder.active) {
             Stage.remove()
         }

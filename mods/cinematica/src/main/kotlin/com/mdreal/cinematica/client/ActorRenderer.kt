@@ -1,6 +1,7 @@
 package com.mdreal.cinematica.client
 
 import com.mdreal.cinematica.entity.ActorEntity
+import com.mdreal.cinematica.timeline.ActorState
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
 import com.mojang.blaze3d.vertex.PoseStack
@@ -43,11 +44,13 @@ class ActorRenderer(context: EntityRendererProvider.Context) : EntityRenderer<Ac
         pose(model, entity.pose)
 
         poseStack.pushPose()
-        // Same transforms as LivingEntityRenderer, plus the root tilt around the feet.
+        // Same transforms as LivingEntityRenderer, plus the root tilt around the hips.
         poseStack.mulPose(Axis.YP.rotationDegrees(180f - entity.bodyYaw))
+        poseStack.translate(0f, HIP, 0f)
         poseStack.mulPose(Axis.XP.rotationDegrees(entity.root.x))
         poseStack.mulPose(Axis.YP.rotationDegrees(entity.root.y))
         poseStack.mulPose(Axis.ZP.rotationDegrees(entity.root.z))
+        poseStack.translate(0f, -HIP, 0f)
         poseStack.scale(-1f, -1f, 1f)
         poseStack.scale(PLAYER_SCALE, PLAYER_SCALE, PLAYER_SCALE)
         poseStack.translate(0f, -1.501f, 0f)
@@ -83,5 +86,6 @@ class ActorRenderer(context: EntityRendererProvider.Context) : EntityRenderer<Ac
 
     private companion object {
         const val PLAYER_SCALE = 0.9375f
+        const val HIP = ActorState.HIP_HEIGHT.toFloat()
     }
 }

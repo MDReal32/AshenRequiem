@@ -51,6 +51,13 @@ object Recorder {
         else -> Rot.ZERO
     }
 
+    /** How far below the hovering feet a preset goes, so lying and sitting actors touch the ground. */
+    private fun dropOf(preset: String) = when (preset) {
+        "lying on back", "lying face down" -> 0.58
+        "sitting" -> 0.6
+        else -> 0.0
+    }
+
     var active = false
         private set
 
@@ -155,7 +162,7 @@ object Recorder {
         val (presetName, pose) = POSES[preset]
         val feet = player.position()
         val key = ActorKey(
-            cursor, Vec(feet.x, feet.y, feet.z) - origin, player.yRot,
+            cursor, Vec(feet.x, feet.y - dropOf(presetName), feet.z) - origin, player.yRot,
             pose.copy(head = Rot(player.xRot.coerceIn(-60f, 60f), 0f, 0f)),
             rootOf(presetName),
             actor.firstOrNull { it.t == cursor }?.ease ?: Ease.LINEAR
@@ -166,11 +173,15 @@ object Recorder {
     }
 
     private fun nextPose() {
+        val previous = POSES[preset].first
         preset = (preset + 1) % POSES.size
         val (presetName, pose) = POSES[preset]
         val index = actor.indexOfFirst { it.t == cursor }
         if (index >= 0) {
-            actor[index] = actor[index].let { it.copy(pose = pose.copy(head = it.pose.head), root = rootOf(presetName)) }
+            val lift = Vec(0.0, dropOf(previous) - dropOf(presetName), 0.0)
+            actor[index] = actor[index].let {
+                it.copy(pos = it.pos + lift, pose = pose.copy(head = it.pose.head), root = rootOf(presetName))
+            }
             changed()
         }
     }

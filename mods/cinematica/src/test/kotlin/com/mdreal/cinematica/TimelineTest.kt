@@ -99,6 +99,23 @@ class TimelineTest {
     }
 
     @Test
+    fun `bones pass through their keys and flow smoothly between them`() {
+        val raised = Pose(rightArm = Rot(-90f, 0f, 30f))
+        val actor = listOf(
+            ActorKey(0, Vec.ZERO, 0f),
+            ActorKey(20, Vec.ZERO, 0f, raised, Rot(90f, 0f, 0f)),
+            ActorKey(40, Vec.ZERO, 0f),
+        )
+        val timeline = Timeline(Scene(emptyList(), actor), start)
+        assertEquals(raised, timeline.actor(20.0).pose)
+        assertEquals(Rot(90f, 0f, 0f), timeline.actor(20.0).root)
+        // At the peak the curve is flat, so just before it the arm is already almost fully raised: no linear corner.
+        val before = timeline.actor(18.0).pose.rightArm.x
+        assertTrue(before < -85f, "expected a flat peak, got $before")
+        close(0.0, timeline.actor(40.0).pose.rightArm.x.toDouble())
+    }
+
+    @Test
     fun `fade interpolates and holds at the ends`() {
         val scene = Scene(emptyList(), fade = listOf(FadeKey(0, 1f), FadeKey(20, 0f)))
         val timeline = Timeline(scene, start)
