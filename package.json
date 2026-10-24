@@ -1,0 +1,8 @@
+{
+  "name": "@ashenrequiem/monorepo",
+  "version": "0.0.0-dev",
+  "workspaces": [
+    "modpack"
+  ],
+  "packageManager": "yarn@4.18.1"
+}
