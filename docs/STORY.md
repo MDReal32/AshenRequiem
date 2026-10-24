@@ -308,3 +308,9 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 8. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
 9. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
 10. The virus in play: the Hush stages (§7) cover infected areas and mobs. Does it also put effects on the player?
+11. The companion drone (§11): is it VESPER's body, or a character of its own?
+
+## 11. Ideas (not decided yet)
+
+- **Companion drone:** a small flying drone that stays near the player and speaks. It must be helpful (hints, what
+  something is, where to go). The player can shut it up.
