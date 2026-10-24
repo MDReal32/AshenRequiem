@@ -27,7 +27,7 @@ class SceneCodecsTest {
         val scene = Scene(
             camera = listOf(
                 CameraKey(0, Vec(1.0, 2.0, 3.0), 10f, -5f, roll = 3f, fov = 60f, ease = Ease.IN_OUT_SINE),
-                CameraKey(40, Vec(4.0, 5.0, 6.0), 90f, 0f),
+                CameraKey(40, Vec(4.0, 5.0, 6.0), 90f, 0f, ground = 0.5f),
             ),
             actor = listOf(ActorKey(0, Vec.ZERO, 45f, Pose(rightArm = Rot(-90f, 0f, 0f), rightElbow = Rot(-60f, 0f, 0f), leftKnee = Rot(45f, 0f, 0f)), Rot(90f, 0f, 0f), Ease.OUT_CUBIC)),
             fade = listOf(FadeKey(0, 1f), FadeKey(20, 0f, Ease.IN_SINE)),

@@ -85,7 +85,11 @@ data class Pose(
     }
 }
 
-/** A camera keyframe. [pos] is where the eye is, relative to the scene origin unless the scene is absolute. */
+/**
+ * A camera keyframe. [pos] is where the eye is, relative to the scene origin unless the scene is absolute. [ground]
+ * (0..1) is how much of its height counts from the ground under the first camera key instead of from the origin: 1
+ * keeps the key as high above that ground as the first key is, 0 leaves it on the origin. See [Scene.lifted].
+ */
 data class CameraKey(
     val t: Int,
     val pos: Vec,
@@ -94,6 +98,7 @@ data class CameraKey(
     val roll: Float = 0f,
     val fov: Float? = null,
     val ease: Ease = Ease.LINEAR,
+    val ground: Float = 0f,
 )
 
 /**
@@ -133,6 +138,17 @@ data class Scene(
 
     /** When the player gets control back. */
     val end: Int get() = length + handoff
+
+    /** Whether any camera key wants its height from the ground. */
+    val grounded: Boolean get() = camera.any { it.ground > 0f }
+
+    /**
+     * The scene with each camera key raised by [lift] (how far the ground under the first camera key is above the
+     * origin) times its [CameraKey.ground] weight, ready to play: the weights are spent.
+     */
+    fun lifted(lift: Double): Scene = if (!grounded) this else copy(camera = camera.map {
+        if (it.ground == 0f) it else it.copy(pos = it.pos + Vec(0.0, lift * it.ground, 0.0), ground = 0f)
+    })
 }
 
 data class CameraState(val pos: Vec, val yaw: Float, val pitch: Float, val roll: Float, val fov: Float?)

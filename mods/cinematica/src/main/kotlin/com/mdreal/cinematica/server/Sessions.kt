@@ -9,6 +9,7 @@ import com.mdreal.cinematica.network.WitnessEndPayload
 import com.mdreal.cinematica.network.WitnessPayload
 import com.mdreal.cinematica.scene.Scenes
 import com.mdreal.cinematica.timeline.ActorState
+import com.mdreal.cinematica.timeline.CameraKey
 import com.mdreal.cinematica.timeline.Pose
 import com.mdreal.cinematica.timeline.Rot
 import com.mdreal.cinematica.timeline.Scene
@@ -20,7 +21,9 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.util.Mth
 import net.minecraft.world.level.GameType
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.attachment.AttachmentType
@@ -129,7 +132,7 @@ object Sessions {
             }
     }
 
-    private fun begin(player: ServerPlayer, mode: Mode, id: ResourceLocation, scene: Scene) {
+    private fun begin(player: ServerPlayer, mode: Mode, id: ResourceLocation, keys: Scene) {
         // A scene started while another runs replaces it but keeps the first restore state.
         active.remove(player.uuid)?.let {
             endWitnesses(player, it)
@@ -139,7 +142,9 @@ object Sessions {
         val restore = player.getData(RESTORE)
 
         val feet = Vec(restore.pos.x, restore.pos.y, restore.pos.z)
-        val origin = if (scene.absolute) Vec.ZERO else feet
+        val origin = if (keys.absolute) Vec.ZERO else feet
+        // The recorder edits the keys as written; only a played scene stands on the ground.
+        val scene = if (mode == Mode.PLAY) onGround(player, keys, origin, restore.dimension) else keys
         val start = ActorState(feet - origin, restore.yaw, Pose(head = Rot(restore.pitch, 0f, 0f)), Rot.ZERO)
 
         player.setGameMode(GameType.SPECTATOR)
@@ -148,6 +153,20 @@ object Sessions {
             player,
             StartPayload(mode, id.toString(), scene, origin, start.pos, restore.yaw, restore.pitch)
         )
+    }
+
+    /**
+     * Lifts the keys that ask for it ([CameraKey.ground]) by how far the first block under the first camera key is
+     * above the origin, so a camera that starts far out flies over the land there rather than at the player's height.
+     * Done once here, so the client draws and the server loads the same path.
+     */
+    private fun onGround(player: ServerPlayer, scene: Scene, origin: Vec, dimension: ResourceKey<Level>): Scene {
+        if (!scene.grounded) return scene
+        val first = scene.camera.minBy { it.t }
+        val level = player.server.getLevel(dimension) ?: return scene
+        val x = Mth.floor(origin.x + first.pos.x)
+        val z = Mth.floor(origin.z + first.pos.z)
+        return scene.lifted(level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - origin.y)
     }
 
     private fun tick(event: ServerTickEvent.Post) {

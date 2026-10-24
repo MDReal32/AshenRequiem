@@ -55,7 +55,8 @@ object SceneCodecs {
             Codec.FLOAT.optionalFieldOf("roll", 0f).forGetter(CameraKey::roll),
             Codec.FLOAT.optionalFieldOf("fov").forGetter { Optional.ofNullable(it.fov) },
             EASE.optionalFieldOf("ease", Ease.LINEAR).forGetter(CameraKey::ease),
-        ).apply(i) { t, pos, yaw, pitch, roll, fov, ease -> CameraKey(t, pos, yaw, pitch, roll, fov.orElse(null), ease) }
+            Codec.floatRange(0f, 1f).optionalFieldOf("ground", 0f).forGetter(CameraKey::ground),
+        ).apply(i) { t, pos, yaw, pitch, roll, fov, ease, ground -> CameraKey(t, pos, yaw, pitch, roll, fov.orElse(null), ease, ground) }
     }
 
     val ACTOR_KEY: Codec<ActorKey> = RecordCodecBuilder.create { i ->

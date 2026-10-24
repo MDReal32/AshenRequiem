@@ -160,6 +160,21 @@ class TimelineTest {
     }
 
     @Test
+    fun `a lift raises camera keys by their ground weight and spends the weights`() {
+        val scene = Scene(listOf(
+            CameraKey(0, Vec(0.0, 90.0, 300.0), 0f, 0f, ground = 1f),
+            CameraKey(10, Vec(0.0, 40.0, 100.0), 0f, 0f, ground = 0.5f),
+            CameraKey(20, Vec(0.0, 2.0, 0.0), 0f, 0f),
+        ))
+        assertTrue(scene.grounded)
+        val lifted = scene.lifted(-12.0)
+        assertEquals(listOf(78.0, 34.0, 2.0), lifted.camera.map { it.pos.y })
+        assertTrue(!lifted.grounded)
+        val flat = Scene(listOf(CameraKey(0, Vec.ZERO, 0f, 0f)))
+        assertTrue(flat.lifted(5.0) === flat)
+    }
+
+    @Test
     fun `an empty camera track has no camera`() {
         assertNull(Timeline(Scene(emptyList()), start).camera(0.0))
     }
