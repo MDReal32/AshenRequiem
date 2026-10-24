@@ -51,6 +51,7 @@ class CinematicaStudioClient(modBus: IEventBus) {
             Director.frame(partialTick)
             Witnesses.frame(partialTick)
         }
+        bus.addListener<RenderFrameEvent.Post> { Director.afterFrame() }
         bus.addListener<ViewportEvent.ComputeCameraAngles> { Director.angles(it) }
         bus.addListener<ViewportEvent.ComputeFov> { Director.fov(it) }
         // While the camera is elsewhere, the real (spectator) player must not show up or get in the way.

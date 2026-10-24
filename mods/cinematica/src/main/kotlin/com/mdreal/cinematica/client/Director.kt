@@ -24,6 +24,8 @@ import net.minecraft.network.chat.Component
 import net.neoforged.neoforge.client.event.ViewportEvent
 import net.neoforged.neoforge.network.PacketDistributor
 import java.nio.file.Files
+import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -39,8 +41,20 @@ object Director {
     /** During the handoff the actor disappears once the camera is this close to its eyes, before entering its head. */
     private const val HIDE_WITHIN = 0.6
 
-    /** Playback controls hint shows this long at the start, and always while paused. */
-    private const val HINT_TICKS = 80
+    /** The control bar shows this long after a control key or a mouse move, and always while paused. */
+    private const val SHOW_TICKS = 60
+
+    /** At the start it stays longer, until the picture is past the usual fade in from black. */
+    private const val SHOW_AT_START = 140
+
+    /** Ticks the control bar takes to fade away. */
+    private const val FADE_TICKS = 10
+
+    /** How long the big play or pause sign stays in the middle after toggling. */
+    private const val FLASH_TICKS = 14
+
+    /** Played part of the progress track. */
+    private const val ACCENT = 0xE0703A
 
     /** How long the "snapshot saved" note stays on screen. */
     private const val NOTE_TICKS = 50
@@ -59,6 +73,14 @@ object Director {
     private var paused = false
     private var note: Component? = null
     private var noteTicks = 0
+    private var showTicks = 0
+    private var flashTicks = 0
+    private var mouseX = 0.0
+    private var mouseY = 0.0
+
+    /** A snapshot waits for one frame drawn without the control bar, then grabs it. */
+    private var shotPending = false
+    private var lastTime = 0.0
     private var finishedSent = false
     private var camera: ActorEntity? = null
     private var cameraState: CameraState? = null
@@ -70,7 +92,11 @@ object Director {
     fun play(name: String, timeline: Timeline, origin: Vec, from: Double = 0.0, preview: Boolean = false, showActor: Boolean = true) {
         stop()
         run = Run(name, timeline, origin, from, preview, showActor)
-        savedCameraType = Minecraft.getInstance().options.cameraType
+        val mc = Minecraft.getInstance()
+        savedCameraType = mc.options.cameraType
+        showTicks = SHOW_AT_START
+        mouseX = mc.mouseHandler.xpos()
+        mouseY = mc.mouseHandler.ypos()
     }
 
     fun stop() {
@@ -79,6 +105,9 @@ object Director {
         ticks = 0
         paused = false
         note = null
+        showTicks = 0
+        flashTicks = 0
+        shotPending = false
         finishedSent = false
         cameraState = null
         camera = null
@@ -97,6 +126,8 @@ object Director {
         val mc = Minecraft.getInstance()
         if (mc.level == null || mc.isPaused) return
         if (noteTicks > 0 && --noteTicks == 0) note = null
+        if (showTicks > 0) showTicks--
+        if (flashTicks > 0) flashTicks--
         controls(run)
         if (paused) return
         ticks++
@@ -114,11 +145,20 @@ object Director {
 
     /** Pause, step and snapshot. Stepping works while playing too; it pauses so the moment can be looked at. */
     private fun controls(run: Run) {
+        // Like a video player, moving the mouse brings the controls up.
+        val mouse = Minecraft.getInstance().mouseHandler
+        if (abs(mouse.xpos() - mouseX) + abs(mouse.ypos() - mouseY) > 4) showTicks = max(showTicks, SHOW_TICKS)
+        mouseX = mouse.xpos()
+        mouseY = mouse.ypos()
         val toggles = Keys.PLAY_PAUSE.presses()
         val step = if (Screen.hasShiftDown()) 1 else 20
         val delta = (Keys.STEP_FORWARD.presses() - Keys.STEP_BACK.presses()) * step
         val snapshots = Keys.SNAPSHOT.presses()
-        if (toggles % 2 == 1) paused = !paused
+        if (toggles % 2 == 1) {
+            paused = !paused
+            flashTicks = FLASH_TICKS
+        }
+        if (toggles > 0 || delta != 0 || snapshots > 0) showTicks = max(showTicks, SHOW_TICKS)
         if (delta != 0) {
             paused = true
             val last = run.timeline.scene.end - run.from.toInt() - 1
@@ -127,17 +167,24 @@ object Director {
         if ((toggles % 2 == 1 || delta != 0) && !run.preview) {
             PacketDistributor.sendToServer(ControlPayload(run.from.toInt() + ticks, paused))
         }
-        if (snapshots > 0) snapshot(run)
+        if (snapshots > 0) shotPending = true
+    }
+
+    /** Called after every frame. A pending snapshot grabs this frame, which was drawn without the control bar. */
+    fun afterFrame() {
+        val run = run ?: return
+        if (!shotPending) return
+        shotPending = false
+        snapshot(run, lastTime)
     }
 
     /**
      * Saves where the scene is right now, so it can be talked about exactly: a screenshot in `screenshots/` and the
      * camera and actor state as JSON in `cinematica/snapshots/`, both named after the scene and tick.
      */
-    private fun snapshot(run: Run) {
+    private fun snapshot(run: Run, time: Double) {
         val mc = Minecraft.getInstance()
-        val tick = run.from.toInt() + ticks
-        val time = time(0f)
+        val tick = time.toInt()
         val base = "${run.name.replace(Regex("[^a-z0-9_-]"), "_")}_t$tick"
         Screenshot.grab(mc.gameDirectory, "cinematica_$base.png", mc.mainRenderTarget) { }
         val camera = run.timeline.camera(time)
@@ -185,6 +232,7 @@ object Director {
         val mc = Minecraft.getInstance()
         val level = mc.level ?: return
         val time = time(partialTick)
+        lastTime = time
         val scene = run.timeline.scene
 
         val state = run.timeline.camera(time)
@@ -239,27 +287,77 @@ object Director {
         }
         val alpha = (run.timeline.fade(time) * 255).toInt().coerceIn(0, 255)
         if (alpha > 0) graphics.fill(0, 0, width, height, alpha shl 24)
-        if (!run.preview) controlsHud(graphics, run, time, height)
+        if (!run.preview && !shotPending) controlsHud(graphics, run, time, partialTick, width, height)
     }
 
-    private fun controlsHud(graphics: GuiGraphics, run: Run, time: Double, height: Int) {
+    /** A video player's bar along the bottom: progress, play state, time, the keys; and the big sign after a toggle. */
+    private fun controlsHud(graphics: GuiGraphics, run: Run, time: Double, partialTick: Float, width: Int, height: Int) {
         val font = Minecraft.getInstance().font
-        val lines = ArrayList<Component>()
-        if (paused) {
-            val tick = run.from.toInt() + ticks
-            lines += Component.translatable("cinematica_studio.player.paused", run.name, "%.2f".format(tick / 20.0), tick)
+        note?.let { graphics.drawString(font, it, 10, height - 58, 0xFFFFFFFF.toInt()) }
+        if (flashTicks > 0) {
+            val alpha = ((flashTicks - partialTick) / FLASH_TICKS).coerceIn(0f, 1f)
+            val x = width / 2
+            val y = height / 2
+            graphics.fill(x - 20, y - 20, x + 20, y + 20, color(0, 0.45f * alpha))
+            icon(graphics, x - 9, y - 11, 22, play = !paused, color(0xFFFFFF, alpha))
         }
-        if (paused || time - run.from < HINT_TICKS) {
-            lines += Component.translatable(
-                "cinematica_studio.player.hint",
-                Keys.PLAY_PAUSE.label(), Keys.STEP_BACK.label(), Keys.STEP_FORWARD.label(), Keys.SNAPSHOT.label()
-            )
+
+        val shown = if (paused) 1f else ((showTicks - partialTick) / FADE_TICKS).coerceIn(0f, 1f)
+        if (shown < 0.05f) return
+        fun c(rgb: Int, alpha: Float = 1f) = color(rgb, alpha * shown)
+
+        graphics.fillGradient(0, height - 48, width, height, c(0, 0f), c(0, 0.75f))
+        val scene = run.timeline.scene
+        val end = scene.end.toDouble()
+        val left = 10
+        val right = width - 10
+        val y = height - 25
+        fun at(t: Double) = left + ((right - left) * (t / end).coerceIn(0.0, 1.0)).toInt()
+        graphics.fill(left, y, right, y + 3, c(0xFFFFFF, 0.3f))
+        val head = at(time)
+        graphics.fill(left, y, head, y + 3, c(ACCENT))
+        // Where the scene ends and the camera starts gliding into the player's eyes.
+        if (scene.handoff > 0) at(scene.length.toDouble()).let { graphics.fill(it, y - 2, it + 1, y + 5, c(0xFFFFFF, 0.7f)) }
+        graphics.fill(head - 2, y - 2, head + 3, y + 5, c(0xFFFFFF))
+        graphics.fill(head - 3, y - 1, head + 4, y + 4, c(0xFFFFFF))
+
+        val row = height - 14
+        icon(graphics, left, row - 1, 9, play = paused, c(0xFFFFFF))
+        var x = left + 16
+        val clock = "${clock(time)} / ${clock(end)}"
+        graphics.drawString(font, clock, x, row, c(0xFFFFFF))
+        x += font.width(clock) + 10
+        val info = "tick ${time.toInt()}   ${run.name}"
+        graphics.drawString(font, info, x, row, c(0xAAAAAA))
+        x += font.width(info)
+        val hint = Component.translatable(
+            "cinematica_studio.player.hint",
+            Keys.PLAY_PAUSE.label(), Keys.STEP_BACK.label(), Keys.STEP_FORWARD.label(), Keys.SNAPSHOT.label()
+        )
+        val hintX = right - font.width(hint)
+        if (hintX > x + 12) graphics.drawString(font, hint, hintX, row, c(0xAAAAAA))
+    }
+
+    /** A play triangle or a pause sign, [size] tall, with its top left at [x], [y]. */
+    private fun icon(graphics: GuiGraphics, x: Int, y: Int, size: Int, play: Boolean, color: Int) {
+        val wide = size * 4 / 5
+        if (play) {
+            for (i in 0 until wide) {
+                val inset = i * size / (2 * wide)
+                graphics.fill(x + i, y + inset, x + i + 1, y + size - inset, color)
+            }
+        } else {
+            val bar = max(1, size * 3 / 10)
+            graphics.fill(x, y, x + bar, y + size, color)
+            graphics.fill(x + wide - bar, y, x + wide, y + size, color)
         }
-        note?.let { lines += it }
-        // Bottom left, inside the lower letterbox bar.
-        lines.forEachIndexed { i, line ->
-            graphics.drawString(font, line, 6, height - 6 - (lines.size - i) * (font.lineHeight + 2), 0xFFDDDDDD.toInt())
-        }
+    }
+
+    private fun color(rgb: Int, alpha: Float) = ((alpha * 255).toInt().coerceIn(0, 255) shl 24) or rgb
+
+    private fun clock(ticks: Double): String {
+        val seconds = ticks / 20.0
+        return "%d:%05.2f".format((seconds / 60).toInt(), seconds % 60)
     }
 
     private const val BLACK = 0xFF000000.toInt()
