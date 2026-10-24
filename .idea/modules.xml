@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev/AshenRequiem.dev.main.iml" filepath="$PROJECT_DIR$/.idea/modules/dev/AshenRequiem.dev.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/core/AshenRequiem.mods.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/core/AshenRequiem.mods.core.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/world/AshenRequiem.mods.world.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/world/AshenRequiem.mods.world.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BoundlessHorizons.iml" filepath="$PROJECT_DIR$/.idea/BoundlessHorizons.iml" />
     </modules>
   </component>
 </project>
