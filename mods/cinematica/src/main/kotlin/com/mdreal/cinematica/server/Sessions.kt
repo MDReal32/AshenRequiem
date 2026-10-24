@@ -20,6 +20,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.SectionPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.Mth
 import net.minecraft.world.level.GameType
@@ -167,9 +169,17 @@ object Sessions {
             // The highest top block in a small patch under the key, so the slope of a hill beside it counts too.
             val x = Mth.floor(origin.x + key.pos.x)
             val z = Mth.floor(origin.z + key.pos.z)
-            GROUND_PATCH.maxOf { (dx, dz) -> level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + dx, z + dz) } - origin.y
+            GROUND_PATCH.maxOf { (dx, dz) -> heightAt(level, x + dx, z + dz) } - origin.y
         }
     }
+
+    /**
+     * The top of the land at a block column. Level.getHeight reads a chunk that isn't loaded as the bottom of the
+     * world, and keys far out are past the loaded ones, so the chunk is loaded (or generated) first.
+     */
+    private fun heightAt(level: ServerLevel, x: Int, z: Int): Int =
+        level.getChunk(SectionPos.blockToSectionCoord(x), SectionPos.blockToSectionCoord(z))
+            .getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x and 15, z and 15) + 1
 
     /** Where around a camera key the ground is measured: a 3 by 3 grid two blocks apart. */
     private val GROUND_PATCH = (-2..2 step 2).flatMap { dx -> (-2..2 step 2).map { dz -> dx to dz } }
