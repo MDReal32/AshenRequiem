@@ -9,9 +9,9 @@ Technical work lives in [ROADMAP.md](ROADMAP.md). Every cutscene lives in [CINEM
 
 ## 1. Logline
 
-People fled a dying world and left it to rot. Thousands of years later, a sleeper wakes up in its ashes, finds the last
-working gate and goes home, bringing the plague that killed the old world along. The only cure is buried in the dead
-world, and only someone who carries its song can see it.
+A sleeper wakes thousands of years in the future, in the ashes of a dead world. They find the last working gate and go
+back to the living past, and bring the plague that killed the future along with them. The dead world they woke in is
+their own doing. The only cure is buried in its ashes, and fixing it is the only way to break the loop.
 
 ## 2. Pillars
 
@@ -26,26 +26,39 @@ world, and only someone who carries its song can see it.
 5. **Moments people remember.** Every crossing between worlds is a cutscene. Every big reveal changes the world on
    screen right in front of the player.
 6. **Performance first.** Sparse worldgen, staged systems, no per-tick world scanning.
+7. **Curiosity, not chores.** No late-game wall of tasks like All the Mods 10. Every step forward is tied to the story:
+   a piece of the lab, a log about the Hush, a door that finally opens. Players move on because they want to know what
+   happens next, not to tick a box. Rewards come from story moments, never from "craft a thousand blocks".
 
 ## 3. History (what really happened)
 
+The **Dead Lands are the Overworld, thousands of years from now.** There is only one world, seen at two times. The
+**Gate** is not a bridge between worlds but between *eras*. The story is a time loop: the player causes the
+apocalypse they woke up in.
+
 | Era | Event |
 |---|---|
-| **The Founding** | Humanity lives on the world we now call the **Dead Lands** (they called it *Home*). |
-| **The Hush** | A plague appears. It doesn't kill bodies; it *silences* them. Living things go quiet, grey and still, then turn to ash. Plants, animals, people, even stone lose their colour. |
-| **The Vigil** | The last research station, **Vigil Station**, tries to find a cure. It fails, but builds **the Gate**: a bridge to a young, untouched world (the **Overworld**). |
-| **The Departure** | The survivors, later called **the Departed**, cross the Gate and seal it behind them. The Hush is left behind on purpose, trapped in the old world. They throw away a whole world to save themselves. |
+| **The Wound** | Long ago, in the Overworld's past, a grey patch appears out of nowhere where a strange gate stands. Nobody knows where it came from. It's where the Hush starts. |
+| **The Hush** | The plague spreads from the Wound. It doesn't kill bodies; it *silences* them. Living things go quiet, grey and still, then turn to ash. Plants, animals, people, even stone lose their colour. Over thousands of years it eats the whole world. |
+| **Home** | The people of the far future (they called their world *Home*) live on what's left, shrinking behind walls as the ash wins. |
+| **The Vigil** | The last research station, **Vigil Station**, tries to find a cure. It fails, but builds **the Gate**: a door back in time, to the young world before the Hush. |
+| **The Departure** | The survivors, later called **the Departed**, go back through the Gate under strict quarantine and seal it behind them. They throw away their whole era to save themselves. |
 | **The Sleeper** | One subject is left in stasis at Vigil Station: **you**. Your file only says `SUBJECT 0 — DO NOT WAKE UNTIL THE SONG RETURNS`. |
-| **The Forgetting** | In the Overworld, the Departed's children forget everything. Over generations they become the **villagers**: quiet, simple, speaking only in murmurs. The ruins they left are vanilla's structures. |
-| **Now** | Thousands of years later, the station's power cell finally dies. The stasis pod fails *open*. You wake up. |
+| **The Forgetting** | In the past, the Departed's children forget everything. Over generations they become the **villagers**: quiet, simple, speaking only in murmurs. The ruins they left are vanilla's structures. |
+| **Now** | The station's power cell finally dies. The stasis pod fails *open*. You wake up, cross the Gate, and come out in the past, at the exact spot that will be called **the Wound**. |
 
 ### The hidden truth (revealed only in Act III)
 
-- The Hush was never fully contained. It is *waiting*, and the Gate is the only door.
-- Subject 0 was not a prisoner. You were the **cure in progress**: injected with a dormant counter-strain the scientists
-  couldn't finish. They needed a catalyst they didn't have, the *cold memory* stored in a realm between worlds (the
-  Twilight).
-- The **Requiem** is the old world's last song, the frequency every living thing on Home once shared. The Hush eats
+- **You are patient zero.** The Hush didn't follow you back by bad luck. It started with you. The grey patch at the Wound
+  in the first row of the history table is *your* arrival. The Dead Lands exist because you crossed. Nobody made the
+  loop; it has always been closed.
+- The Departed knew. That's why the pod says *do not wake*, and why VESPER's last words are cut off: *"Do not... let
+  it... follow—"*. Waking you starts the loop again.
+- Subject 0 was not only a carrier. You were also the **cure in progress**: injected with a dormant counter-strain the
+  scientists couldn't finish. They needed a catalyst they didn't have, the *cold memory* stored in a realm between
+  worlds (the Twilight).
+- So the cure is not a prize. It's fixing your own mistake, and the only way out of the loop.
+- The **Requiem** is Home's last song, the frequency every living thing on Home once shared. The Hush eats
   that song. Whoever carries it can see what the Hush has hidden and can enter places the Hush can't.
 - The cure can't just be *made*. It has to be *grown* in a world that has never known death: **Eden**.
 
@@ -53,10 +66,11 @@ world, and only someone who carries its song can see it.
 
 | Name | What it is |
 |---|---|
-| **Dead Lands** | The abandoned original world. Ash, bone-white stone, dead forests, grey skies, ruins. A dimension of its own. |
+| **Dead Lands** | The Overworld thousands of years in the future, after the Hush. Ash, bone-white stone, dead forests, grey skies, ruins. A dimension of its own in-game. |
+| **Advanced Dead Lands** | The Dead Lands on the second visit (Act III). The same places, seen with the Requiem: new structures, opened doors, and the truth. |
 | **The Hush** | The plague. It shows up as grey ash, desaturation, silence and "hushed" creatures. |
 | **Vigil Station** | The only lab. It spawns exactly once, 3000–5000 blocks from spawn. It holds the Gate. |
-| **The Gate** | The portal between the Dead Lands and the Overworld. One-of-a-kind and repaired by the player. |
+| **The Gate** | A machine in Vigil Station that crosses between eras: the far future (Dead Lands) and the past (Overworld). One-of-a-kind and repaired by the player. |
 | **VESPER** | Vigil Station's dying AI. A calm, broken voice heard through terminals and speakers. The first "person" the player meets. |
 | **Subject 0 / the Sleeper** | The player. |
 | **The Departed** | The people who fled. Ancestors of the villagers. |
@@ -65,7 +79,7 @@ world, and only someone who carries its song can see it.
 | **The Quiet Archive** | A huge, indestructible, impossible building hidden in the Dead Lands, where the Departed buried the cure research. Inspired by Control's Oldest House. |
 | **The Sweeper** | The Archive's caretaker, an old janitor who shouldn't be alive. Gives the player the **Tuning Radio**. |
 | **The Ash Maze** | A maze inside the Archive that keeps rearranging itself. You can only get through it with the Tuning Radio playing. |
-| **Eden** (Cennet) | The final realm. Bright, alive, never touched by death. Where the cure is grown and where creation itself can be used. |
+| **Eden** (Cennet) | The final realm, the Land of Angels: the opposite of the Nether. Bright, alive, never touched by death. Where the cure is grown and where creation itself can be used. |
 | **The Choir** | The Hush's heart, the hive-mind of every silenced thing. The final boss, fought in the Overworld. |
 
 ## 5. Characters
@@ -128,6 +142,14 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
   - **Combat:** the station's corrupted guardians (mini-boss: **The Custodian**, a security machine taken over by the Hush).
   - **Trade:** VESPER's fabricator, paid with `ash_memory` (the Dead Lands currency, dropped by hushed creatures and found in ruins).
 - *Cutscene:* **C03 Station Doors** (the first time you enter).
+- *Locked on the first visit:* some doors, machines and terminals stay sealed or unreadable (corrupted logs, a wing
+  marked `QUARANTINE — SUBJECT 0`, a door keyed to a mark the player doesn't have yet). They only open on the second
+  visit in Act III. The player should leave Vigil Station knowing there's more inside.
+- *Planted hints* (they only make sense in Act III):
+  - A log of the Hush's oldest sample, dated at the start of the old calendar, from "a site beside an unknown gate".
+  - Coordinates of the first infection site. They match where the Gate drops the player in the Overworld.
+  - A handwriting sample in a scientist's notes that matches the player's own Subject Tag.
+  - VESPER calling the player "Subject Zero" *and*, once, glitching to "patient zero".
 
 **Ch. 4 — Crossing**
 - *Beat:* The Gate wakes up. VESPER's last words. You step through.
@@ -154,7 +176,7 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 - *Hush:* **Stage 3** when the first Twilight portal is lit.
 
 **Ch. 7 — The Twilight**
-- *Beat:* The Twilight Forest is the realm between worlds that the Departed passed through. It's full of things they
+- *Beat:* The Twilight Forest is the realm between eras that the Departed passed through on their way back. It's full of things they
   left behind. Normal Twilight Forest progression (Naga → Lich → Minoshroom → Hydra → Knight Phantoms → Ur-Ghast → Alpha
   Yeti → Snow Queen), with extra lore pages and Hush pressure added.
 - *Cutscene:* **C07 Between Worlds** (entering the Twilight).
@@ -162,19 +184,23 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 
 **Ch. 8 — The Requiem**
 - *Beat:* The Snow Queen dies. Time freezes. The cold memory she held floods into the player. For the first time the
-  player *hears* the old world's song: the Requiem.
+  player *hears* Home's song: the Requiem.
 - *Reward:* The **Requiem mark**: a permanent per-player state that survives death, is shown as a mark in the HUD
   corner and on the player's hand, and can't be removed.
 - *Cutscene:* **C08 Requiem** (the emotional peak of Act II).
 - *Hook:* the mark keeps pulling the player back toward the Dead Lands (a faint compass pull and whispers: *"come home"*).
 - *Hush:* stays at 4, but now it's *visible* to the player in the Overworld (marked players see Hush veins in the ground).
 
-### ACT III — REQUIEM (Dead Lands, revealed)
+### ACT III — REQUIEM (Advanced Dead Lands)
 
 **Ch. 9 — The Return**
-- *Beat:* Back through the Gate. When a marked player arrives, the Dead Lands *change*: veiled blocks fade in around
-  them in a wave. Bridges where there was only air, buildings inside "solid" stone, writing on walls.
+- *Beat:* Back through the Gate. When a marked player arrives, the Dead Lands *change* into the **Advanced Dead Lands**:
+  veiled blocks fade in around them in a wave. Bridges where there was only air, buildings inside "solid" stone,
+  writing on walls. Familiar places look different, and new structures that weren't there before can now be found.
 - *Cutscene:* **C09 Unveiling**.
+- *Vigil Station, again:* the doors and terminals that were sealed in Act I now open. The quarantine wing, the
+  corrupted logs and the planted hints start to add up. The player begins to suspect the truth before the Archive
+  says it.
 - *Gate:* Follow the song to the Quiet Archive. The location is only shown to marked players (a sound you can follow
   around you, hidden waymarkers).
 
@@ -191,8 +217,9 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 - *Cutscene:* **C12 The Maze** (*in-game*, with music synced to the geometry, not a passive scene).
 
 **Ch. 12 — The Last Words**
-- *Beat:* The heart of the Archive: the Departed's last recordings. The truth about Subject 0 and the cure. The cure has
-  to be grown in Eden, and the **Eden Seed** is kept here.
+- *Beat:* The heart of the Archive: the Departed's last recordings. The truth: Subject 0 is patient zero, and the Dead
+  Lands are the Overworld's future, killed by the Hush the player carried back. The player caused the apocalypse they
+  woke up in. The cure has to be grown in Eden, and the **Eden Seed** is kept here.
 - *Reward:* the **Eden Seed** (it opens the way to Eden).
 - *Cutscene:* **C13 Last Words**.
 - *Hush:* **Stage 5**. While you were inside, the Choir felt the Requiem and is attacking for real.
@@ -211,6 +238,10 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 **Ch. 15 — Creation**
 - *Beat:* Eden teaches creation. The player unlocks **Root Tools** in tiers: summon/craft anything, flight, world
   brush/instant build, and finally the **Bloom**, the finished cure.
+- *Creative items, not creative mode:* the reward is items that normally exist only in creative mode, never the game
+  mode itself. They're handed out in parts, each one tied to a story moment (a recording heard, a place reached, a boss
+  phase won), never to grinding. In the story it's the sign that the loop is coming apart and the player is free to
+  build the world again. The exact split is still open (see §10).
 - *Gate:* Grow the Bloom (a multi-step creation challenge using the new tools).
 
 **Ch. 16 — The Last Song**
@@ -223,7 +254,8 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 
 ### Epilogue
 - The Overworld slowly heals (Hush zones turn back into living biomes over time).
-- In the Dead Lands, grass grows around Vigil Station for the first time in thousands of years.
+- In the Dead Lands, grass grows around Vigil Station for the first time in thousands of years. The future has
+  changed: the loop is broken.
 - The Sweeper is gone from the Archive. Only his broom is left.
 - Free play: the player keeps their Root Tools. Optional "New Game+" ideas are listed in the roadmap.
 
@@ -250,7 +282,20 @@ Containment Lanterns let the player protect their own areas at every stage. The 
 - Never explain the Sweeper.
 - Every terminal log has a date in the old calendar (`Year 2219 of Home` style) and a name.
 
-## 9. Open questions (for the author)
+## 9. Levels
+
+The pack has 6 levels. Each one is a place, and the story moves the player between them.
+
+| # | Level | Acts / chapters | Status |
+|---|---|---|---|
+| 1 | **Dead Lands** | Act I, Ch. 1–4 | Decided |
+| 2 | **Overworld** (with the Nether as part of its progression) | Act II, Ch. 5–6 | Decided |
+| 3 | Not decided (Twilight Forest is planned here) | Act II, Ch. 7–8; today the story has the Twilight here | Open |
+| 4 | **Advanced Dead Lands** | Act III, Ch. 9–12 | Decided |
+| 5 | Not decided (Twilight Forest is planned here too) | Between Act III and Eden; today the story has the dying Overworld (Ch. 13) here | Open |
+| 6 | **Eden, the Land of Angels**: the opposite of the Nether | Act IV, Ch. 14–16 | Decided |
+
+## 10. Open questions (for the author)
 
 1. Twilight's "last boss": I'm assuming the **Snow Queen** (the current end of Twilight Forest progression). Okay?
 2. Should villagers ever *talk* (subtitled murmurs), or stay fully silent?
@@ -258,3 +303,8 @@ Containment Lanterns let the player protect their own areas at every stage. The 
 4. The Ash Maze music has to be original (we can't use Control's "Take Control"). Will you commission it, make it
    yourself, or should I plan for a placeholder?
 5. Should the Sweeper's lines be Azerbaijani, or would you prefer another language (or a mix)?
+6. Levels 3 and 5: Twilight Forest for both (split in two parts), the dying Overworld for level 5, or something new?
+7. How exactly are the creative items handed out in parts (which items, at which story moments)?
+8. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
+9. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
+10. The virus in play: the Hush stages (§7) cover infected areas and mobs. Does it also put effects on the player?
