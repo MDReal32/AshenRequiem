@@ -314,23 +314,39 @@ Twilight Forest was removed on 2026-10-24. Deeper and Darker is in the pack to t
 
 ### 7.2 Tech and magic unlocks
 
-Tech and magic mods open up as the story moves on. A set opens when a level ends. Its items are **hard** to get during
-the next level and **easy** from the level after that ("crafted or grown").
+Every tech and magic mod is usable from the start. What changes as the story moves on is how its items are made:
 
-| Set | Opens when this level ends | Tech | Magic | Hard during | Easy from |
+- **Hard recipe, always there.** KubeJS replaces each item's default recipe with one that needs something earned the
+  hard way: a boss drop, a rare find, a long build. Nothing is locked; you can have it early if you put the work in.
+- **Normal recipe, added by quests.** Finishing the quests that end a level adds the normal recipe for that set
+  ("just crafted or grown"). The hard recipe stays too.
+
+| Set | Tech | Magic | Normal recipe when this level's quests are done |
+|---|---|---|---|
+| A | Create | — | 2 Overworld + Nether |
+| B | Immersive Engineering, Create Crafts & Additions | Ars Nouveau | 3 Realm before the Requiem |
+| C | — | Nature's Aura, Iron's Spells 'n Spellbooks | 4 Advanced Dead Lands |
+| D | Mekanism, AE2, Powah | Occultism | 5 Dying Overworld |
+
+- What each hard recipe asks for is picked per item, from things the player can earn by the level where they'd first
+  want it (a set A item asks for something from the Dead Lands or the Overworld, not from Eden).
+- Our own Dead Lands items follow the same rule: hard in the Dead Lands, normal once level 1's quests are done.
+- Eden adds no set. Its reward is our own Root Tools.
+- The quest that ends a level sets the player's stage (`player.stages`, the same entity tags the first-join script
+  uses). JEI shows both recipes, and the normal one says what unlocks it.
+- **To solve:** vanilla recipes aren't per player. Crafting-table recipes can check the crafter's stage (a 1.21.1
+  recipe-stages mod, or our core). Machine recipes (Create, Mekanism) have no player, so their normal recipe needs a
+  catalyst the quest gives instead.
+
+**Apotheosis runs the whole pack.** It's in from level 1 and grows with the story through its five world tiers. Each
+tier's unlock criteria are replaced with our level-end quest, so the player moves up one tier per level:
+
+| Level | 1 Dead Lands | 2 Overworld | 3 Realm | 4 Advanced Dead Lands | 5 Dying Overworld, 6 Eden |
 |---|---|---|---|---|---|
-| A | 1 Dead Lands | Create | — | 2 | 3 |
-| B | 2 Overworld + Nether | Immersive Engineering, Create Crafts & Additions | Ars Nouveau | 3 | 4 |
-| C | 3 Realm before the Requiem | — | Nature's Aura, Iron's Spells 'n Spellbooks, Apotheosis | 4 | 5 |
-| D | 4 Advanced Dead Lands | Mekanism, AE2, Powah | Occultism | 5 | 6 Eden |
+| World tier | Haven | Frontier | Ascent | Summit | Pinnacle |
 
-- Level 1 has no third-party mods. Its own Dead Lands items follow the same rule: hard in the Dead Lands, easy in the
-  Overworld.
-- After level 5 no new set opens. Eden's reward is our own Root Tools.
-- **How it's built:** every mod is installed from the start. KubeJS keeps each set's items uncraftable until the
-  player's stage allows it, and gives each item two recipes: the hard one during its level and the easy one from the
-  next. The quest that ends a level sets the player's stage (`player.stages`, the same entity tags the first-join
-  script uses). JEI only shows recipes the player can use.
+Summit normally needs the Wither; our quest replaces that. Check the exact criteria format once Apotheosis is in the
+pack.
 
 ### 7.3 Candidates
 
@@ -339,6 +355,7 @@ the next level and **easy** from the level after that ("crafted or grown").
 | Refined Storage | Instead of AE2 if preferred; only one of the two. |
 | Industrial Foregoing, Oritech, Modern Industrialization | Extra tech, could join set B or D. |
 | Mahou Tsukai, Forbidden & Arcanus | Extra magic, could join set B or C. |
+| Mystical Agriculture | Fits "crafted or grown": its seed tiers could carry the hard recipes. CurseForge only; 1.21.1 build unchecked. |
 | Storage Drawers | CurseForge only; its 1.21.1 build is unchecked. |
 | Ender Storage | Maybe later, renamed in lore to "Departed Vaults". |
 | Pam's HarvestCraft, Farming for Blockheads | Probably not: crafting busywork against pillar 7. |

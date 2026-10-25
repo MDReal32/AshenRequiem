@@ -297,19 +297,21 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 
 ### What each level opens
 
-When a level ends, a set of tech and magic mods opens. Its items are **hard** to get during the next level and
-**easy** from the level after that. The Dead Lands' own items work the same way: hard in the Dead Lands, easy in the
-Overworld.
+Tech and magic mods are there from the start, but their items need a **hard recipe**: something earned the hard way,
+like a boss drop. Finishing a level's quests adds the **normal recipe** for one set ("just crafted or grown"). The Dead
+Lands' own items work the same way: hard in the Dead Lands, normal once level 1 is done.
 
-| Level that ends | Opens | Hard during | Easy from |
-|---|---|---|---|
-| 1 Dead Lands | Create | 2 | 3 |
-| 2 Overworld | Immersive Engineering, Create Crafts & Additions, Ars Nouveau | 3 | 4 |
-| 3 Realm before the Requiem | Nature's Aura, Iron's Spells 'n Spellbooks, Apotheosis | 4 | 5 |
-| 4 Advanced Dead Lands | Mekanism, AE2, Powah, Occultism | 5 | 6 |
+| Level whose quests are done | Normal recipes for |
+|---|---|
+| 1 Dead Lands | Our Dead Lands items |
+| 2 Overworld | Create |
+| 3 Realm before the Requiem | Immersive Engineering, Create Crafts & Additions, Ars Nouveau |
+| 4 Advanced Dead Lands | Nature's Aura, Iron's Spells 'n Spellbooks |
+| 5 Dying Overworld | Mekanism, AE2, Powah, Occultism |
 
-Eden opens nothing new: its reward is the Root Tools. The main path asks one small thing from each mod; the rest is
-free play. How it's built is in ROADMAP.md §7.2.
+Apotheosis runs from level 1 to the end: each level moves the player up one world tier (Haven → Frontier → Ascent →
+Summit → Pinnacle). Eden adds nothing new: its reward is the Root Tools. The main path asks one small thing from each
+mod; the rest is free play. How it's built is in ROADMAP.md §7.2.
 
 ## 10. Open questions (for the author)
 
