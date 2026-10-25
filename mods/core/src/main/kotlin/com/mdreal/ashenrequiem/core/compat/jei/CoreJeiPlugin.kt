@@ -57,8 +57,7 @@ private object RecipeGateDecorator : IRecipeCategoryDecorator<RecipeHolder<Craft
         val (text, _) = mark(recipe) ?: return
         val font = Minecraft.getInstance().font
         if (mouseX < category.width - font.width(text) || mouseY < category.height - font.lineHeight) return
-        val level = ClientProgress.current.level
-        gates(recipe).forEach { gate -> tooltip.add(explain(gate, level)) }
+        gates(recipe).forEach { gate -> tooltip.add(explain(gate)) }
     }
 
     private fun gates(recipe: RecipeHolder<CraftingRecipe>) = ClientRecipeGates.byRecipe[recipe.id].orEmpty()
@@ -75,13 +74,13 @@ private object RecipeGateDecorator : IRecipeCategoryDecorator<RecipeHolder<Craft
         return null
     }
 
-    private fun explain(gate: RecipeGates.Gate, level: Int): Component {
+    private fun explain(gate: RecipeGates.Gate): Component {
         val until = gate.untilLevel.orElse(null)
         return when {
             until == null && gate.workbenchOnly -> Component.translatable("$KEY.workbench.always")
             until == null -> Component.translatable("$KEY.locked.always")
-            gate.workbenchOnly -> Component.translatable("$KEY.workbench.until", until, level)
-            else -> Component.translatable("$KEY.level.until", until, level)
+            gate.workbenchOnly -> Component.translatable("$KEY.workbench.until", until)
+            else -> Component.translatable("$KEY.level.until", until)
         }
     }
 }

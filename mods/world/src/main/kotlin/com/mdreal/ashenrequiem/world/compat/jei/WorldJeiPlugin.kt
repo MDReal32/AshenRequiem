@@ -45,7 +45,7 @@ class WorldJeiPlugin : IModPlugin {
     override fun registerRecipes(registration: IRecipeRegistration) {
         val knife = SizedIngredient(Ingredient.of(Items.SCRAP_KNIFE), 1)
         registration.addRecipes(SCRAPING, ScrapKnifeItem.SCRAPES.map { (log, scraped) ->
-            BlockInteraction(listOf(knife), ItemStack(log), ItemStack(scraped), Component.translatable("$KEY.scraping.note"))
+            BlockInteraction(listOf(knife), ItemStack(log), ItemStack(scraped))
         })
 
         val needed = BrokenWorkbenchBlock.NEEDED
@@ -56,7 +56,6 @@ class WorldJeiPlugin : IModPlugin {
                     SizedIngredient(Ingredient.of(Items.SCRAP), needed),
                 ),
                 ItemStack(Blocks.BROKEN_WORKBENCH.item.get()), ItemStack(Blocks.WORKBENCH.item.get()),
-                Component.translatable("$KEY.repairing.note"),
             )
         ))
 
