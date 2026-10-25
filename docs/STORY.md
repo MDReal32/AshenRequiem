@@ -55,8 +55,8 @@ apocalypse they woke up in.
 - The Departed knew. That's why the pod says *do not wake*, and why VESPER's last words are cut off: *"Do not... let
   it... follow—"*. Waking you starts the loop again.
 - Subject 0 was not only a carrier. You were also the **cure in progress**: injected with a dormant counter-strain the
-  scientists couldn't finish. They needed a catalyst they didn't have, the *cold memory* stored in a realm between
-  worlds (the Twilight).
+  scientists couldn't finish. They needed a catalyst they didn't have: the *last echo* of Home, kept in the realm below
+  the bedrock (the Otherside), where the sculk stores every sound it ever heard.
 - So the cure is not a prize. It's fixing your own mistake, and the only way out of the loop.
 - The **Requiem** is Home's last song, the frequency every living thing on Home once shared. The Hush eats
   that song. Whoever carries it can see what the Hush has hidden and can enter places the Hush can't.
@@ -74,7 +74,7 @@ apocalypse they woke up in.
 | **VESPER** | Vigil Station's dying AI. A calm, broken voice heard through terminals and speakers. The first "person" the player meets. |
 | **Subject 0 / the Sleeper** | The player. |
 | **The Departed** | The people who fled. Ancestors of the villagers. |
-| **The Requiem** | The mark the player gets after the Twilight's last boss. It can never be lost, even on death. It reveals hidden things. |
+| **The Requiem** | The mark the player gets in the depths of the Otherside's Ancient Temple. It can never be lost, even on death. It reveals hidden things. |
 | **Veiled things** | Blocks and structures in the Dead Lands that only exist for those who carry the Requiem. Everyone else sees air, ash or stone. |
 | **The Quiet Archive** | A huge, indestructible, impossible building hidden in the Dead Lands, where the Departed buried the cure research. Inspired by Control's Oldest House. |
 | **The Sweeper** | The Archive's caretaker, an old janitor who shouldn't be alive. Gives the player the **Tuning Radio**. |
@@ -108,7 +108,7 @@ Never speaks. We learn who they are only through other people's words and old re
 
 ### The Choir
 - No body of its own. It speaks with many voices at once: whispers made from every silenced creature.
-- It appears in the Nether (a whisper), in the Twilight (a chorus) and in the finale (a full body made of ash and
+- It appears in the Nether (a whisper), in the Otherside (a chorus) and in the finale (a full body made of ash and
   silenced creatures).
 
 ## 6. Story by Act
@@ -158,7 +158,7 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 - *Then:* **C05 Something Follows**: you look back, and grey ash pours out of the Gate behind you.
 - *Hush:* **Stage 1**.
 
-### ACT II — CONTAGION (Overworld → Nether → Twilight)
+### ACT II — CONTAGION (Overworld → Nether → Otherside)
 
 **Ch. 5 — Homecoming**
 - *Beat:* A bright, living world. Villages. Normal Minecraft survival, but the area around the Gate exit (the **Wound**) is turning grey.
@@ -168,23 +168,26 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 
 **Ch. 6 — The Nether**
 - *Beat:* The Nether is *not* infected. The Hush hates heat. But in the deepest fortresses you hear the Choir for the first time.
-- *Gate:* Collect the materials for the Twilight portal catalyst (the **Ember of Waking**: blaze + a Nether-fortress
-  core + ash from the Wound). The Twilight portal only opens with it.
+- *Gate:* Collect the materials for the **Ember of Waking** (blaze + a Nether-fortress core + ash from the Wound). The
+  Otherside portal only opens with it.
 - *Note:* **The End does not exist.** No strongholds, no Eyes of Ender. A "Sealed Door" lore item explains it: the
   Departed sealed it.
 - *Cutscene:* **C06 First Whisper** (short, in-game).
-- *Hush:* **Stage 3** when the first Twilight portal is lit.
 
-**Ch. 7 — The Twilight**
-- *Beat:* The Twilight Forest is the realm between eras that the Departed passed through on their way back. It's full of things they
-  left behind. Normal Twilight Forest progression (Naga → Lich → Minoshroom → Hydra → Knight Phantoms → Ur-Ghast → Alpha
-  Yeti → Snow Queen), with extra lore pages and Hush pressure added.
-- *Cutscene:* **C07 Between Worlds** (entering the Twilight).
-- *Hush:* **Stage 4** after the Ur-Ghast (the Overworld is now clearly sick).
+**Ch. 7 — The Otherside**
+- *Beat:* The Ancient Cities are where the Departed sheltered on their way back, and the Otherside below the bedrock is
+  where they hid what they couldn't carry. Its sculk is the Hush's opposite: the Hush silences, the sculk remembers
+  every sound. Deeper and Darker's progression (Ancient City → the Warden and its Heart of the Deep → the Otherside
+  portal, lit with the Heart and the Ember of Waking → the Otherside's biomes and sculk mobs → the Ancient Temple), with
+  extra lore pages and Hush pressure added.
+- *Cutscene:* **C07 Between Worlds** (entering the Otherside).
+- *Hush:* **Stage 3** when the first Otherside portal is lit, **Stage 4** when the Ancient Temple is found (the
+  Overworld is now clearly sick).
 
 **Ch. 8 — The Requiem**
-- *Beat:* The Snow Queen dies. Time freezes. The cold memory she held floods into the player. For the first time the
-  player *hears* Home's song: the Requiem.
+- *Beat:* In the Ancient Temple's deepest room the Choir comes as a chorus. When the player outlasts it, the sculk all
+  around falls silent, then plays back every echo it ever stored at once. Among them, for the first time, the player
+  *hears* Home's song: the Requiem.
 - *Reward:* The **Requiem mark**: a permanent per-player state that survives death, is shown as a mark in the HUD
   corner and on the player's hand, and can't be removed.
 - *Cutscene:* **C08 Requiem** (the emotional peak of Act II).
@@ -266,8 +269,8 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 | 0 | World start | Overworld untouched. |
 | 1 | Crossing the Gate (Ch. 4) | Grey patch around the Wound, ash particles, villagers get nervous. |
 | 2 | Finishing Ch. 5 / entering the Nether | Hush zones appear in a ring around the Wound. Hushed animals. |
-| 3 | First Twilight portal | Zones spread, hushed mobs come out at night, crops fail in grey areas. |
-| 4 | Ur-Ghast defeated | Hushed villages, ash rain events, the sky dims slightly everywhere. |
+| 3 | First Otherside portal | Zones spread, hushed mobs come out at night, crops fail in grey areas. |
+| 4 | Ancient Temple found | Hushed villages, ash rain events, the sky dims slightly everywhere. |
 | 5 | Last Words (Ch. 12) | The world is dying: big grey regions, silent biomes, constant ash. The Choir is active. |
 | — | Finale won | The Hush falls back, a colour wave plays, and areas heal over time. |
 
@@ -290,7 +293,7 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 |---|---|---|---|
 | 1 | **Dead Lands** | Act I, Ch. 1–4 | Decided |
 | 2 | **Overworld** (with the Nether as part of its progression) | Act II, Ch. 5–6 | Decided |
-| 3 | **The realm before the Requiem**: Twilight Forest or Deeper and Darker | Act II, Ch. 7–8; today the story has the Twilight here | Open |
+| 3 | **The Otherside** (Deeper and Darker): the realm below the bedrock, before the Requiem | Act II, Ch. 7–8 | Decided |
 | 4 | **Advanced Dead Lands** | Act III, Ch. 9–12 | Decided |
 | 5 | **The dying Overworld** at Hush stage 5 | Between Act III and Eden (Ch. 13) | Proposed |
 | 6 | **Eden, the Land of Angels**: the opposite of the Nether | Act IV, Ch. 14–16 | Decided |
@@ -306,7 +309,7 @@ Lands' own items work the same way: hard in the Dead Lands, normal once level 1 
 |---|---|
 | 1 Dead Lands | Our Dead Lands items |
 | 2 Overworld | Create |
-| 3 Realm before the Requiem | Immersive Engineering, Create Crafts & Additions, Ars Nouveau |
+| 3 Otherside | Immersive Engineering, Create Crafts & Additions, Ars Nouveau |
 | 4 Advanced Dead Lands | Nature's Aura, Iron's Spells 'n Spellbooks |
 | 5 Dying Overworld | Mekanism, AE2, Powah, Occultism |
 
@@ -316,13 +319,14 @@ mod; the rest is free play. How it's built is in ROADMAP.md §7.2.
 
 ## 10. Open questions (for the author)
 
-1. Twilight's "last boss": I'm assuming the **Snow Queen** (the current end of Twilight Forest progression). Okay?
+1. The Otherside has no last boss of its own. The Requiem comes from outlasting the Choir's chorus in the Ancient
+   Temple's deepest room. Okay, or should it be a boss we add?
 2. Should villagers ever *talk* (subtitled murmurs), or stay fully silent?
 3. Multiplayer: does each player get their own wake-up pod, or does the team share one?
 4. The Ash Maze music has to be original (we can't use Control's "Take Control"). Will you commission it, make it
    yourself, or should I plan for a placeholder?
 5. Should the Sweeper's lines be Azerbaijani, or would you prefer another language (or a mix)?
-6. Level 3: Twilight Forest or Deeper and Darker? And is the dying Overworld right for level 5?
+6. Is the dying Overworld right for level 5?
 7. How exactly are the creative items handed out in parts (which items, at which story moments)?
 8. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
 9. The ending: is the loop broken for good (current plan), or does it start again for New Game+?

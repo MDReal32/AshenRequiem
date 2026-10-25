@@ -168,13 +168,13 @@ Deep in a Nether fortress, every sound cuts out for a second. Stereo whispers. T
 then the heat comes back.
 
 ### C07 — Between Worlds · 10s · (L)(I)
-The Twilight portal's water parts. Tunnel shader in green and violet. You arrive at dusk in the Twilight with a slow
-camera pan across the canopy. Title card: **THE TWILIGHT**.
+The Otherside portal flares. Tunnel shader in deep teal and black. You arrive in the Otherside's dark with a slow
+camera pan over glowing sculk. Title card: **THE OTHERSIDE**.
 
 ### C08 — Requiem · 30s · (L)(I) · the emotional peak of Act II
-1. The Snow Queen breaks apart. **Time stops**: particles freeze in the air (client-side freeze of entity and particle
+1. The Choir's chorus breaks off. **Time stops**: particles freeze in the air (client-side freeze of entity and particle
    ticks), sound muffles.
-2. Frost creeps in from the edges of the screen.
+2. Sculk veins creep in from the edges of the screen.
 3. A single note, then a choir line: the **Requiem theme**, heard for the first time.
 4. Eyelids close. In the dark: fast flashes of the Dead Lands *as it once was*, green and alive (5–6 pre-rendered
    panoramas or real camera shots of a hidden "memory" area).

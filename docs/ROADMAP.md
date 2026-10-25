@@ -95,12 +95,10 @@ exit, the Wound, is created on the first crossing near world spawn) and is store
 Remove strongholds from structure sets, and remove the Eye of Ender and End portal frame recipes and loot (KubeJS
 plus a datapack). Add a "Sealed Door" lore item in place of any loot that would have pointed to the End.
 
-### D8 — Twilight gating
-*On hold: level 3 may be Twilight Forest or Deeper and Darker (STORY.md §9). This section assumes Twilight Forest.*
-
-Twilight Forest (the NeoForge 1.21.1 build) is required. The portal pool only works if the **Ember of Waking** is thrown
-in together with the diamond (we hook TF's portal-activation event, with a KubeJS fallback). The Snow Queen kill
-advancement grants the Requiem.
+### D8 — Otherside gating
+Deeper and Darker is required. Its Otherside portal is lit with the Warden's Heart of the Deep; ours also needs the
+**Ember of Waking** (hook the portal lighting, with a KubeJS fallback). Outlasting the Choir's chorus in the Ancient
+Temple's deepest room grants the Requiem.
 
 ### D9 — The Quiet Archive
 - Its own pocket dimension (`ashen_requiem_world:archive`) entered through a veiled door in the Dead Lands. That makes
@@ -214,11 +212,11 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - **Done when:** stages 1–5 can be set by command and each one looks clearly different, tick time stays ≤ 2 ms under
   load, and a lantern-protected base is never converted.
 
-### Stage 6 — Nether & Twilight (Act II)
-- Ember of Waking, D8 portal gating, Twilight lore pages and Hush hooks, C06, C07.
+### Stage 6 — Nether & Otherside (Act II)
+- Ember of Waking, D8 portal gating, Otherside lore pages and Hush hooks, C06, C07.
 - **C08 Requiem** and the mark: HUD indicator, hand glow, compass pull, ambient shimmer.
-- FTB chapters "The Nether", "The Twilight", "The Requiem".
-- **Done when:** the Snow Queen kill grants the mark, the mark survives death, `/kill` and relogging, and the Hush
+- FTB chapters "The Nether", "The Otherside", "The Requiem".
+- **Done when:** the Ancient Temple encounter grants the mark, the mark survives death, `/kill` and relogging, and the Hush
   stages advance at the right story beats.
 
 ### Stage 7 — Reveal system (Act III start)
@@ -263,7 +261,7 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 | 3 | 768 | + trees petrify, stone pales | hushed mobs at night | rare ash rain |
 | 4 | 1536 | + villages hushed | hushed villagers, more at night | sky dims 10% |
 | 5 | 3072 + patches everywhere | full | Choir spawns | constant ash, sky dims 30% |
-All radii are config values. The Nether and the Twilight are never converted.
+All radii are config values. The Nether and the Otherside are never converted.
 
 ### 5.2 Three-path rule (kept from the old plan)
 Every required key item: **Explore** (structure/puzzle) · **Combat** (boss/elite) · **Trade** (currency, expensive
@@ -302,15 +300,14 @@ NeoForge 1.21.1 build on 2026-10-25. Lootr gives each player their own chest loo
 |---|---|
 | Our base | Kotlin for Forge, KubeJS + Rhino, KubeJS Create, ProbeJS (client only) |
 | Story and progression | FTB Quests / Library / Teams / XMod Compat |
-| Content | Create, Lootr, Waystones, Sophisticated Backpacks, Corpse, Falling Trees, Connected Glass, Double Doors, Dummmmmmy, Cosmetic Armor |
+| Content | Create, Deeper and Darker, Lootr, Waystones, Sophisticated Backpacks, Corpse, Falling Trees, Connected Glass, Double Doors, Dummmmmmy, Cosmetic Armor |
 | Maps | JourneyMap + JMI, FTB Chunks |
 | Info | JEI, Just Enough Resources / Professions / Breeding, Better Advanced Tooltips |
 | Convenience | FTB Ultimine, Mouse Tweaks, Controlling, Searchables, Configured, Dark Mode Everywhere, Fast Furnace / Workbench / Suite, Clumps, AI Improvements, Nether Portal Fix |
 | Performance | Sodium (+ Dynamic Lights), Lithium, ModernFix, FerriteCore, Fast Async World Save, GPU Memory Leak Fix, BadOptimizations |
 | Libraries | Architectury, Balm, Collective, Cupboard, Fusion, Moonlight, PandaLib, Placebo, SuperMartijn642 Core Lib, mezz_config |
 
-Twilight Forest was removed on 2026-10-24. Deeper and Darker is in the pack to try out as the other level 3 candidate
-(STORY.md §9). D8 waits on that decision.
+Level 3 is Deeper and Darker's Otherside (STORY.md §9). Twilight Forest was removed on 2026-10-24.
 
 ### 7.2 Tech and magic unlocks
 
@@ -325,7 +322,7 @@ Every tech and magic mod is usable from the start. What changes as the story mov
 | Set | Tech | Magic | Normal recipe when this level's quests are done |
 |---|---|---|---|
 | A | Create | — | 2 Overworld + Nether |
-| B | Immersive Engineering, Create Crafts & Additions | Ars Nouveau | 3 Realm before the Requiem |
+| B | Immersive Engineering, Create Crafts & Additions | Ars Nouveau | 3 Otherside |
 | C | — | Nature's Aura, Iron's Spells 'n Spellbooks | 4 Advanced Dead Lands |
 | D | Mekanism, AE2, Powah | Occultism | 5 Dying Overworld |
 
@@ -342,7 +339,7 @@ Every tech and magic mod is usable from the start. What changes as the story mov
 **Apotheosis runs the whole pack.** It's in from level 1 and grows with the story through its five world tiers. Each
 tier's unlock criteria are replaced with our level-end quest, so the player moves up one tier per level:
 
-| Level | 1 Dead Lands | 2 Overworld | 3 Realm | 4 Advanced Dead Lands | 5 Dying Overworld, 6 Eden |
+| Level | 1 Dead Lands | 2 Overworld | 3 Otherside | 4 Advanced Dead Lands | 5 Dying Overworld, 6 Eden |
 |---|---|---|---|---|---|
 | World tier | Haven | Frontier | Ascent | Summit | Pinnacle |
 
@@ -377,7 +374,7 @@ pack.
 | Risk | Mitigation |
 |---|---|
 | Per-player veil breaks with rendering mods | Stage 7 starts with a spike test on Sodium; overlay fallback if needed. |
-| Twilight Forest API changes | Keep all TF hooks in one adapter class with a KubeJS fallback. |
+| Deeper and Darker changes | Keep all its hooks in one adapter class with a KubeJS fallback. |
 | Cinematics on servers with lag | Server timeouts, client prediction, teleports behind black frames. |
 | Scope (this is a big pack) | Every stage ships something playable; cut content per stage, never per system. |
 | Music budget | The beat-map system works with any track, so placeholders work until the final music is in. |
