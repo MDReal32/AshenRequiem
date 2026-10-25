@@ -4,5 +4,6 @@
   "package": "com.mdreal.ashenrequiem.core.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": ["CraftingMenuMixin", "FastBenchUtilMixin", "RecipeManagerMixin"],
+  "client": ["compat.ConfiguredJeiConfigProviderMixin"],
   "injectors": { "defaultRequire": 1 }
 }
