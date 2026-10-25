@@ -32,7 +32,7 @@ mods/
   hush/      ashen_requiem_hush     Overworld infection: stages, zones, conversion, hushed mobs,
                                     Containment Lanterns, villager changes
   eden/      ashen_requiem_eden     Eden dimension, Root Tools, the Choir boss, finale, healing
-modpack/                            KubeJS (TS): quest glue, recipes, End removal, Twilight gating
+modpack/                            KubeJS (TS): quest glue, recipes, End removal, level gating, mod unlocks
 dev/pack/                           dev instance (FTB Quests chapters live in dev/pack/config/ftbquests)
 ```
 Rule: content modules depend only on `core`, never on each other. If two of them need to talk, it goes through core's
@@ -96,6 +96,8 @@ Remove strongholds from structure sets, and remove the Eye of Ender and End port
 plus a datapack). Add a "Sealed Door" lore item in place of any loot that would have pointed to the End.
 
 ### D8 — Twilight gating
+*On hold: level 3 may be Twilight Forest or Deeper and Darker (STORY.md §9). This section assumes Twilight Forest.*
+
 Twilight Forest (the NeoForge 1.21.1 build) is required. The portal pool only works if the **Ember of Waking** is thrown
 in together with the diamond (we hook TF's portal-activation event, with a KubeJS fallback). The Snow Queen kill
 advancement grants the Requiem.
@@ -291,15 +293,66 @@ pity path). Currencies: `ash_memory` (Act I), `requiem_shard` (Act III).
 
 ## 7. Third-party mods
 
-Already in dev (installed through CurseForge): FTB Quests / Library / Teams / Chunks / Ultimine, KubeJS, ProbeJS,
-Twilight Forest, Create, JEI, JourneyMap, Waystones, Sodium, Lithium, ModernFix, FerriteCore, and others.
+Mods are installed and updated through the CurseForge app (`dev/pack/mods`). Every mod below was checked for a
+NeoForge 1.21.1 build on 2026-10-25. Lootr gives each player their own chest loot in multiplayer and needs no lock.
 
-To add: **Lootr** (single-player loot per chest in multiplayer).
+### 7.1 In the pack now
 
-Wishlist from the old plan, to review in Stage 11 for fit and balance: AE2 *or* Refined Storage (pick one),
-Sophisticated Backpacks, Storage Drawers, Farming for Blockheads + Pam's HarvestCraft, Ender Storage (rename it in
-lore: "Departed Vaults"), Avaritia (probably clashes with Eden's creation tools, so likely drop it). **Eden Ring** is
-Fabric-only and is replaced by our own Eden.
+| Role | Mods |
+|---|---|
+| Our base | Kotlin for Forge, KubeJS + Rhino, KubeJS Create, ProbeJS (client only) |
+| Story and progression | FTB Quests / Library / Teams / XMod Compat |
+| Content | Create, Lootr, Waystones, Sophisticated Backpacks, Corpse, Falling Trees, Connected Glass, Double Doors, Dummmmmmy, Cosmetic Armor |
+| Maps | JourneyMap + JMI, FTB Chunks |
+| Info | JEI, Just Enough Resources / Professions / Breeding, Better Advanced Tooltips |
+| Convenience | FTB Ultimine, Mouse Tweaks, Controlling, Searchables, Configured, Dark Mode Everywhere, Fast Furnace / Workbench / Suite, Clumps, AI Improvements, Nether Portal Fix |
+| Performance | Sodium (+ Dynamic Lights), Lithium, ModernFix, FerriteCore, Fast Async World Save, GPU Memory Leak Fix, BadOptimizations |
+| Libraries | Architectury, Balm, Collective, Cupboard, Fusion, Moonlight, PandaLib, Placebo, SuperMartijn642 Core Lib, mezz_config |
+
+Twilight Forest was removed on 2026-10-24. Deeper and Darker is in the pack to try out as the other level 3 candidate
+(STORY.md §9). D8 waits on that decision.
+
+### 7.2 Tech and magic unlocks
+
+Tech and magic mods open up as the story moves on. A set opens when a level ends. Its items are **hard** to get during
+the next level and **easy** from the level after that ("crafted or grown").
+
+| Set | Opens when this level ends | Tech | Magic | Hard during | Easy from |
+|---|---|---|---|---|---|
+| A | 1 Dead Lands | Create | — | 2 | 3 |
+| B | 2 Overworld + Nether | Immersive Engineering, Create Crafts & Additions | Ars Nouveau | 3 | 4 |
+| C | 3 Realm before the Requiem | — | Nature's Aura, Iron's Spells 'n Spellbooks, Apotheosis | 4 | 5 |
+| D | 4 Advanced Dead Lands | Mekanism, AE2, Powah | Occultism | 5 | 6 Eden |
+
+- Level 1 has no third-party mods. Its own Dead Lands items follow the same rule: hard in the Dead Lands, easy in the
+  Overworld.
+- After level 5 no new set opens. Eden's reward is our own Root Tools.
+- **How it's built:** every mod is installed from the start. KubeJS keeps each set's items uncraftable until the
+  player's stage allows it, and gives each item two recipes: the hard one during its level and the easy one from the
+  next. The quest that ends a level sets the player's stage (`player.stages`, the same entity tags the first-join
+  script uses). JEI only shows recipes the player can use.
+
+### 7.3 Candidates
+
+| Mod | Status |
+|---|---|
+| Refined Storage | Instead of AE2 if preferred; only one of the two. |
+| Industrial Foregoing, Oritech, Modern Industrialization | Extra tech, could join set B or D. |
+| Mahou Tsukai, Forbidden & Arcanus | Extra magic, could join set B or C. |
+| Storage Drawers | CurseForge only; its 1.21.1 build is unchecked. |
+| Ender Storage | Maybe later, renamed in lore to "Departed Vaults". |
+| Pam's HarvestCraft, Farming for Blockheads | Probably not: crafting busywork against pillar 7. |
+| Avaritia | No: clashes with Eden's creation tools. |
+| Botania | No 1.21.1 build; Nature's Aura took its place in set C. |
+
+**Eden Ring** is Fabric-only and is replaced by our own Eden.
+
+### 7.4 Open
+
+- Waystones break Act I's long walk. Block them in the Dead Lands (no generation, no use) and allow them from the
+  Overworld on?
+- FTB Chunks and JourneyMap both have a minimap. Keep one. The map is also where the veil could leak (D4).
+- Create shouldn't be craftable in the Dead Lands, so the "no vanilla" pillar holds there.
 
 ## 8. Risks
 

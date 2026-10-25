@@ -290,10 +290,26 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 |---|---|---|---|
 | 1 | **Dead Lands** | Act I, Ch. 1–4 | Decided |
 | 2 | **Overworld** (with the Nether as part of its progression) | Act II, Ch. 5–6 | Decided |
-| 3 | Not decided (Twilight Forest is planned here) | Act II, Ch. 7–8; today the story has the Twilight here | Open |
+| 3 | **The realm before the Requiem**: Twilight Forest or Deeper and Darker | Act II, Ch. 7–8; today the story has the Twilight here | Open |
 | 4 | **Advanced Dead Lands** | Act III, Ch. 9–12 | Decided |
-| 5 | Not decided (Twilight Forest is planned here too) | Between Act III and Eden; today the story has the dying Overworld (Ch. 13) here | Open |
+| 5 | **The dying Overworld** at Hush stage 5 | Between Act III and Eden (Ch. 13) | Proposed |
 | 6 | **Eden, the Land of Angels**: the opposite of the Nether | Act IV, Ch. 14–16 | Decided |
+
+### What each level opens
+
+When a level ends, a set of tech and magic mods opens. Its items are **hard** to get during the next level and
+**easy** from the level after that. The Dead Lands' own items work the same way: hard in the Dead Lands, easy in the
+Overworld.
+
+| Level that ends | Opens | Hard during | Easy from |
+|---|---|---|---|
+| 1 Dead Lands | Create | 2 | 3 |
+| 2 Overworld | Immersive Engineering, Create Crafts & Additions, Ars Nouveau | 3 | 4 |
+| 3 Realm before the Requiem | Nature's Aura, Iron's Spells 'n Spellbooks, Apotheosis | 4 | 5 |
+| 4 Advanced Dead Lands | Mekanism, AE2, Powah, Occultism | 5 | 6 |
+
+Eden opens nothing new: its reward is the Root Tools. The main path asks one small thing from each mod; the rest is
+free play. How it's built is in ROADMAP.md §7.2.
 
 ## 10. Open questions (for the author)
 
@@ -303,7 +319,7 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 4. The Ash Maze music has to be original (we can't use Control's "Take Control"). Will you commission it, make it
    yourself, or should I plan for a placeholder?
 5. Should the Sweeper's lines be Azerbaijani, or would you prefer another language (or a mix)?
-6. Levels 3 and 5: Twilight Forest for both (split in two parts), the dying Overworld for level 5, or something new?
+6. Level 3: Twilight Forest or Deeper and Darker? And is the dying Overworld right for level 5?
 7. How exactly are the creative items handed out in parts (which items, at which story moments)?
 8. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
 9. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
