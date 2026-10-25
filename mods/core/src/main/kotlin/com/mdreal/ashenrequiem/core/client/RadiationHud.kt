@@ -13,6 +13,7 @@ object RadiationHud {
     private val EMPTY = CoreConfig.id("hud/radiation_empty")
     private val FULL = CoreConfig.id("hud/radiation_full")
     private const val ICON = 9
+    private const val INNER = 7 // the yellow between the outline columns 0 and 8
 
     fun render(graphics: GuiGraphics, delta: DeltaTracker) {
         val mc = Minecraft.getInstance()
@@ -27,7 +28,9 @@ object RadiationHud {
             graphics.blitSprite(EMPTY, x, y, ICON, ICON)
             val fill = (tenths - i * 10).coerceIn(0, 10)
             if (fill == 0) continue
-            val width = (fill * ICON + 9) / 10
+            // Each tenth shows at least a column, and the last column only lights at a full unit.
+            val shown = if (fill == 10) INNER else Math.round(fill * INNER / 10f).coerceIn(1, INNER - 1)
+            val width = if (fill == 10) ICON else 1 + shown
             graphics.blitSprite(FULL, ICON, ICON, 0, 0, x, y, width, ICON)
         }
         RenderSystem.disableBlend()
