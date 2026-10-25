@@ -33,8 +33,14 @@ neoForge {
     }
 }
 
+repositories {
+    maven { url = 'https://api.modrinth.com/maven'; content { includeGroup 'maven.modrinth' } }
+}
+
 dependencies {
     implementation project(':mods:core')
+    // JER is optional; its compat code only runs when it's installed (the dev pack ships it in dev/pack/mods).
+    compileOnly "maven.modrinth:just-enough-resources-jer:${jer_version}"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
