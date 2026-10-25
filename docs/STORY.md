@@ -298,7 +298,8 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 ### What each level opens
 
 Tech and magic mods are there from the start, but their items need a **hard recipe**: something earned the hard way,
-like a boss drop. Finishing a level's quests adds the **normal recipe** for one set ("just crafted or grown"). The Dead
+like a boss drop. Finishing a level's quests adds the **normal recipe** for one set ("just crafted or grown"): no earned item needed, so the player can make as many as they
+like. The Dead
 Lands' own items work the same way: hard in the Dead Lands, normal once level 1 is done.
 
 | Level whose quests are done | Normal recipes for |

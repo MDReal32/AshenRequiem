@@ -319,7 +319,8 @@ Every tech and magic mod is usable from the start. What changes as the story mov
 - **Hard recipe, always there.** KubeJS replaces each item's default recipe with one that needs something earned the
   hard way: a boss drop, a rare find, a long build. Nothing is locked; you can have it early if you put the work in.
 - **Normal recipe, added by quests.** Finishing the quests that end a level adds the normal recipe for that set
-  ("just crafted or grown"). The hard recipe stays too.
+  ("just crafted or grown"). It doesn't need the earned item, so from then on the player can make as many as they
+  like. The hard recipe stays too.
 
 | Set | Tech | Magic | Normal recipe when this level's quests are done |
 |---|---|---|---|
