@@ -125,8 +125,26 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 - *Cutscene:* **C01 Waking**.
 - The player starts with nothing except the **Subject Tag** (a dog-tag item; flavour text, and a compass that later points to VESPER's signal).
 
+**The first hour**
+- Nothing in the Dead Lands works the old way. Logs don't turn into planks in your hands, and you can't make a crafting
+  table from the start.
+- In a corner of the Cradle stands a **broken workbench**. It can't be used yet.
+- By hand you can gather ash, dirt and bone sand, and slowly break dead logs. Fallen logs and dead leaves give a few
+  sticks. Searching rubble in ruins gives **scrap**. Stone needs a tool, as always.
+- Every tree in the Dead Lands is dead, and it stays dead: leaves drop no saplings, so wood runs out where you've cut it.
+  The bark is **radiated**, a little. Carrying raw dead wood slowly raises your radiation (see §7.1).
+- The first recipe is the only one that works in the inventory: the **scrap knife** (scrap + stick).
+- Use the knife on a dead log to scrape the bark off. A **scraped log** is clean, and it's the only wood that can be
+  worked.
+- Repair the Cradle's workbench with scraped logs and scrap. From then on planks, sticks and tools come from the
+  workbench. This is the pack's first quest.
+- A crafting table of your own can only be made at the repaired workbench, and it needs scrap. Ashen-stone tools come
+  next, then the Long Walk.
+- In the Overworld (level 2) trees are healthy again, and logs, planks and crafting tables work the vanilla way: the
+  Dead Lands' items are hard during level 1 and normal after it (§9).
+
 **Ch. 2 — The Long Walk**
-- *Beat:* Survive the Dead Lands: ash storms, cold nights, hushed creatures. Scavenge ruins for tools and food. A faint
+- *Beat:* Survive the Dead Lands: ash storms, cold nights, hushed creatures, radiation. Scavenge ruins for tools and food. A faint
   radio signal (VESPER) gets clearer the closer you get.
 - *Gate:* Find a **Signal Relay** ruin and repair it. VESPER says hello and the Subject Tag starts pointing roughly
   toward Vigil Station.
@@ -277,6 +295,14 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 Containment Lanterns let the player protect their own areas at every stage. The Hush can be *slowed* locally but never
 *stopped* until the finale.
 
+### 7.1 Radiation (story view)
+
+The Dead Lands are still a little radiated. A new bar in the HUD, next to health and hunger, shows how much radiation
+the player has taken in. Below 4 of its 10 units nothing happens. Above that it hurts, more the higher it climbs, and a
+full bar kills at once. Radiation comes from being near radiated things or carrying them: dead wood's bark first,
+later ruins, Dead Lands ores and the uranium of tech mods like Mekanism. Staying away from them lets it fall again.
+The numbers are in ROADMAP.md D12.
+
 ## 8. Tone and writing rules
 
 - Short sentences. Silence is fine. Say less than you think you need to.
@@ -301,9 +327,9 @@ The pack has 6 levels. Each one is a place, and the story moves the player betwe
 ### What each level opens
 
 Tech and magic mods are there from the start, but their items need a **hard recipe**: something earned the hard way,
-like a boss drop. Finishing a level's quests adds the **normal recipe** for one set ("just crafted or grown"): no earned item needed, so the player can make as many as they
-like. The Dead
-Lands' own items work the same way: hard in the Dead Lands, normal once level 1 is done.
+like a boss drop. Finishing a level's quests adds the **normal recipe** for one set ("just crafted or grown"): no
+earned item needed, so the player can make as many as they like. The Dead Lands' own items work the same way: hard in
+the Dead Lands, normal once level 1 is done.
 
 | Level whose quests are done | Normal recipes for |
 |---|---|
@@ -330,6 +356,7 @@ mod; the rest is free play. How it's built is in ROADMAP.md §7.2.
 8. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
 9. The virus in play: the Hush stages (§7) cover infected areas and mobs. Does it also put effects on the player?
 10. The companion drone (§11): is it VESPER's body, or a character of its own?
+11. What made the Dead Lands radiated: the Hush itself, or what Home did to stop it?
 
 ## 11. Ideas (not decided yet)
 

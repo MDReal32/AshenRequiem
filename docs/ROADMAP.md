@@ -144,6 +144,55 @@ sees it appear during C09 (per player, through the D4 veil). Goal: *"that wasn't
 - **On reveal (C09):** the wave sweeps out, chunks around the player re-render, the true biome is re-sent, the ponds
   fill, and the first green the player has seen in the Dead Lands rises out of ground they've walked a dozen times.
 
+### D11 — Dead Lands crafting (the first hour)
+The story side is STORY.md Act I, "The first hour". The Dead Lands' own items follow the hard → normal rule (§7.2): hard
+during level 1, vanilla again once level 1's quests are done.
+- **Removed at the start** (`modpack`, KubeJS): every log → planks recipe, the vanilla crafting table recipe, and
+  planks → sticks in the inventory grid. They come back with level 1's stage.
+- **Dead trees never grow back:** dead leaves drop no saplings (already true), so cut forests stay cut.
+- **New items and blocks** (`world`):
+  - `scrap`, from rubble piles in ruins and from Waystation loot.
+  - `scrap_knife` (scrap + stick, the only inventory recipe at the start). Using it on a dead log or dead wood
+    scrapes it into a `scraped_log` / `scraped_wood`, like an axe strips logs. It takes durability.
+  - `scraped_log` / `scraped_wood`: not radiated. Only these turn into dead planks, and only at a workbench.
+  - `broken_workbench`, placed in the Cradle. Using it with scraped logs and scrap repairs it into a working crafting
+    table (the first quest's goal).
+  - Crafting table recipe at the workbench: dead planks + scrap.
+- **Radiated:** dead logs and dead wood (items and blocks) carry a little radiation (D12). Scraped wood and planks
+  don't.
+
+### D12 — Radiation
+A per-player value with its own HUD bar. It lives in `core`, so every module and other mods can feed it.
+- **Scale:** 10 units shown in the HUD, each worth 100 points (1000 points in all). Every number here is a config
+  value, to balance in playtests.
+- **Damage per second,** by the units the player has. Between the points below it grows in a straight line (6 units
+  hurts 2.5 hearts a second):
+
+  | Units | Below 4 | 4 | 5 | 7 | 8 | 10 |
+  |---|---|---|---|---|---|---|
+  | Damage | none | ½ heart | 1 heart | 4 hearts | 8 hearts | instant death |
+
+  Its own damage type (`ashen_requiem:radiation`), which armour doesn't block, with its own death message.
+- **Gaining it** (checked once a second, in points per second):
+  - **Carried items:** each radiated item in the inventory adds its strength. A stack adds less than its count times
+    the strength (square root of the count), so one log doesn't matter and a full stack does. Held items count
+    double.
+  - **Nearby blocks and dropped items:** each radiated one within 6 blocks adds its strength, falling off with
+    distance. The scan skips chunk sections that hold no radiated blocks, so it stays cheap.
+  - Strengths come from NeoForge data maps (`ashen_requiem:radiation`, one for items and one for blocks), so modules,
+    KubeJS and datapacks add entries without code.
+- **Losing it:** a slow, steady fall (3 points a second to start) that always runs, so small sources never add up.
+  Death clears it. Cures and protective gear are left for later (open).
+- **First numbers to try:** a dead log is 0.5 points a second. One log or a dead forest around you stays under the
+  fall rate; a full stack of 64 raw logs (+4/s against the fall of 3) climbs slowly and reaches 4 units in about 7 minutes.
+- **HUD:** a row of 10 icons above the hunger bar (air bubbles move up a row), filling in tenths. A NeoForge GUI layer,
+  so cutscenes hide it with the rest of the HUD. The server owns the value and syncs it to the client when it changes.
+- **Debug:** `/ar radiation get|set <player> <points>`.
+- **Other mods' radiation:** radioactive items from tech mods join the same data maps: Mekanism's uranium (ore, raw,
+  ingot), yellowcake, plutonium, polonium and nuclear waste, and Powah's uraninite. Mekanism has its own radiation
+  system; turn it off in its config if it can be, so there is only one bar. Its radioactive chemicals in tanks need a
+  small adapter that reads Mekanism's own radioactivity values. Its hazmat suit should cut our gain.
+
 ## 4. Development stages
 
 Each stage gives you something **playable**. We don't start the next stage until the current one meets its "done
@@ -191,6 +240,9 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
   (tameable mount for the long walk).
 - **Structures:** the Cradle (spawn), Waystations, Signal Relays, ruined towns, dead roads (feature).
 - Sky, fog, weather, ambient sound, ash weather effect.
+- The first hour (D11): no vanilla wood crafting, the scrap knife, scraped wood, the Cradle's broken workbench, the
+  first quest.
+- Radiation v1 (D12): the value, HUD bar, damage, data maps, dead wood as the first source.
 - **Done when:** you can survive the first night with only Dead Lands resources, and none of the ~10 people you
   playtest it with can name a vanilla block they saw.
 
@@ -368,6 +420,8 @@ pack.
   Overworld on?
 - FTB Chunks and JourneyMap both have a minimap. Keep one. The map is also where the veil could leak (D4).
 - Create shouldn't be craftable in the Dead Lands, so the "no vanilla" pillar holds there.
+- Radiation cures and protective gear: our own items, other mods' (Mekanism's hazmat suit), or both?
+- Do items inside backpacks (Sophisticated Backpacks) count toward radiation?
 
 ## 8. Risks
 
