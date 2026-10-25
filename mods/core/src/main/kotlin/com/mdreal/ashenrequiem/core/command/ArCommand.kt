@@ -114,22 +114,25 @@ object ArCommand {
 
     private fun Ctx.reply(text: String) = source.sendSuccess({ Component.literal(text) }, true)
 
+    /** For queries: only whoever ran the command sees it, not every op in chat. */
+    private fun Ctx.answer(text: String) = source.sendSuccess({ Component.literal(text) }, false)
+
     private fun state(ctx: Ctx, players: Collection<ServerPlayer>): Int {
         val server = ctx.source.server
-        ctx.reply(
+        ctx.answer(
             "World: hush=${AshenRequiem.getHushStage(server)}, gate=${AshenRequiem.isGateRepaired(server)}, " +
                 "finale=${AshenRequiem.isFinaleWon(server)}"
         )
         AshenRequiem.locations(server).forEach { (key, pos) ->
-            ctx.reply("  $key -> ${pos.dimension().location()} ${pos.pos().toShortString()}")
+            ctx.answer("  $key -> ${pos.dimension().location()} ${pos.pos().toShortString()}")
         }
-        players.forEach { ctx.reply("${it.scoreboardName}: ${AshenRequiem.progress(it)}") }
+        players.forEach { ctx.answer("${it.scoreboardName}: ${AshenRequiem.progress(it)}") }
         return players.size
     }
 
     private fun hushGet(ctx: Ctx): Int {
         val stage = AshenRequiem.getHushStage(ctx.source.server)
-        ctx.reply("Hush stage: $stage")
+        ctx.answer("Hush stage: $stage")
         return stage
     }
 
@@ -154,7 +157,7 @@ object ArCommand {
     }
 
     private fun levelGet(ctx: Ctx, players: Collection<ServerPlayer>): Int {
-        players.forEach { ctx.reply("${it.scoreboardName}: level ${AshenRequiem.getLevel(it)}") }
+        players.forEach { ctx.answer("${it.scoreboardName}: level ${AshenRequiem.getLevel(it)}") }
         return players.size
     }
 
@@ -178,7 +181,7 @@ object ArCommand {
             val units = points / Radiation.pointsPerUnit()
             val damage = Radiation.damage(units, player.maxHealth)
             val top = sources.take(5).joinToString(", ") { (label, p) -> "$label %.1f".format(p) }
-            ctx.reply(
+            ctx.answer(
                 "${player.gameProfile.name}: %.2f units (%.1f points), %s damage per reading".format(
                     units, points, if (damage == Float.MAX_VALUE) "lethal" else "%.1f".format(damage)
                 ) + if (top.isEmpty()) "" else ". $top"
@@ -193,9 +196,9 @@ object ArCommand {
         val started = System.nanoTime()
         val stats = BiomeSampler.sample(level, radius, step, seeds)
         val ms = (System.nanoTime() - started) / 1_000_000
-        ctx.reply("Biomes in ${level.dimension().location()} within $radius (step $step, ${seeds ?: "world"} seed(s), ${ms}ms):")
+        ctx.answer("Biomes in ${level.dimension().location()} within $radius (step $step, ${seeds ?: "world"} seed(s), ${ms}ms):")
         stats.forEach {
-            ctx.reply(
+            ctx.answer(
                 "  %-45s %5.1f%% (%.1f-%.1f)  in %d seed(s)  nearest %d-%d".format(
                     it.biome, it.meanShare, it.minShare, it.maxShare, it.seedsFound, it.nearestMin, it.nearestMax
                 )
