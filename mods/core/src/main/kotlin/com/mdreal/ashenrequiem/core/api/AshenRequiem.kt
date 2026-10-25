@@ -1,5 +1,6 @@
 package com.mdreal.ashenrequiem.core.api
 
+import com.mdreal.ashenrequiem.core.radiation.Radiation
 import com.mdreal.ashenrequiem.core.state.Attachments
 import com.mdreal.ashenrequiem.core.state.PlayerProgress
 import com.mdreal.ashenrequiem.core.state.ProgressSync
@@ -106,6 +107,9 @@ object AshenRequiem {
 
     fun markCinematicSeen(player: ServerPlayer, id: String): Boolean =
         update(player) { it.copy(seenCinematics = it.seenCinematics + id) }
+
+    /** The player's radiation reading, in units of the HUD bar (10 is a full bar). Updated once a second. */
+    fun getRadiation(player: ServerPlayer): Float = Radiation.units(player)
 
     /** Wipes a player's story progress. Losing the Requiem this way still fires [RequiemChangedEvent]. */
     fun resetPlayer(player: ServerPlayer) {

@@ -2,6 +2,7 @@ package com.mdreal.ashenrequiem.core.network
 
 import com.mdreal.ashenrequiem.core.CoreConfig
 import com.mdreal.ashenrequiem.core.compat.jer.LootTableSync
+import com.mdreal.ashenrequiem.core.radiation.RadiationSync
 import com.mdreal.ashenrequiem.core.recipe.RecipeGateSync
 import com.mdreal.ashenrequiem.core.state.PlayerProgress
 import io.netty.buffer.ByteBuf
@@ -41,5 +42,6 @@ object Network {
         }
         RecipeGateSync.register(event.registrar(PROTOCOL))
         LootTableSync.register(event.registrar(PROTOCOL))
+        RadiationSync.register(event.registrar(PROTOCOL))
     }
 }

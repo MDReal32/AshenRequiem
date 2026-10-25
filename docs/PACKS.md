@@ -23,9 +23,13 @@ A file at the same path replaces the mod's; a new file adds to it.
   turns it off.
 - **Recipes, loot tables, tags, worldgen** (biomes, features, the Dead Lands dimension): the usual data paths under
   `data/ashen_requiem_world/`.
+- **Radiation**: strengths in the data maps `data/ashen_requiem/data_maps/item/radiation.json` (points per carried
+  item) and `data/ashen_requiem/data_maps/block/radiation.json` (points from a block right next to the player), as
+  `{ "values": { "<item or block id>": 3 } }`. Tags work as keys too. The world mod's dead wood is its first entry.
 - **Cinematics**: scene files under `data/<namespace>/cinematica/scenes/`, played by Cinematica Studio.
 - **Story state**: `/ar` commands (`/ar level set <player> <n>` and the rest), or `AR` from KubeJS
   (`AR.setLevel(...)`, `AR.setHushStage(...)`). `LevelChangedEvent` is posted on NeoForge's event bus for mods.
-- **Settings**: the mods' config files.
+- **Settings**: the mods' config files (`config/ashen-requiem/`; radiation's scale, reach and damage are in
+  `core.toml`).
 - **Textures and models**: a resource pack, under `assets/ashen_requiem_world/`. Most blocks pick between seven
   textures (`<name>`, `<name>_1` … `<name>_6`), set in the blockstates.

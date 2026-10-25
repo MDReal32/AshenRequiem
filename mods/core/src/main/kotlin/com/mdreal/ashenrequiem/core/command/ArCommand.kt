@@ -2,6 +2,7 @@ package com.mdreal.ashenrequiem.core.command
 
 import com.mdreal.ashenrequiem.core.api.AshenRequiem
 import com.mdreal.ashenrequiem.core.api.DimensionSpawns
+import com.mdreal.ashenrequiem.core.radiation.Radiation
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.IntegerArgumentType
@@ -60,6 +61,7 @@ object ArCommand {
                         )
                 )
                 .then(Commands.literal("reset").withTargets(::reset))
+                .then(Commands.literal("radiation").withTargets(::radiation))
                 .then(
                     Commands.literal("location").then(
                         Commands.literal("clear").then(
@@ -166,6 +168,22 @@ object ArCommand {
     private fun reset(ctx: Ctx, players: Collection<ServerPlayer>): Int {
         players.forEach(AshenRequiem::resetPlayer)
         ctx.reply("Reset story progress for ${players.size} player(s)")
+        return players.size
+    }
+
+    /** `/ar radiation [targets]`: a fresh reading and its five biggest sources. */
+    private fun radiation(ctx: Ctx, players: Collection<ServerPlayer>): Int {
+        for (player in players) {
+            val (points, sources) = Radiation.report(player)
+            val units = points / Radiation.pointsPerUnit()
+            val damage = Radiation.damage(units, player.maxHealth)
+            val top = sources.take(5).joinToString(", ") { (label, p) -> "$label %.1f".format(p) }
+            ctx.reply(
+                "${player.gameProfile.name}: %.2f units (%.1f points), %s damage per reading".format(
+                    units, points, if (damage == Float.MAX_VALUE) "lethal" else "%.1f".format(damage)
+                ) + if (top.isEmpty()) "" else ". $top"
+            )
+        }
         return players.size
     }
 

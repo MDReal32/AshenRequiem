@@ -176,7 +176,7 @@ during level 1, vanilla again once level 1's quests are done.
 ### D12 — Radiation
 A per-player value with its own HUD bar. It lives in `core`, so every module and other mods can feed it.
 - **Scale:** 10 units shown in the HUD, each worth 100 points (1000 points in all). Every number here is a config
-  value, to balance in playtests.
+  value (`config/ashen-requiem/core.toml`, `[radiation]`), to balance in playtests.
 - **Damage per second,** by the units the player has. Between the points below it grows in a straight line (6 units
   hurts 2.5 hearts a second):
 

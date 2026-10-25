@@ -8,5 +8,8 @@
   "jei.ashen_requiem_core.gate.locked.always": "Can't be crafted",
   "jei.ashen_requiem_core.gate.workbench.until": "Needs a 3×3 grid until level %s",
   "jei.ashen_requiem_core.gate.workbench.always": "Needs a 3×3 grid",
-  "jei.ashen_requiem_core.use_on_block": "Right-click the block with it"
+  "jei.ashen_requiem_core.use_on_block": "Right-click the block with it",
+  "tooltip.ashen_requiem_core.radiated": "Radiated",
+  "death.attack.ashen_requiem.radiation": "%1$s died of radiation",
+  "death.attack.ashen_requiem.radiation.player": "%1$s died of radiation while fighting %2$s"
 }
