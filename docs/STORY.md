@@ -319,19 +319,17 @@ mod; the rest is free play. How it's built is in ROADMAP.md §7.2.
 
 ## 10. Open questions (for the author)
 
-1. The Otherside has no last boss of its own. The Requiem comes from outlasting the Choir's chorus in the Ancient
-   Temple's deepest room. Okay, or should it be a boss we add?
-2. Should villagers ever *talk* (subtitled murmurs), or stay fully silent?
-3. Multiplayer: does each player get their own wake-up pod, or does the team share one?
-4. The Ash Maze music has to be original (we can't use Control's "Take Control"). Will you commission it, make it
+1. Should villagers ever *talk* (subtitled murmurs), or stay fully silent?
+2. Multiplayer: does each player get their own wake-up pod, or does the team share one?
+3. The Ash Maze music has to be original (we can't use Control's "Take Control"). Will you commission it, make it
    yourself, or should I plan for a placeholder?
-5. Should the Sweeper's lines be Azerbaijani, or would you prefer another language (or a mix)?
-6. Is the dying Overworld right for level 5?
-7. How exactly are the creative items handed out in parts (which items, at which story moments)?
-8. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
-9. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
-10. The virus in play: the Hush stages (§7) cover infected areas and mobs. Does it also put effects on the player?
-11. The companion drone (§11): is it VESPER's body, or a character of its own?
+4. Should the Sweeper's lines be Azerbaijani, or would you prefer another language (or a mix)?
+5. Is the dying Overworld right for level 5?
+6. How exactly are the creative items handed out in parts (which items, at which story moments)?
+7. Which new structures appear in the Advanced Dead Lands, besides the Quiet Archive and Vigil Station's opened wings?
+8. The ending: is the loop broken for good (current plan), or does it start again for New Game+?
+9. The virus in play: the Hush stages (§7) cover infected areas and mobs. Does it also put effects on the player?
+10. The companion drone (§11): is it VESPER's body, or a character of its own?
 
 ## 11. Ideas (not decided yet)
 
