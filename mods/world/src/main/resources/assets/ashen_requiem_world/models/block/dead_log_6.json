@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ashen_requiem_world:block/dead_log_top_6",
+    "side": "ashen_requiem_world:block/dead_log_6"
+  }
+}

@@ -4,7 +4,31 @@
       { "model": "ashen_requiem_world:block/grey_marsh_mud" },
       { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 90 },
       { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 180 },
-      { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 270 }
+      { "model": "ashen_requiem_world:block/grey_marsh_mud", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_1" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_1", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_1", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_1", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_2" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_2", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_2", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_2", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_3" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_3", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_3", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_3", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_4" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_4", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_4", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_4", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_5" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_5", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_5", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_5", "y": 270 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_6" },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_6", "y": 90 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_6", "y": 180 },
+      { "model": "ashen_requiem_world:block/grey_marsh_mud_6", "y": 270 }
     ]
   }
 }

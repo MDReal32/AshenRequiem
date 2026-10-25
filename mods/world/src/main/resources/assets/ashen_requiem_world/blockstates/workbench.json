@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
-      "model": "ashen_requiem_world:block/workbench"
-    }
+    "": [
+      { "model": "ashen_requiem_world:block/workbench" },
+      { "model": "ashen_requiem_world:block/workbench_1" },
+      { "model": "ashen_requiem_world:block/workbench_2" },
+      { "model": "ashen_requiem_world:block/workbench_3" },
+      { "model": "ashen_requiem_world:block/workbench_4" },
+      { "model": "ashen_requiem_world:block/workbench_5" },
+      { "model": "ashen_requiem_world:block/workbench_6" }
+    ]
   }
 }

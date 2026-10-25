@@ -4,7 +4,31 @@
       { "model": "ashen_requiem_world:block/ash" },
       { "model": "ashen_requiem_world:block/ash", "y": 90 },
       { "model": "ashen_requiem_world:block/ash", "y": 180 },
-      { "model": "ashen_requiem_world:block/ash", "y": 270 }
+      { "model": "ashen_requiem_world:block/ash", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_1" },
+      { "model": "ashen_requiem_world:block/ash_1", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_1", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_1", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_2" },
+      { "model": "ashen_requiem_world:block/ash_2", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_2", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_2", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_3" },
+      { "model": "ashen_requiem_world:block/ash_3", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_3", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_3", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_4" },
+      { "model": "ashen_requiem_world:block/ash_4", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_4", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_4", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_5" },
+      { "model": "ashen_requiem_world:block/ash_5", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_5", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_5", "y": 270 },
+      { "model": "ashen_requiem_world:block/ash_6" },
+      { "model": "ashen_requiem_world:block/ash_6", "y": 90 },
+      { "model": "ashen_requiem_world:block/ash_6", "y": 180 },
+      { "model": "ashen_requiem_world:block/ash_6", "y": 270 }
     ]
   }
 }

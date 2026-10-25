@@ -1,5 +1,34 @@
 {
   "variants": {
-    "": { "model": "ashen_requiem_world:block/ashen_bedrock" }
+    "": [
+      { "model": "ashen_requiem_world:block/ashen_bedrock" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_1" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_1", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_1", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_1", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_2" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_2", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_2", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_2", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_3" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_3", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_3", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_3", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_4" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_4", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_4", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_4", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_5" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_5", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_5", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_5", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_6" },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_6", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_6", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_bedrock_6", "y": 270 }
+    ]
   }
 }

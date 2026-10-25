@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
-      "model": "ashen_requiem_world:block/broken_workbench"
-    }
+    "logs=0,scrap=0": { "model": "ashen_requiem_world:block/broken_workbench" },
+    "logs=0,scrap=1": { "model": "ashen_requiem_world:block/broken_workbench_0_1" },
+    "logs=0,scrap=2": { "model": "ashen_requiem_world:block/broken_workbench_0_2" },
+    "logs=1,scrap=0": { "model": "ashen_requiem_world:block/broken_workbench_1_0" },
+    "logs=1,scrap=1": { "model": "ashen_requiem_world:block/broken_workbench_1_1" },
+    "logs=1,scrap=2": { "model": "ashen_requiem_world:block/broken_workbench_1_2" },
+    "logs=2,scrap=0": { "model": "ashen_requiem_world:block/broken_workbench_2_0" },
+    "logs=2,scrap=1": { "model": "ashen_requiem_world:block/broken_workbench_2_1" },
+    "logs=2,scrap=2": { "model": "ashen_requiem_world:block/workbench" }
   }
 }

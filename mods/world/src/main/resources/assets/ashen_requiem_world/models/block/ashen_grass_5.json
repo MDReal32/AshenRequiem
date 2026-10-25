@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "ashen_requiem_world:block/ashen_grass/top_5",
+    "bottom": "ashen_requiem_world:block/ashen_dirt/bottom_5",
+    "side": "ashen_requiem_world:block/ashen_grass/side_5"
+  }
+}

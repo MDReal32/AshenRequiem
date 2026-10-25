@@ -1,7 +1,31 @@
 {
   "variants": {
-    "axis=x": { "model": "ashen_requiem_world:block/dead_wood", "x": 90, "y": 90 },
-    "axis=y": { "model": "ashen_requiem_world:block/dead_wood" },
-    "axis=z": { "model": "ashen_requiem_world:block/dead_wood", "x": 90 }
+    "axis=x": [
+      { "model": "ashen_requiem_world:block/dead_wood", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_1", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_2", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_3", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_4", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_5", "x": 90, "y": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_6", "x": 90, "y": 90 }
+    ],
+    "axis=y": [
+      { "model": "ashen_requiem_world:block/dead_wood" },
+      { "model": "ashen_requiem_world:block/dead_wood_1" },
+      { "model": "ashen_requiem_world:block/dead_wood_2" },
+      { "model": "ashen_requiem_world:block/dead_wood_3" },
+      { "model": "ashen_requiem_world:block/dead_wood_4" },
+      { "model": "ashen_requiem_world:block/dead_wood_5" },
+      { "model": "ashen_requiem_world:block/dead_wood_6" }
+    ],
+    "axis=z": [
+      { "model": "ashen_requiem_world:block/dead_wood", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_1", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_2", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_3", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_4", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_5", "x": 90 },
+      { "model": "ashen_requiem_world:block/dead_wood_6", "x": 90 }
+    ]
   }
 }

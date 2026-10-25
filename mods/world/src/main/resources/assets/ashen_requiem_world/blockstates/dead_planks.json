@@ -1,5 +1,13 @@
 {
   "variants": {
-    "": { "model": "ashen_requiem_world:block/dead_planks" }
+    "": [
+      { "model": "ashen_requiem_world:block/dead_planks" },
+      { "model": "ashen_requiem_world:block/dead_planks_1" },
+      { "model": "ashen_requiem_world:block/dead_planks_2" },
+      { "model": "ashen_requiem_world:block/dead_planks_3" },
+      { "model": "ashen_requiem_world:block/dead_planks_4" },
+      { "model": "ashen_requiem_world:block/dead_planks_5" },
+      { "model": "ashen_requiem_world:block/dead_planks_6" }
+    ]
   }
 }

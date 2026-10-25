@@ -1,7 +1,13 @@
 {
   "variants": {
-    "": {
-      "model": "ashen_requiem_world:block/rubble"
-    }
+    "": [
+      { "model": "ashen_requiem_world:block/rubble" },
+      { "model": "ashen_requiem_world:block/rubble_1" },
+      { "model": "ashen_requiem_world:block/rubble_2" },
+      { "model": "ashen_requiem_world:block/rubble_3" },
+      { "model": "ashen_requiem_world:block/rubble_4" },
+      { "model": "ashen_requiem_world:block/rubble_5" },
+      { "model": "ashen_requiem_world:block/rubble_6" }
+    ]
   }
 }

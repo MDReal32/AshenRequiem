@@ -1,5 +1,13 @@
 {
   "variants": {
-    "": { "model": "ashen_requiem_world:block/ashen_cobblestone" }
+    "": [
+      { "model": "ashen_requiem_world:block/ashen_cobblestone" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_1" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_2" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_3" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_4" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_5" },
+      { "model": "ashen_requiem_world:block/ashen_cobblestone_6" }
+    ]
   }
 }

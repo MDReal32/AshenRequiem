@@ -4,7 +4,31 @@
       { "model": "ashen_requiem_world:block/ashen_grass" },
       { "model": "ashen_requiem_world:block/ashen_grass", "y": 90 },
       { "model": "ashen_requiem_world:block/ashen_grass", "y": 180 },
-      { "model": "ashen_requiem_world:block/ashen_grass", "y": 270 }
+      { "model": "ashen_requiem_world:block/ashen_grass", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_1" },
+      { "model": "ashen_requiem_world:block/ashen_grass_1", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_1", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_1", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_2" },
+      { "model": "ashen_requiem_world:block/ashen_grass_2", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_2", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_2", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_3" },
+      { "model": "ashen_requiem_world:block/ashen_grass_3", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_3", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_3", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_4" },
+      { "model": "ashen_requiem_world:block/ashen_grass_4", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_4", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_4", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_5" },
+      { "model": "ashen_requiem_world:block/ashen_grass_5", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_5", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_5", "y": 270 },
+      { "model": "ashen_requiem_world:block/ashen_grass_6" },
+      { "model": "ashen_requiem_world:block/ashen_grass_6", "y": 90 },
+      { "model": "ashen_requiem_world:block/ashen_grass_6", "y": 180 },
+      { "model": "ashen_requiem_world:block/ashen_grass_6", "y": 270 }
     ]
   }
 }
