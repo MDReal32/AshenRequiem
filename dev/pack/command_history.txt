@@ -29,3 +29,6 @@
 /probejs dump
 /gamemode survival
 /gamemode creative
+/cinematica play local:c01_waking
+/cinematica play local:intro
+/probejs
