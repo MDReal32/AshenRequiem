@@ -1,7 +1,6 @@
 {
   // Types come from ProbeJS (8.x), which dumps them into the pack's .probe folder when the game loads a world.
   "compilerOptions": {
-    "composite": true,
     "target": "ES2022",
     "lib": ["ES2022"],
     "module": "preserve",
