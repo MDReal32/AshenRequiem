@@ -152,7 +152,8 @@ during level 1, vanilla again once level 1's quests are done.
   `until_level` (blocked while the player's `level` is lower) and `workbench_only` (blocked in the 2×2 inventory
   grid). The check sits where the server looks up a crafting recipe for a player: vanilla's crafting grid and
   FastWorkbench's, which replaces it in our pack. Machines and autocrafters have no player, so gates don't apply to
-  them. The quest that ends a level runs `/ar level set <player> <n>` (or `AR.setLevel` from KubeJS).
+  them. The quest that ends a level runs `/ar level set <player> <n>` (or `AR.setLevel` from KubeJS). A pack replaces or adds
+  gates with its own files (see PACKS.md).
 - **Gated in level 1** (`world`'s gate files, all `until_level: 2`): every vanilla log → planks recipe and the
   vanilla crafting table; vanilla sticks and our dead planks are `workbench_only`.
 - **Per-player level** (`core`): `level` in the player's progress, 1–6. `/ar level get|set`, `AR.getLevel` /
