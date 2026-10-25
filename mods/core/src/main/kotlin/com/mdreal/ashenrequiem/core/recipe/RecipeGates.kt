@@ -23,6 +23,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.AddReloadListenerEvent
+import net.neoforged.neoforge.event.OnDatapackSyncEvent
 import java.util.Optional
 
 /**
@@ -37,15 +38,23 @@ object RecipeGates {
     private val LOGGER = LogUtils.getLogger()
 
     /** Blocks [recipes] while the player's level is below [untilLevel] (always, if empty); only in the 2×2 grid if [workbenchOnly]. */
-    private data class Gate(val recipes: List<ResourceLocation>, val untilLevel: Optional<Int>, val workbenchOnly: Boolean)
+    data class Gate(val recipes: List<ResourceLocation>, val untilLevel: Optional<Int>, val workbenchOnly: Boolean) {
+        fun blocks(level: Int, inInventoryGrid: Boolean): Boolean =
+            untilLevel.map { level < it }.orElse(true) && (!workbenchOnly || inInventoryGrid)
+    }
 
-    private val GATE_CODEC: Codec<Gate> = RecordCodecBuilder.create { i ->
+    val GATE_CODEC: Codec<Gate> = RecordCodecBuilder.create { i ->
         i.group(
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(Gate::recipes),
             Codec.INT.optionalFieldOf("until_level").forGetter(Gate::untilLevel),
             Codec.BOOL.optionalFieldOf("workbench_only", false).forGetter(Gate::workbenchOnly),
         ).apply(i, ::Gate)
     }
+
+    /** Every gate loaded, as written; clients get these to show the gates in JEI ([RecipeGateSync]). */
+    @Volatile
+    var all: List<Gate> = emptyList()
+        private set
 
     @Volatile
     private var gates: Map<ResourceLocation, List<Gate>> = emptyMap()
@@ -54,6 +63,7 @@ object RecipeGates {
 
     fun hook(bus: IEventBus) {
         bus.addListener<AddReloadListenerEvent> { it.addListener(Loader) }
+        bus.addListener<OnDatapackSyncEvent> { event -> event.relevantPlayers.forEach(RecipeGateSync::send) }
     }
 
     @JvmStatic
@@ -65,9 +75,7 @@ object RecipeGates {
     fun isBlocked(recipe: ResourceLocation, player: ServerPlayer, menu: AbstractContainerMenu): Boolean {
         val forRecipe = gates[recipe] ?: return false
         val level = AshenRequiem.getLevel(player)
-        return forRecipe.any { gate ->
-            gate.untilLevel.map { level < it }.orElse(true) && (!gate.workbenchOnly || menu is InventoryMenu)
-        }
+        return forRecipe.any { it.blocks(level, menu is InventoryMenu) }
     }
 
     /**
@@ -90,14 +98,21 @@ object RecipeGates {
         return Optional.ofNullable(all.firstOrNull(::usable))
     }
 
+    fun byRecipe(gates: List<Gate>): Map<ResourceLocation, List<Gate>> {
+        val map = mutableMapOf<ResourceLocation, MutableList<Gate>>()
+        gates.forEach { gate -> gate.recipes.forEach { map.getOrPut(it) { mutableListOf() } += gate } }
+        return map
+    }
+
     private object Loader : SimpleJsonResourceReloadListener(Gson(), "ashen_requiem/recipe_gates") {
         override fun apply(files: Map<ResourceLocation, JsonElement>, manager: ResourceManager, profiler: ProfilerFiller) {
-            val loaded = mutableMapOf<ResourceLocation, MutableList<Gate>>()
-            files.forEach { (file, json) ->
+            val parsed = files.mapNotNull { (file, json) ->
                 GATE_CODEC.parse(JsonOps.INSTANCE, json)
                     .resultOrPartial { LOGGER.error("Recipe gate {} is invalid: {}", file, it) }
-                    .ifPresent { gate -> gate.recipes.forEach { loaded.getOrPut(it) { mutableListOf() } += gate } }
+                    .orElse(null)
             }
+            val loaded = byRecipe(parsed)
+            all = parsed
             gates = loaded
             LOGGER.info("Loaded {} recipe gate file(s) covering {} recipe(s)", files.size, loaded.size)
         }

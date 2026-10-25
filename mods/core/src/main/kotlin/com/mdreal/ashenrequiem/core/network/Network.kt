@@ -2,6 +2,7 @@ package com.mdreal.ashenrequiem.core.network
 
 import com.mdreal.ashenrequiem.core.CoreConfig
 import com.mdreal.ashenrequiem.core.compat.jer.LootTableSync
+import com.mdreal.ashenrequiem.core.recipe.RecipeGateSync
 import com.mdreal.ashenrequiem.core.state.PlayerProgress
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -38,6 +39,7 @@ object Network {
         event.registrar(PROTOCOL).playToClient(PlayerProgressPayload.TYPE, PlayerProgressPayload.STREAM_CODEC) { payload, _ ->
             ClientProgress.current = payload.progress
         }
+        RecipeGateSync.register(event.registrar(PROTOCOL))
         LootTableSync.register(event.registrar(PROTOCOL))
     }
 }

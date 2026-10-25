@@ -1,0 +1,11 @@
+{
+  "jei.ashen_requiem_core.in_world": "In the world",
+
+  "jei.ashen_requiem_core.gate.level": "Level %s",
+  "jei.ashen_requiem_core.gate.locked": "Locked",
+  "jei.ashen_requiem_core.gate.workbench": "3×3 only",
+  "jei.ashen_requiem_core.gate.level.until": "Needs level %s (you are level %s)",
+  "jei.ashen_requiem_core.gate.locked.always": "Can't be crafted by hand",
+  "jei.ashen_requiem_core.gate.workbench.until": "Needs a 3×3 crafting grid, not the inventory's 2×2, until level %s (you are level %s)",
+  "jei.ashen_requiem_core.gate.workbench.always": "Needs a 3×3 crafting grid, not the inventory's 2×2"
+}

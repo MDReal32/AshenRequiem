@@ -22,11 +22,7 @@ class ScrapKnifeItem(props: Properties) : Item(props) {
         val level = context.level
         val pos = context.clickedPos
         val state = level.getBlockState(pos)
-        val scraped = when (state.block) {
-            Blocks.DEAD_LOG.block.get() -> Blocks.SCRAPED_LOG.block.get()
-            Blocks.DEAD_WOOD.block.get() -> Blocks.SCRAPED_WOOD.block.get()
-            else -> return InteractionResult.PASS
-        }
+        val scraped = SCRAPES[state.block] ?: return InteractionResult.PASS
         val player = context.player
         level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1f, 1.2f)
         if (!level.isClientSide) {
@@ -37,5 +33,15 @@ class ScrapKnifeItem(props: Properties) : Item(props) {
             player?.let { context.itemInHand.hurtAndBreak(1, it, LivingEntity.getSlotForHand(context.hand)) }
         }
         return InteractionResult.sidedSuccess(level.isClientSide)
+    }
+
+    companion object {
+        /** What the knife scrapes into what. JEI shows the same list. */
+        val SCRAPES: Map<Block, Block> by lazy {
+            mapOf(
+                Blocks.DEAD_LOG.block.get() to Blocks.SCRAPED_LOG.block.get(),
+                Blocks.DEAD_WOOD.block.get() to Blocks.SCRAPED_WOOD.block.get(),
+            )
+        }
     }
 }

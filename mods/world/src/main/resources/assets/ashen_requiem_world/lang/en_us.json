@@ -35,5 +35,16 @@
   "biome.ashen_requiem_world.deadlands.shattered_highlands": "Shattered Highlands",
   "biome.ashen_requiem_world.deadlands.ash_ocean": "Ash Ocean",
   "biome.ashen_requiem_world.deadlands.last_garden": "The Last Garden",
-  "jer.dim.ashen_requiem_world:deadlands": "The Dead Lands"
+  "jer.dim.ashen_requiem_world:deadlands": "The Dead Lands",
+
+  "jei.ashen_requiem_world.scraping": "Scraping",
+  "jei.ashen_requiem_world.scraping.note": "Use the knife on the block (1 durability)",
+  "jei.ashen_requiem_world.repairing": "Repairing",
+  "jei.ashen_requiem_world.repairing.note": "Use each item on the block, one at a time",
+  "jei.ashen_requiem_world.info.rubble": "Heaps of rubble lie across the Dead Lands. Break them for scrap, and now and then a stick.",
+  "jei.ashen_requiem_world.info.scrap": "Comes from breaking rubble, which lies across the Dead Lands. The first thing you can work with.",
+  "jei.ashen_requiem_world.info.scrap_knife": "Use it on a dead log or dead wood to scrape the radiated bark off. Each scrape costs 1 durability.",
+  "jei.ashen_requiem_world.info.dead_log": "The Dead Lands' trees are long dead, their bark radiated. Scrape it off with a scrap knife before the wood is any use.",
+  "jei.ashen_requiem_world.info.broken_workbench": "The Cradle's workbench, broken. Use %s scraped logs and %s scrap on it to repair it.",
+  "jei.ashen_requiem_world.info.workbench": "Works like a crafting table. Some recipes need its 3×3 grid and can't be made in the inventory."
 }
