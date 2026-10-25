@@ -1,6 +1,9 @@
 package com.mdreal.ashenrequiem.world.init
 
 import com.mdreal.ashenrequiem.world.WorldConfig
+import com.mdreal.ashenrequiem.world.block.BrokenWorkbenchBlock
+import com.mdreal.ashenrequiem.world.block.RubbleBlock
+import com.mdreal.ashenrequiem.world.block.WorkbenchBlock
 import com.mdreal.ashenrequiem.world.utils.BlockWithItem
 import com.mdreal.ashenrequiem.world.utils.registerBlockWithItem
 import net.minecraft.world.level.block.Block
@@ -57,6 +60,15 @@ object Blocks {
         "dead_wood", { it.mapColor(MapColor.COLOR_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0f).sound(SoundType.WOOD) },
         factory = ::RotatedPillarBlock
     )
+    /** A dead log with the radiated bark scraped off by a scrap knife; the only wood the Dead Lands can work (ROADMAP D11). */
+    val SCRAPED_LOG = registerBlockWithItem(
+        "scraped_log", { it.mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.0f).sound(SoundType.WOOD) },
+        factory = ::RotatedPillarBlock
+    )
+    val SCRAPED_WOOD = registerBlockWithItem(
+        "scraped_wood", { it.mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.0f).sound(SoundType.WOOD) },
+        factory = ::RotatedPillarBlock
+    )
     val DEAD_PLANKS = registerBlockWithItem(
         "dead_planks", { it.mapColor(MapColor.COLOR_LIGHT_GRAY).instrument(NoteBlockInstrument.BASS).strength(2.0f, 3.0f).sound(SoundType.WOOD) }
     )
@@ -68,6 +80,20 @@ object Blocks {
                 .ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor { _, _, _ -> false }
         },
         factory = ::LeavesBlock
+    )
+    /** Heaps of the old world's leftovers; break them for scrap and sticks. */
+    val RUBBLE = registerBlockWithItem(
+        "rubble", { it.mapColor(MapColor.STONE).strength(0.6f).sound(SoundType.GRAVEL).pushReaction(PushReaction.DESTROY) },
+        factory = ::RubbleBlock
+    )
+    /** The Cradle's workbench before it's repaired. One per world, placed at the Cradle. */
+    val BROKEN_WORKBENCH = registerBlockWithItem(
+        "broken_workbench", { it.mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD) },
+        factory = ::BrokenWorkbenchBlock
+    )
+    val WORKBENCH = registerBlockWithItem(
+        "workbench", { it.mapColor(MapColor.WOOD).instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD) },
+        factory = ::WorkbenchBlock
     )
     /** The old Dead Lands floor. No longer generated (the floor is vanilla bedrock); kept so older worlds keep theirs. */
     val ASHEN_BEDROCK = registerBlockWithItem(

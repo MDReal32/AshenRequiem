@@ -2,6 +2,10 @@
   "values": [
     "ashen_requiem_world:dead_log",
     "ashen_requiem_world:dead_wood",
-    "ashen_requiem_world:dead_planks"
+    "ashen_requiem_world:dead_planks",
+    "ashen_requiem_world:scraped_log",
+    "ashen_requiem_world:scraped_wood",
+    "ashen_requiem_world:broken_workbench",
+    "ashen_requiem_world:workbench"
   ]
 }

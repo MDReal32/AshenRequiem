@@ -1,0 +1,8 @@
+{
+  "until_level": 2,
+  "workbench_only": true,
+  "recipes": [
+    "minecraft:stick",
+    "ashen_requiem_world:dead_planks"
+  ]
+}

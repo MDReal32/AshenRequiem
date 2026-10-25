@@ -5,6 +5,7 @@ import com.mdreal.ashenrequiem.core.api.DimensionSpawns
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.ArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
@@ -48,7 +49,24 @@ object ArCommand {
                         .then(Commands.literal("grant").withTargets { ctx, players -> requiem(ctx, players, true) })
                         .then(Commands.literal("revoke").withTargets { ctx, players -> requiem(ctx, players, false) })
                 )
+                .then(
+                    Commands.literal("level")
+                        .then(Commands.literal("get").withTargets(::levelGet))
+                        .then(
+                            Commands.literal("set").then(
+                                Commands.argument("level", IntegerArgumentType.integer(1, AshenRequiem.MAX_LEVEL))
+                                    .withTargets(::levelSet)
+                            )
+                        )
+                )
                 .then(Commands.literal("reset").withTargets(::reset))
+                .then(
+                    Commands.literal("location").then(
+                        Commands.literal("clear").then(
+                            Commands.argument("key", StringArgumentType.word()).executes(::locationClear)
+                        )
+                    )
+                )
                 .then(
                     Commands.literal("tp").then(
                         Commands.argument("dimension", DimensionArgument.dimension()).withTargets(::tp)
@@ -133,6 +151,18 @@ object ArCommand {
         return players.size
     }
 
+    private fun levelGet(ctx: Ctx, players: Collection<ServerPlayer>): Int {
+        players.forEach { ctx.reply("${it.scoreboardName}: level ${AshenRequiem.getLevel(it)}") }
+        return players.size
+    }
+
+    private fun levelSet(ctx: Ctx, players: Collection<ServerPlayer>): Int {
+        val level = IntegerArgumentType.getInteger(ctx, "level")
+        players.forEach { AshenRequiem.setLevel(it, level) }
+        ctx.reply("Set level $level for ${players.size} player(s)")
+        return players.size
+    }
+
     private fun reset(ctx: Ctx, players: Collection<ServerPlayer>): Int {
         players.forEach(AshenRequiem::resetPlayer)
         ctx.reply("Reset story progress for ${players.size} player(s)")
@@ -154,6 +184,14 @@ object ArCommand {
             )
         }
         return stats.size
+    }
+
+    /** Forgets a story location, so whatever placed it runs again (for example the Cradle's workbench on the next login). */
+    private fun locationClear(ctx: Ctx): Int {
+        val key = StringArgumentType.getString(ctx, "key")
+        val removed = AshenRequiem.removeLocation(ctx.source.server, key)
+        ctx.reply(if (removed) "Cleared location $key" else "No location named $key")
+        return if (removed) 1 else 0
     }
 
     private fun tp(ctx: Ctx, players: Collection<ServerPlayer>): Int {

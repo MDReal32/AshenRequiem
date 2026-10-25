@@ -12,3 +12,6 @@ class GateStateChangedEvent(val server: MinecraftServer, val repaired: Boolean) 
 
 /** Posted on the NeoForge game bus after a player gains or loses the Requiem mark. */
 class RequiemChangedEvent(val player: ServerPlayer, val hasRequiem: Boolean) : Event()
+
+/** Posted on the NeoForge game bus after a player moves to another level (STORY.md §9). */
+class LevelChangedEvent(val player: ServerPlayer, val oldLevel: Int, val newLevel: Int) : Event()

@@ -2,6 +2,7 @@ package com.mdreal.ashenrequiem.core
 
 import com.mdreal.ashenrequiem.core.command.ArCommand
 import com.mdreal.ashenrequiem.core.network.Network
+import com.mdreal.ashenrequiem.core.recipe.RecipeGates
 import com.mdreal.ashenrequiem.core.state.Attachments
 import com.mdreal.ashenrequiem.core.state.ProgressSync
 import net.neoforged.bus.api.IEventBus
@@ -15,5 +16,6 @@ class AshenRequiemCore(modBus: IEventBus) {
         Network.hook(modBus)
         ProgressSync.hook(NeoForge.EVENT_BUS)
         ArCommand.hook(NeoForge.EVENT_BUS)
+        RecipeGates.hook(NeoForge.EVENT_BUS)
     }
 }

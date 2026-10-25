@@ -20,6 +20,7 @@ object CreativeTab {
                 Blocks.allBlocks.forEach { block ->
                     output.accept(ItemStack(block.item.get()))
                 }
+                Items.allItems.forEach { output.accept(ItemStack(it.get())) }
             }
             .build()
     }

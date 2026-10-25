@@ -16,6 +16,7 @@ import net.neoforged.neoforge.common.NeoForge
  */
 object AshenRequiem {
     const val MAX_HUSH_STAGE = 5
+    const val MAX_LEVEL = 6
 
     // ---- World-global state ----
 
@@ -61,6 +62,13 @@ object AshenRequiem {
         state.setDirty()
     }
 
+    fun removeLocation(server: MinecraftServer, key: String): Boolean {
+        val state = WorldProgress.get(server)
+        if (state.locations.remove(key) == null) return false
+        state.setDirty()
+        return true
+    }
+
     fun locations(server: MinecraftServer): Map<String, GlobalPos> = WorldProgress.get(server).locations.toMap()
 
     // ---- Per-player state ----
@@ -83,6 +91,16 @@ object AshenRequiem {
 
     fun setChapter(player: ServerPlayer, chapter: Int): Boolean =
         update(player) { it.copy(chapter = chapter.coerceAtLeast(0)) }
+
+    fun getLevel(player: ServerPlayer): Int = progress(player).level
+
+    /** Clamps to `1..MAX_LEVEL`. Returns true if the level changed. */
+    fun setLevel(player: ServerPlayer, level: Int): Boolean {
+        val old = getLevel(player)
+        val changed = update(player) { it.copy(level = level.coerceIn(1, MAX_LEVEL)) }
+        if (changed) NeoForge.EVENT_BUS.post(LevelChangedEvent(player, old, getLevel(player)))
+        return changed
+    }
 
     fun hasSeenCinematic(player: ServerPlayer, id: String): Boolean = id in progress(player).seenCinematics
 

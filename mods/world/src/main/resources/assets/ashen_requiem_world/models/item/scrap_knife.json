@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ashen_requiem_world:item/scrap_knife"
+  }
+}

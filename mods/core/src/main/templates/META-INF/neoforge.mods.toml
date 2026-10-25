@@ -37,3 +37,6 @@ type="optional"
 versionRange="[2101.7,)"
 ordering="NONE"
 side="BOTH"
+
+[[mixins]]
+config="ashen_requiem_core.mixins.json"

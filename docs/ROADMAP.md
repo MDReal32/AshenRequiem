@@ -153,17 +153,22 @@ during level 1, vanilla again once level 1's quests are done.
   grid). The check sits where the server looks up a crafting recipe for a player: vanilla's crafting grid and
   FastWorkbench's, which replaces it in our pack. Machines and autocrafters have no player, so gates don't apply to
   them. The quest that ends a level runs `/ar level set <player> <n>` (or `AR.setLevel` from KubeJS).
-- **Gated in level 1** (`world`'s gate file, all `until_level: 2`): every vanilla log → planks recipe and the
+- **Gated in level 1** (`world`'s gate files, all `until_level: 2`): every vanilla log → planks recipe and the
   vanilla crafting table; vanilla sticks and our dead planks are `workbench_only`.
+- **Per-player level** (`core`): `level` in the player's progress, 1–6. `/ar level get|set`, `AR.getLevel` /
+  `AR.setLevel`, and a `LevelChangedEvent`.
 - **Dead trees never grow back:** dead leaves drop no saplings (already true), so cut forests stay cut.
 - **New items and blocks** (`world`):
-  - `scrap`, from `rubble` piles scattered over the Dead Lands (later also in ruins and Waystation loot).
+  - `scrap`, from `rubble`: half-high heaps scattered over the Dead Lands, with a few always around the Cradle.
+    Breaking one drops scrap (70%) and a stick (35%); silk touch keeps the heap. Later also in ruins and Waystation
+    loot.
   - `scrap_knife` (scrap + stick, the only inventory recipe at the start). Using it on a dead log or dead wood
     scrapes it into a `scraped_log` / `scraped_wood`, like an axe strips logs. It takes durability.
   - `scraped_log` / `scraped_wood`: not radiated. Only these turn into dead planks, and only at a workbench.
-  - `broken_workbench`, placed in the Cradle. Using it with scraped logs and scrap repairs it into a working crafting
-    table (the first quest's goal).
-  - Crafting table recipe at the workbench: dead planks + scrap (`workbench_only` for good: it's the hard recipe).
+  - `broken_workbench`, placed beside the Cradle once per world. Using 2 scraped logs and 2 scrap on it repairs it
+    into a `workbench` (the first quest's goal).
+  - `workbench`: the Dead Lands' crafting table, so no vanilla crafting table shows up there. Recipe: 2 dead planks
+    over 2 scrap, `workbench_only` for good (it's the hard recipe).
 - **Radiated:** dead logs and dead wood (items and blocks) carry a little radiation (D12). Scraped wood and planks
   don't.
 

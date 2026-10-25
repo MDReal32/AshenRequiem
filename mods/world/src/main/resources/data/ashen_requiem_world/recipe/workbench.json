@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "ashen_requiem_world:dead_planks"
+    },
+    "S": {
+      "item": "ashen_requiem_world:scrap"
+    }
+  },
+  "pattern": [
+    "PP",
+    "SS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ashen_requiem_world:workbench"
+  }
+}

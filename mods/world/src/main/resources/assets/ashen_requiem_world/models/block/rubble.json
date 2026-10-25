@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "ashen_requiem_world:block/rubble",
+    "top": "ashen_requiem_world:block/rubble",
+    "side": "ashen_requiem_world:block/rubble"
+  }
+}

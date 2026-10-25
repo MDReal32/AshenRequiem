@@ -129,8 +129,9 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
 - Nothing in the Dead Lands works the old way. Logs don't turn into planks in your hands, and you can't make a crafting
   table from the start.
 - In a corner of the Cradle stands a **broken workbench**. It can't be used yet.
-- By hand you can gather ash, dirt and bone sand, and slowly break dead logs. Fallen logs and dead leaves give a few
-  sticks. Searching rubble in ruins gives **scrap**. Stone needs a tool, as always.
+- By hand you can gather ash, dirt and bone sand, and slowly break dead logs. Heaps of **rubble** lie around the Cradle
+  and all over the Dead Lands: breaking them gives **scrap** and sometimes a stick. Dead leaves give the odd stick too.
+  Stone needs a tool, as always.
 - Every tree in the Dead Lands is dead, and it stays dead: leaves drop no saplings, so wood runs out where you've cut it.
   The bark is **radiated**, a little. Carrying raw dead wood slowly raises your radiation (see §7.1).
 - The first recipe is the only one that works in the inventory: the **scrap knife** (scrap + stick).
@@ -138,7 +139,8 @@ Overworld spread stage it triggers). The quest chapters in FTB Quests follow thi
   worked.
 - Repair the Cradle's workbench with scraped logs and scrap. From then on planks, sticks and tools come from the
   workbench. This is the pack's first quest.
-- A crafting table of your own can only be made at the repaired workbench, and it needs scrap. Ashen-stone tools come
+- A workbench of your own can only be made at the repaired one, and it needs scrap. The vanilla crafting table waits
+  for level 2. Ashen-stone tools come
   next, then the Long Walk.
 - In the Overworld (level 2) trees are healthy again, and logs, planks and crafting tables work the vanilla way: the
   Dead Lands' items are hard during level 1 and normal after it (§9).

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "ashen_requiem_world:block/workbench_front",
+    "down": "ashen_requiem_world:block/dead_planks",
+    "up": "ashen_requiem_world:block/workbench_top",
+    "north": "ashen_requiem_world:block/workbench_front",
+    "south": "ashen_requiem_world:block/workbench_side",
+    "east": "ashen_requiem_world:block/workbench_side",
+    "west": "ashen_requiem_world:block/workbench_front"
+  }
+}

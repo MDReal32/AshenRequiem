@@ -14,6 +14,17 @@
   "block.ashen_requiem_world.dead_wood": "Dead Wood",
   "block.ashen_requiem_world.dead_planks": "Dead Planks",
   "block.ashen_requiem_world.dead_leaves": "Dead Leaves",
+  "block.ashen_requiem_world.scraped_log": "Scraped Log",
+  "block.ashen_requiem_world.scraped_wood": "Scraped Wood",
+
+  "block.ashen_requiem_world.rubble": "Rubble",
+  "block.ashen_requiem_world.workbench": "Workbench",
+  "block.ashen_requiem_world.broken_workbench": "Broken Workbench",
+  "block.ashen_requiem_world.broken_workbench.missing": "Still needs %s scraped log(s) and %s scrap",
+  "block.ashen_requiem_world.broken_workbench.repaired": "The workbench holds together again",
+
+  "item.ashen_requiem_world.scrap": "Scrap",
+  "item.ashen_requiem_world.scrap_knife": "Scrap Knife",
 
   "creative_tab.ashen_requiem_world.world": "Ashen Requiem: World",
 
