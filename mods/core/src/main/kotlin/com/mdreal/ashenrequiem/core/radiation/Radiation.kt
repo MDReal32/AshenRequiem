@@ -22,6 +22,7 @@ import net.neoforged.neoforge.network.PacketDistributor
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import java.util.UUID
+import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -105,7 +106,8 @@ object Radiation {
         val points = measure(player, null)
         readings[player.uuid] = points
         val units = points / pointsPerUnit()
-        val tenths = (units * 10).toInt().coerceIn(0, 100)
+        // Rounded up, so any radiation at all shows on the bar.
+        val tenths = ceil(units * 10).toInt().coerceIn(0, 100)
         if (sent.put(player.uuid, tenths) != tenths) PacketDistributor.sendToPlayer(player, RadiationPayload(tenths))
 
         if (!hurt || !player.isAlive || player.isCreative || player.isSpectator) return
