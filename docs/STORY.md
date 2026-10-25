@@ -298,10 +298,10 @@ Containment Lanterns let the player protect their own areas at every stage. The 
 ### 7.1 Radiation (story view)
 
 The Dead Lands are still a little radiated. A new bar in the HUD, next to health and hunger, shows how much radiation
-the player has taken in. Below 4 of its 10 units nothing happens. Above that it hurts, more the higher it climbs, and a
-full bar kills at once. Radiation comes from being near radiated things or carrying them: dead wood's bark first,
-later ruins, Dead Lands ores and the uranium of tech mods like Mekanism. Staying away from them lets it fall again.
-The numbers are in ROADMAP.md D12.
+the player is exposed to right now. Below 4 of its 10 units nothing happens. Above that it hurts, more the higher it
+climbs, and a full bar kills at once. It doesn't build up over time: it reads what the player carries and where they
+stand. Dead wood's bark comes first, later ruins, Dead Lands ores and the uranium of tech mods like Mekanism. Drop them
+or walk away and it falls at once. The numbers are in ROADMAP.md D12.
 
 ## 8. Tone and writing rules
 

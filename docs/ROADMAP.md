@@ -54,7 +54,7 @@ to, so:
 | State | Scope | Storage |
 |---|---|---|
 | `hushStage` (0–5), `gateRepaired`, `finaleWon`, key structure positions | world-global | `SavedData` on the Overworld |
-| `requiem` (mark), `chapter`, cinematics already seen, `awakened` | per player | NeoForge data attachment with `copyOnDeath` (can never be lost) |
+| `requiem` (mark), `chapter`, `level` (1–6, D11), cinematics already seen, `awakened` | per player | NeoForge data attachment with `copyOnDeath` (can never be lost) |
 | Scars (broken veiled blocks) | per chunk | chunk data attachment |
 
 Every state change fires a core event (`HushStageChanged`, `RequiemGranted`, …) that the other modules and KubeJS
@@ -147,17 +147,23 @@ sees it appear during C09 (per player, through the D4 veil). Goal: *"that wasn't
 ### D11 — Dead Lands crafting (the first hour)
 The story side is STORY.md Act I, "The first hour". The Dead Lands' own items follow the hard → normal rule (§7.2): hard
 during level 1, vanilla again once level 1's quests are done.
-- **Removed at the start** (`modpack`, KubeJS): every log → planks recipe, the vanilla crafting table recipe, and
-  planks → sticks in the inventory grid. They come back with level 1's stage.
+- **Recipe gates** (`core`): the mods do this, not KubeJS. A gate is a data file
+  (`data/<namespace>/ashen_requiem/recipe_gates/*.json`) that lists recipe ids and says when they're blocked:
+  `until_level` (blocked while the player's `level` is lower) and `workbench_only` (blocked in the 2×2 inventory
+  grid). The check sits where the server looks up a crafting recipe for a player: vanilla's crafting grid and
+  FastWorkbench's, which replaces it in our pack. Machines and autocrafters have no player, so gates don't apply to
+  them. The quest that ends a level runs `/ar level set <player> <n>` (or `AR.setLevel` from KubeJS).
+- **Gated in level 1** (`world`'s gate file, all `until_level: 2`): every vanilla log → planks recipe and the
+  vanilla crafting table; vanilla sticks and our dead planks are `workbench_only`.
 - **Dead trees never grow back:** dead leaves drop no saplings (already true), so cut forests stay cut.
 - **New items and blocks** (`world`):
-  - `scrap`, from rubble piles in ruins and from Waystation loot.
+  - `scrap`, from `rubble` piles scattered over the Dead Lands (later also in ruins and Waystation loot).
   - `scrap_knife` (scrap + stick, the only inventory recipe at the start). Using it on a dead log or dead wood
     scrapes it into a `scraped_log` / `scraped_wood`, like an axe strips logs. It takes durability.
   - `scraped_log` / `scraped_wood`: not radiated. Only these turn into dead planks, and only at a workbench.
   - `broken_workbench`, placed in the Cradle. Using it with scraped logs and scrap repairs it into a working crafting
     table (the first quest's goal).
-  - Crafting table recipe at the workbench: dead planks + scrap.
+  - Crafting table recipe at the workbench: dead planks + scrap (`workbench_only` for good: it's the hard recipe).
 - **Radiated:** dead logs and dead wood (items and blocks) carry a little radiation (D12). Scraped wood and planks
   don't.
 
@@ -172,26 +178,26 @@ A per-player value with its own HUD bar. It lives in `core`, so every module and
   |---|---|---|---|---|---|---|
   | Damage | none | ½ heart | 1 heart | 4 hearts | 8 hearts | instant death |
 
-  Its own damage type (`ashen_requiem:radiation`), which armour doesn't block, with its own death message.
-- **Gaining it** (checked once a second, in points per second):
-  - **Carried items:** each radiated item in the inventory adds its strength. A stack adds less than its count times
-    the strength (square root of the count), so one log doesn't matter and a full stack does. Held items count
-    double.
+  Its own damage type (`ashen_requiem:radiation`), which armour doesn't block, with its own death message. Cures and
+  protective gear are left for later (open).
+- **A live reading, not a build-up.** The bar shows what the player is exposed to right now: what they carry and
+  where they stand. It's recalculated once a second, so dropping the items or walking away lowers it at once. Nothing
+  builds up over time.
+  - **Carried items:** every radiated item in the inventory adds its strength, per item: the more you carry, the
+    higher it goes. Held items count double.
   - **Nearby blocks and dropped items:** each radiated one within 6 blocks adds its strength, falling off with
     distance. The scan skips chunk sections that hold no radiated blocks, so it stays cheap.
-  - Strengths come from NeoForge data maps (`ashen_requiem:radiation`, one for items and one for blocks), so modules,
-    KubeJS and datapacks add entries without code.
-- **Losing it:** a slow, steady fall (3 points a second to start) that always runs, so small sources never add up.
-  Death clears it. Cures and protective gear are left for later (open).
-- **First numbers to try:** a dead log is 0.5 points a second. One log or a dead forest around you stays under the
-  fall rate; a full stack of 64 raw logs (+4/s against the fall of 3) climbs slowly and reaches 4 units in about 7 minutes.
+  - Strengths (points per item or block) come from NeoForge data maps (`ashen_requiem:radiation`, one for items and
+    one for blocks), so modules, KubeJS and datapacks add entries without code.
+- **First numbers to try:** a carried dead log is 3 points and a dead log block nearby up to 1. A stack of 64 raw logs
+  reads about 2 units (no damage), three stacks about 6 (it hurts). Standing in a dead forest reads well under 1.
 - **HUD:** a row of 10 icons above the hunger bar (air bubbles move up a row), filling in tenths. A NeoForge GUI layer,
   so cutscenes hide it with the rest of the HUD. The server owns the value and syncs it to the client when it changes.
-- **Debug:** `/ar radiation get|set <player> <points>`.
+- **Debug:** `/ar radiation [player]` prints the reading and its biggest sources.
 - **Other mods' radiation:** radioactive items from tech mods join the same data maps: Mekanism's uranium (ore, raw,
   ingot), yellowcake, plutonium, polonium and nuclear waste, and Powah's uraninite. Mekanism has its own radiation
   system; turn it off in its config if it can be, so there is only one bar. Its radioactive chemicals in tanks need a
-  small adapter that reads Mekanism's own radioactivity values. Its hazmat suit should cut our gain.
+  small adapter that reads Mekanism's own radioactivity values. Its hazmat suit should cut the reading.
 
 ## 4. Development stages
 
@@ -242,7 +248,7 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - Sky, fog, weather, ambient sound, ash weather effect.
 - The first hour (D11): no vanilla wood crafting, the scrap knife, scraped wood, the Cradle's broken workbench, the
   first quest.
-- Radiation v1 (D12): the value, HUD bar, damage, data maps, dead wood as the first source.
+- Radiation v1 (D12): the live reading, HUD bar, damage, data maps, dead wood as the first source.
 - **Done when:** you can survive the first night with only Dead Lands resources, and none of the ~10 people you
   playtest it with can name a vanilla block they saw.
 
@@ -382,10 +388,9 @@ Every tech and magic mod is usable from the start. What changes as the story mov
   want it (a set A item asks for something from the Dead Lands or the Overworld, not from Eden).
 - Our own Dead Lands items follow the same rule: hard in the Dead Lands, normal once level 1's quests are done.
 - Eden adds no set. Its reward is our own Root Tools.
-- The quest that ends a level sets the player's stage (`player.stages`, the same entity tags the first-join script
-  uses). JEI shows both recipes, and the normal one says what unlocks it.
-- **To solve:** vanilla recipes aren't per player. Crafting-table recipes can check the crafter's stage (a 1.21.1
-  recipe-stages mod, or our core). Machine recipes (Create, Mekanism) have no player, so their normal recipe needs a
+- The quest that ends a level raises the player's `level` (D2), and core's recipe gates (D11) open the normal recipes
+  for that player. JEI shows both recipes, and the normal one says what unlocks it.
+- **To solve:** machine recipes (Create, Mekanism) have no player, so their normal recipe needs a
   catalyst the quest gives instead.
 
 **Apotheosis runs the whole pack.** It's in from level 1 and grows with the story through its five world tiers. Each
