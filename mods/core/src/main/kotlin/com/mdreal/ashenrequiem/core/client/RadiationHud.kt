@@ -7,7 +7,7 @@ import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 
-/** A row of 10 icons above the hunger bar, one per unit of radiation, each filling from the bottom in tenths. */
+/** A row of 10 icons above the hunger bar, one per unit of radiation, filling left to right in tenths like a progress bar. */
 object RadiationHud {
     val ID = CoreConfig.id("radiation")
     private val EMPTY = CoreConfig.id("hud/radiation_empty")
@@ -23,12 +23,12 @@ object RadiationHud {
         val y = graphics.guiHeight() - mc.gui.rightHeight
         RenderSystem.enableBlend()
         for (i in 0 until 10) {
-            val x = right - i * 8 - ICON
+            val x = right - (9 - i) * 8 - ICON
             graphics.blitSprite(EMPTY, x, y, ICON, ICON)
             val fill = (tenths - i * 10).coerceIn(0, 10)
             if (fill == 0) continue
-            val height = (fill * ICON + 9) / 10
-            graphics.blitSprite(FULL, ICON, ICON, 0, ICON - height, x, y + ICON - height, ICON, height)
+            val width = (fill * ICON + 9) / 10
+            graphics.blitSprite(FULL, ICON, ICON, 0, 0, x, y, width, ICON)
         }
         RenderSystem.disableBlend()
         mc.gui.rightHeight += 10
