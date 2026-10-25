@@ -366,7 +366,7 @@ NeoForge 1.21.1 build on 2026-10-25. Lootr gives each player their own chest loo
 | Story and progression | FTB Quests / Library / Teams / XMod Compat |
 | Content | Create, Deeper and Darker, Lootr, Waystones, Sophisticated Backpacks, Corpse, Falling Trees, Connected Glass, Double Doors, Dummmmmmy, Cosmetic Armor |
 | Maps | JourneyMap + JMI, FTB Chunks |
-| Info | JEI, Just Enough Resources / Professions / Breeding, Better Advanced Tooltips |
+| Info | JEI, Just Enough Resources / Professions / Breeding, Better Advanced Tooltips, Jade |
 | Convenience | FTB Ultimine, Mouse Tweaks, Controlling, Searchables, Configured, Dark Mode Everywhere, Fast Furnace / Workbench / Suite, Clumps, AI Improvements, Nether Portal Fix |
 | Performance | Sodium (+ Dynamic Lights), Lithium, ModernFix, FerriteCore, Fast Async World Save, GPU Memory Leak Fix, BadOptimizations |
 | Libraries | Architectury, Balm, Collective, Cupboard, Fusion, Moonlight, PandaLib, Placebo, SuperMartijn642 Core Lib, mezz_config |

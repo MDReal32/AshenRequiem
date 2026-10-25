@@ -25,7 +25,7 @@ A file at the same path replaces the mod's; a new file adds to it.
   `data/ashen_requiem_world/`.
 - **Radiation**: strengths in the data maps `data/ashen_requiem/data_maps/item/radiation.json` (points per carried
   item) and `data/ashen_requiem/data_maps/block/radiation.json` (points from a block right next to the player), as
-  `{ "values": { "<item or block id>": 3 } }`. Tags work as keys too. The world mod's dead wood is its first entry.
+  `{ "values": { "<item or block id>": 3 } }`. Tags work as keys too. The world mod's dead wood is its first entry. With Jade, looking at a radiated block or dropped stack shows its points.
 - **Cinematics**: scene files under `data/<namespace>/cinematica/scenes/`, played by Cinematica Studio.
 - **Story state**: `/ar` commands (`/ar level set <player> <n>` and the rest), or `AR` from KubeJS
   (`AR.setLevel(...)`, `AR.setHushStage(...)`). `LevelChangedEvent` is posted on NeoForge's event bus for mods.

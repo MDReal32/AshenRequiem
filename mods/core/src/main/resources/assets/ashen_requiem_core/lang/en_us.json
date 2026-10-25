@@ -10,6 +10,9 @@
   "jei.ashen_requiem_core.gate.workbench.always": "Needs a 3×3 grid",
   "jei.ashen_requiem_core.use_on_block": "Right-click the block with it",
   "tooltip.ashen_requiem_core.radiated": "Radiated",
+  "jade.ashen_requiem_core.radiation": "Radiation: %s",
+  "jade.ashen_requiem_core.radiation_each": "Radiation: %s (%s each)",
+  "config.jade.plugin_ashen_requiem_core.radiation": "Radiation",
   "death.attack.ashen_requiem.radiation": "%1$s died of radiation",
   "death.attack.ashen_requiem.radiation.player": "%1$s died of radiation while fighting %2$s"
 }

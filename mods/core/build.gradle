@@ -42,8 +42,9 @@ dependencies {
     // KubeJS is an optional runtime dependency; the dev pack ships its jar in dev/pack/mods.
     compileOnly "dev.latvian.mods:kubejs-neoforge:${kubejs_version}"
     compileOnly "dev.latvian.mods:rhino:${rhino_version}"
-    // JEI and JER are optional too; only their plugins and mixins touch them, and those load only when they are there.
+    // JEI, JER and Jade are optional too; only their plugins and mixins touch them, and those load only when they are there.
     compileOnly "maven.modrinth:jei:${jei_version}"
+    compileOnly "maven.modrinth:jade:${jade_version}"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
