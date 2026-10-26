@@ -2,12 +2,12 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "overworld"
-	group: "1410CC851F9E4B11"
+	group: "0001000000000000"
 	icon: {
-		count: 1
 		id: "minecraft:grass_block"
 	}
-	id: "367A7D9792DA801F"
+	id: "0001000200000000"
+	images: [ ]
 	order_index: 1
 	progression_mode: "flexible"
 	quest_links: [ ]

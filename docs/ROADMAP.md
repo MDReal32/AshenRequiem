@@ -64,6 +64,12 @@ listen to.
 FTB Quests rewards run a command or a KubeJS reward (`AR.setHushStage(server, 3)`, `AR.cinematic(...)`). The mods never read
 quest data directly. That keeps quests easy to rearrange, and `/ar` debug commands can reproduce any state.
 
+The book: a Welcome chapter, then a Main Story group with one chapter per level (1–6). Other groups that move the
+story sit beside it. Ids are written by hand as `GGGG CCCC QQQQ TTTT` (hex): group, chapter, quest, task. Group
+`0000` is "no group" (Welcome is `0000 0001`), Main Story is `0001`, its chapters are the levels, and quests and tasks
+count up from `0001`. Rewards use `1001` and up in the last block. Every id starts with `0`: FTB Quests reads ids as
+signed longs and replaces one that starts with 8–F.
+
 ### D4 — Per-player reveal (veil)
 Block states are shared by everyone on a server, so "visible only to marked players" is done like this:
 - **Veiled blocks** are real blocks on the server.

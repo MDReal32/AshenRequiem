@@ -3,16 +3,21 @@
 	default_quest_shape: ""
 	filename: "welcome"
 	group: ""
-	id: "19B36F23B45AB620"
+	id: "0000000100000000"
+	images: [ ]
 	order_index: 0
 	quest_links: [ ]
 	quests: [{
 		icon: {
-			id: "minecraft:oak_log"
+			components: {
+				"ftbquests:icon": "kubejs:item/logo"
+			}
+			id: "ftbquests:custom_icon"
 		}
-		id: "4C42E0C9D5063097"
+		id: "0000000100010000"
+		shape: "none"
 		tasks: [{
-			id: "2E89C12CC255F0EC"
+			id: "0000000100010001"
 			type: "checkmark"
 		}]
 		x: 0.0d

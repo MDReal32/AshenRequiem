@@ -1,56 +1,56 @@
 {
-	chapter.19B36F23B45AB620.title: "Welcome"
-	chapter.50FDBEB381E428E3.title: "Level 1 — Dead Lands"
-	chapter.367A7D9792DA801F.title: "Level 2 — Overworld"
-	chapter.0789BD767ECE5727.title: "Level 3 — The Otherside"
-	chapter.57C995D267590DC9.title: "Level 4 — Advanced Dead Lands"
-	chapter.3671E139ED5A5509.title: "Level 5 — The Dying Overworld"
-	chapter.7672D90FCEE368EA.title: "Level 6 — Eden"
-	chapter_group.1410CC851F9E4B11.title: "Main Story"
-	quest.4C42E0C9D5063097.title: "Welcome"
-	task.2E89C12CC255F0EC.title: "Introduction"
-	quest.1B7BFBE6B3A78E28.title: "Waking"
-	quest.1B7BFBE6B3A78E28.quest_desc: [
+	chapter.0000000100000000.title: "Welcome"
+	chapter.0001000100000000.title: "Level 1 — Dead Lands"
+	chapter.0001000200000000.title: "Level 2 — Overworld"
+	chapter.0001000300000000.title: "Level 3 — The Otherside"
+	chapter.0001000400000000.title: "Level 4 — Advanced Dead Lands"
+	chapter.0001000500000000.title: "Level 5 — The Dying Overworld"
+	chapter.0001000600000000.title: "Level 6 — Eden"
+	chapter_group.0001000000000000.title: "Main Story"
+	quest.0000000100010000.title: "Welcome"
+	task.0000000100010001.title: "Introduction"
+	quest.0001000100010000.title: "Waking"
+	quest.0001000100010000.quest_desc: [
 		"Okay. I'm awake. I think."
 		"Everything's grey. Don't panic. Start with what's close."
 	]
-	quest.63124B283FC0CA3B.title: "Scrap"
-	quest.63124B283FC0CA3B.quest_desc: [
+	quest.0001000100020000.title: "Scrap"
+	quest.0001000100020000.quest_desc: [
 		"Those heaps around the pod. Junk, but junk is something."
 		"Break a few. Scrap, and a stick if I'm lucky."
 	]
-	quest.746BC84D0532F68E.title: "Scrap Knife"
-	quest.746BC84D0532F68E.quest_desc: [
+	quest.0001000100030000.title: "Scrap Knife"
+	quest.0001000100030000.quest_desc: [
 		"Scrap and a stick. Tie them together and that's a blade."
 		"My hands remember how. I don't."
 	]
-	quest.7F87FE2C3AA35AF9.title: "Clean Wood"
-	quest.7F87FE2C3AA35AF9.quest_desc: [
+	quest.0001000100040000.title: "Clean Wood"
+	quest.0001000100040000.quest_desc: [
 		"This bark makes my skin crawl. Something in it is wrong."
 		"Scrape it off with the knife. The wood under it is clean."
 	]
-	quest.1333A28A05B5D535.title: "The Old Workbench"
-	quest.1333A28A05B5D535.quest_desc: [
+	quest.0001000100050000.title: "The Old Workbench"
+	quest.0001000100050000.quest_desc: [
 		"That bench in the corner. Broken, not gone."
 		"Two clean logs and two bits of scrap should hold it together."
 	]
-	quest.2420BC013AC7AA19.title: "Dead Planks"
-	quest.2420BC013AC7AA19.quest_desc: [
+	quest.0001000100060000.title: "Dead Planks"
+	quest.0001000100060000.quest_desc: [
 		"Clean logs into planks. Only on the bench, though."
 		"Out here nothing works in bare hands."
 	]
-	quest.7E0BF996BCE31DAD.title: "A Bench of My Own"
-	quest.7E0BF996BCE31DAD.quest_desc: [
+	quest.0001000100070000.title: "A Bench of My Own"
+	quest.0001000100070000.quest_desc: [
 		"I can't keep walking back to that corner."
 		"Planks and scrap. One I can take with me."
 	]
-	quest.0614B522C0C0B3BC.title: "Wooden Pickaxe"
-	quest.0614B522C0C0B3BC.quest_desc: [
+	quest.0001000100080000.title: "Wooden Pickaxe"
+	quest.0001000100080000.quest_desc: [
 		"Under the ash it's all stone."
 		"Wood won't last long, but it'll get me through."
 	]
-	quest.510FDE662B910DEE.title: "Ashen Stone"
-	quest.510FDE662B910DEE.quest_desc: [
+	quest.0001000100090000.title: "Ashen Stone"
+	quest.0001000100090000.quest_desc: [
 		"Grey stone, grey tools. Fits."
 		"Better than wood. Good enough to start walking."
 	]

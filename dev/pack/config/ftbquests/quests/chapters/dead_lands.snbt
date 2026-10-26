@@ -2,77 +2,67 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "dead_lands"
-	group: "1410CC851F9E4B11"
+	group: "0001000000000000"
 	icon: {
-		count: 1
 		id: "ashen_requiem_world:dead_log"
 	}
-	id: "50FDBEB381E428E3"
+	id: "0001000100000000"
+	images: [ ]
 	order_index: 0
 	progression_mode: "flexible"
 	quest_links: [ ]
 	quests: [
 		{
-			id: "1B7BFBE6B3A78E28"
+			id: "0001000100010000"
 			tasks: [{
 				dimension: "ashen_requiem_world:deadlands"
-				id: "160509C5B7EABE6D"
+				id: "0001000100010001"
 				type: "dimension"
 			}]
 			x: 0.0d
 			y: 0.0d
 		}
 		{
-			dependencies: ["1B7BFBE6B3A78E28"]
-			id: "63124B283FC0CA3B"
+			dependencies: ["0001000100010000"]
+			id: "0001000100020000"
 			tasks: [{
-				id: "02F80E005773062B"
-				item: {
-					count: 1
-					id: "ashen_requiem_world:scrap"
-				}
+				id: "0001000100020001"
+				item: { count: 1, id: "ashen_requiem_world:scrap" }
 				type: "item"
 			}]
 			x: 1.5d
 			y: 0.0d
 		}
 		{
-			dependencies: ["63124B283FC0CA3B"]
-			id: "746BC84D0532F68E"
+			dependencies: ["0001000100020000"]
+			id: "0001000100030000"
 			tasks: [{
-				id: "745C8DC6AECCD014"
-				item: {
-					count: 1
-					id: "ashen_requiem_world:scrap_knife"
-				}
+				id: "0001000100030001"
+				item: { count: 1, id: "ashen_requiem_world:scrap_knife" }
 				type: "item"
 			}]
 			x: 3.0d
 			y: 0.0d
 		}
 		{
-			dependencies: ["746BC84D0532F68E"]
-			id: "7F87FE2C3AA35AF9"
+			dependencies: ["0001000100030000"]
+			id: "0001000100040000"
 			tasks: [{
-				id: "46ECC0EFF04B3F4B"
-				item: {
-					count: 1
-					id: "ashen_requiem_world:scraped_log"
-				}
+				id: "0001000100040001"
+				item: { count: 1, id: "ashen_requiem_world:scraped_log" }
 				type: "item"
 			}]
 			x: 4.5d
 			y: 0.0d
 		}
 		{
-			dependencies: ["7F87FE2C3AA35AF9"]
+			dependencies: ["0001000100040000"]
 			icon: {
-				count: 1
 				id: "ashen_requiem_world:workbench"
 			}
-			id: "1333A28A05B5D535"
+			id: "0001000100050000"
 			tasks: [{
-				id: "259DC489D12AF3A8"
+				id: "0001000100050001"
 				observation_type: "block"
 				observe_type: 0
 				timer: 0L
@@ -83,28 +73,22 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["1333A28A05B5D535"]
-			id: "2420BC013AC7AA19"
+			dependencies: ["0001000100050000"]
+			id: "0001000100060000"
 			tasks: [{
-				id: "6DD1A5E07C7304EA"
-				item: {
-					count: 1
-					id: "ashen_requiem_world:dead_planks"
-				}
+				id: "0001000100060001"
+				item: { count: 1, id: "ashen_requiem_world:dead_planks" }
 				type: "item"
 			}]
 			x: 7.5d
 			y: 0.0d
 		}
 		{
-			dependencies: ["2420BC013AC7AA19"]
-			id: "7E0BF996BCE31DAD"
+			dependencies: ["0001000100060000"]
+			id: "0001000100070000"
 			tasks: [{
-				id: "72E33B9E6E5AEFEB"
-				item: {
-					count: 1
-					id: "ashen_requiem_world:workbench"
-				}
+				id: "0001000100070001"
+				item: { count: 1, id: "ashen_requiem_world:workbench" }
 				only_from_crafting: true
 				type: "item"
 			}]
@@ -112,28 +96,22 @@
 			y: -1.0d
 		}
 		{
-			dependencies: ["2420BC013AC7AA19"]
-			id: "0614B522C0C0B3BC"
+			dependencies: ["0001000100060000"]
+			id: "0001000100080000"
 			tasks: [{
-				id: "61609FCB4361E877"
-				item: {
-					count: 1
-					id: "minecraft:wooden_pickaxe"
-				}
+				id: "0001000100080001"
+				item: { count: 1, id: "minecraft:wooden_pickaxe" }
 				type: "item"
 			}]
 			x: 9.0d
 			y: 1.0d
 		}
 		{
-			dependencies: ["0614B522C0C0B3BC"]
-			id: "510FDE662B910DEE"
+			dependencies: ["0001000100080000"]
+			id: "0001000100090000"
 			tasks: [{
-				id: "75878EE098E3F4A6"
-				item: {
-					count: 1
-					id: "minecraft:stone_pickaxe"
-				}
+				id: "0001000100090001"
+				item: { count: 1, id: "minecraft:stone_pickaxe" }
 				type: "item"
 			}]
 			x: 10.5d

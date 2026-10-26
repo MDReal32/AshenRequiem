@@ -2,12 +2,12 @@
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
 	filename: "dying_overworld"
-	group: "1410CC851F9E4B11"
+	group: "0001000000000000"
 	icon: {
-		count: 1
 		id: "minecraft:dead_bush"
 	}
-	id: "3671E139ED5A5509"
+	id: "0001000500000000"
+	images: [ ]
 	order_index: 4
 	progression_mode: "flexible"
 	quest_links: [ ]
