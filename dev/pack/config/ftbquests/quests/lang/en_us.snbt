@@ -10,6 +10,7 @@
 	quest.0000000100100000.title: "Welcome"
 	task.0000000100100001.title: "Introduction"
 	quest.0001000100100000.title: "Waking"
+	task.0001000100100001.title: "Wake up"
 	quest.0001000100100000.quest_desc: [
 		"Okay. I'm awake. I think."
 		"Everything's grey. Don't panic. Start with what's close."

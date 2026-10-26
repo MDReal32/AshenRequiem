@@ -15,9 +15,8 @@
 		{
 			id: "0001000100100000"
 			tasks: [{
-				dimension: "ashen_requiem_world:deadlands"
 				id: "0001000100100001"
-				type: "dimension"
+				type: "custom"
 			}]
 			x: 0.0d
 			y: 0.0d

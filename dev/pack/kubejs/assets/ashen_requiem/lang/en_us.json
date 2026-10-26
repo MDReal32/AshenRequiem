@@ -1,0 +1,19 @@
+{
+  "voice.ashen_requiem.waking.done": "Cold. My legs still work. That's a start.",
+  "voice.ashen_requiem.scrap.open": "Rubble everywhere. Somebody built things here once. Some of it must still be useful.",
+  "voice.ashen_requiem.scrap.done": "Rusty, sharp, mine.",
+  "voice.ashen_requiem.scrap_knife.open": "That sharp piece of scrap could cut, with a handle on it.",
+  "voice.ashen_requiem.scrap_knife.done": "It's ugly, but it cuts.",
+  "voice.ashen_requiem.clean_wood.open": "My fingers itch where I touched that bark. Better peel it off before I carry any.",
+  "voice.ashen_requiem.clean_wood.done": "Pale wood underneath. That feels safe to hold.",
+  "voice.ashen_requiem.old_workbench.open": "The bench in the corner is missing a leg and half its top. I can fix that.",
+  "voice.ashen_requiem.old_workbench.done": "It stands. The first thing here that works.",
+  "voice.ashen_requiem.dead_planks.open": "With a working bench I can saw these logs into boards.",
+  "voice.ashen_requiem.dead_planks.done": "Boards. I'm building again.",
+  "voice.ashen_requiem.own_bench.open": "If I'm going anywhere, I'll need a bench that goes with me.",
+  "voice.ashen_requiem.own_bench.done": "Light enough to carry. Good.",
+  "voice.ashen_requiem.wooden_pickaxe.open": "Rock is too hard for bare hands. Wood first, then something better.",
+  "voice.ashen_requiem.wooden_pickaxe.done": "It won't last, but it'll bite.",
+  "voice.ashen_requiem.ashen_stone.open": "This pick won't last long. The rock it breaks could make a better one.",
+  "voice.ashen_requiem.ashen_stone.done": "Stone in my hands. Now I can go somewhere."
+}
