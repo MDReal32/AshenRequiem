@@ -35,7 +35,7 @@ FTBQuestsEvents.completed(event => {
   if (slug == null) return;
   const players: $ServerPlayer[] = [];
   event.onlineMembers.forEach(member => {
-    const player = event.server.getPlayerList().getPlayer(member.uuid);
+    const player = event.server.getPlayerList().getPlayer(member.uuid.toString());
     if (player != null) players.push(player);
   });
   for (const player of players) speak(player, slug, "done");
