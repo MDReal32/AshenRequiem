@@ -34,8 +34,9 @@ FTBQuestsEvents.completed(event => {
   const slug = VOICED[event.object.toString()];
   if (slug == null) return;
   const players: $ServerPlayer[] = [];
-  event.onlineMembers.forEach(player => {
-    players.push(player as $ServerPlayer);
+  event.onlineMembers.forEach(member => {
+    const player = event.server.getPlayerList().getPlayer(member.uuid);
+    if (player != null) players.push(player);
   });
   for (const player of players) speak(player, slug, "done");
   // A tick later the quest's completion has settled, so whatever it opened now counts its dependencies as done.

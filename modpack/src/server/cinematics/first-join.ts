@@ -41,5 +41,7 @@ PlayerEvents.loggedIn(event => {
 });
 
 CinematicaEvents.ended(event => {
-  if (event.sceneId.toString() === SCENE) wake(event.player);
+  if (event.sceneId.toString() !== SCENE) return;
+  const player = event.server.getPlayerList().getPlayer(event.player.uuid);
+  if (player != null) wake(player);
 });
