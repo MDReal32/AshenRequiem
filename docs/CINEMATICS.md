@@ -31,7 +31,13 @@ on `SceneEndEvent`.
   your view, `J` actor key where you hover, `O` actor pose, `U` ease, `B` fade, `Del` delete, arrows move the cursor
   or jump between keys, `G` previews, `Enter` saves. `/cinematica stop` leaves. Keys can be rebound in Controls.
 - **Commands:** `/cinematica play <scene> [targets]`, `stop [targets]`, `record <name>`, `list` (op level 2).
-- **Known limits:** no overlay text, eyelids, shaders, audio or skip yet. Those are in the target design below.
+- **Playback controls** (pause, step, snapshot, the bar) only with `developerMode = true` in
+  `cinematica-studio-client.toml`. For players a scene just plays.
+- **Spoken lines** outside scenes: `Cinematica.say(player, key, sound)` (also from KubeJS). The client shows the
+  translated `key` as a subtitle above the hotbar and plays `sound` in the Voice category if its resources have it,
+  so a line without a recording yet is just the subtitle. One line at a time; the queue keeps the newest two and
+  waits while a scene plays.
+- **Known limits:** no overlay text in scenes, eyelids, shaders, audio or skip yet. Those are in the target design below.
 
 The rest of this section is the **target design** for later versions.
 

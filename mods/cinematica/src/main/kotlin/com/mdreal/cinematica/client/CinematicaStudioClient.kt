@@ -3,6 +3,7 @@ package com.mdreal.cinematica.client
 import com.mdreal.cinematica.CinematicaStudio
 import com.mdreal.cinematica.entity.ModEntities
 import com.mdreal.cinematica.network.ClientBridge
+import com.mdreal.cinematica.network.LinePayload
 import com.mdreal.cinematica.network.Mode
 import com.mdreal.cinematica.network.StartPayload
 import com.mdreal.cinematica.network.WitnessPayload
@@ -50,6 +51,7 @@ class CinematicaStudioClient(container: ModContainer, modBus: IEventBus) {
             Recorder.tick()
             Director.tick()
             Witnesses.tick()
+            Lines.tick()
         }
         bus.addListener<RenderFrameEvent.Pre> {
             val partialTick = it.partialTick.getGameTimeDeltaPartialTick(true)
@@ -88,6 +90,7 @@ class CinematicaStudioClient(container: ModContainer, modBus: IEventBus) {
             Director.stop()
             Stage.remove()
             Witnesses.clear()
+            Lines.clear()
         }
     }
 
@@ -112,6 +115,8 @@ class CinematicaStudioClient(container: ModContainer, modBus: IEventBus) {
         override fun witness(payload: WitnessPayload) = Witnesses.start(payload)
 
         override fun witnessEnd(owner: UUID) = Witnesses.end(owner)
+
+        override fun line(payload: LinePayload) = Lines.say(payload.key, payload.sound.orElse(null))
     }
 
     private object Overlay : LayeredDraw.Layer {
@@ -119,6 +124,7 @@ class CinematicaStudioClient(container: ModContainer, modBus: IEventBus) {
 
         override fun render(graphics: GuiGraphics, deltaTracker: DeltaTracker) {
             if (Recorder.active && !Director.active) Recorder.hud(graphics)
+            Lines.render(graphics, deltaTracker.getGameTimeDeltaPartialTick(true))
         }
     }
 }

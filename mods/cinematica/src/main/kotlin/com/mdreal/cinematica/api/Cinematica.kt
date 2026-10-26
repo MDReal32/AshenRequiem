@@ -1,5 +1,6 @@
 package com.mdreal.cinematica.api
 
+import com.mdreal.cinematica.network.LinePayload
 import com.mdreal.cinematica.scene.Scenes
 import com.mdreal.cinematica.server.Sessions
 import com.mdreal.cinematica.timeline.Scene
@@ -7,6 +8,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.Event
+import net.neoforged.neoforge.network.PacketDistributor
+import java.util.Optional
 
 /**
  * The public, server-side API. Other mods decide *when* a scene plays; Cinematica Studio plays it, keeps the player
@@ -25,6 +28,14 @@ object Cinematica {
 
     /** Stops a scene or recording early. Fires [SceneEndEvent] with `completed = false` for a scene. */
     fun stop(player: ServerPlayer): Boolean = Sessions.stop(player)
+
+    /**
+     * Says a spoken line to [player] outside a scene: [key] is a translation key shown as a subtitle, [sound] the voice,
+     * played only if the client has it. Lines queue one after another and wait while a scene plays.
+     */
+    @JvmOverloads
+    fun say(player: ServerPlayer, key: String, sound: ResourceLocation? = null) =
+        PacketDistributor.sendToPlayer(player, LinePayload(key, Optional.ofNullable(sound)))
 
     fun isInScene(player: ServerPlayer): Boolean = Sessions.isActive(player)
 

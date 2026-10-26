@@ -16,8 +16,8 @@ import net.neoforged.neoforge.common.NeoForge
 /**
  * Loaded by KubeJS only when it is installed (listed in `kubejs.plugins.txt`).
  *
- * Server scripts get `Cinematica` (`play(player, 'ns:id')`, `stop(player)`, `isInScene(player)`,
- * `sceneIds(server)`) and the events `CinematicaEvents.started` and `CinematicaEvents.ended`.
+ * Server scripts get `Cinematica` (`play(player, 'ns:id')`, `stop(player)`, `say(player, 'lang.key', 'ns:sound')`,
+ * `isInScene(player)`, `sceneIds(server)`) and the events `CinematicaEvents.started` and `CinematicaEvents.ended`.
  */
 class CinematicaKubePlugin : KubeJSPlugin {
     override fun init() {

@@ -10,9 +10,11 @@ import net.minecraft.core.UUIDUtil
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import java.util.Optional
 import java.util.UUID
 
 enum class Mode { PLAY, RECORD }
@@ -121,6 +123,20 @@ object EndPayload : CustomPacketPayload {
     override fun type() = TYPE
 }
 
+/** Server to client: say a spoken line, the subtitle [key] (a translation key) and [sound] if the client has it. */
+data class LinePayload(val key: String, val sound: Optional<ResourceLocation>) : CustomPacketPayload {
+    override fun type(): CustomPacketPayload.Type<LinePayload> = TYPE
+
+    companion object {
+        val TYPE = CustomPacketPayload.Type<LinePayload>(CinematicaStudio.id("line"))
+        val STREAM_CODEC: StreamCodec<ByteBuf, LinePayload> = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8, LinePayload::key,
+            ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), LinePayload::sound,
+            ::LinePayload
+        )
+    }
+}
+
 /** Client to server: the client reached the end of the scene, including the handoff. */
 object FinishedPayload : CustomPacketPayload {
     val TYPE = CustomPacketPayload.Type<FinishedPayload>(CinematicaStudio.id("finished"))
@@ -170,6 +186,7 @@ object ClientBridge {
         fun end()
         fun witness(payload: WitnessPayload)
         fun witnessEnd(owner: UUID)
+        fun line(payload: LinePayload)
     }
 
     @Volatile
@@ -177,7 +194,7 @@ object ClientBridge {
 }
 
 object Network {
-    private const val PROTOCOL = "3"
+    private const val PROTOCOL = "4"
 
     fun hook(bus: IEventBus) {
         bus.addListener(::onRegister)
@@ -191,6 +208,7 @@ object Network {
             .playToClient(WitnessEndPayload.TYPE, WitnessEndPayload.STREAM_CODEC) { payload, _ ->
                 ClientBridge.sink?.witnessEnd(payload.owner)
             }
+            .playToClient(LinePayload.TYPE, LinePayload.STREAM_CODEC) { payload, _ -> ClientBridge.sink?.line(payload) }
             .playToServer(FinishedPayload.TYPE, FinishedPayload.STREAM_CODEC) { _, ctx ->
                 (ctx.player() as? ServerPlayer)?.let(Sessions::onClientFinished)
             }
