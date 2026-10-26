@@ -1,0 +1,15 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "otherside"
+	group: "1410CC851F9E4B11"
+	icon: {
+		count: 1
+		id: "minecraft:sculk"
+	}
+	id: "8789BD767ECE5727"
+	order_index: 2
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [ ]
+}

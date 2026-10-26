@@ -1,11 +1,11 @@
 {
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
-	filename: "waking"
+	filename: "dead_lands"
 	group: "1410CC851F9E4B11"
 	icon: {
 		count: 1
-		id: "ashen_requiem_world:scrap_knife"
+		id: "ashen_requiem_world:dead_log"
 	}
 	id: "50FDBEB381E428E3"
 	order_index: 0

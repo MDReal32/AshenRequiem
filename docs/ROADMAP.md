@@ -257,7 +257,7 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - **Structures:** the Cradle (spawn), Waystations, Signal Relays, ruined towns, dead roads (feature).
 - Sky, fog, weather, ambient sound, ash weather effect.
 - The first hour (D11): no vanilla wood crafting, the scrap knife, scraped wood, the Cradle's broken workbench, the
-  first quest. The FTB Quests chapter "Ch. 1 — Waking" (level 1 group) walks it from waking to stone tools.
+  first quest. The FTB Quests chapter "Level 1 — Dead Lands" (Main Story group) walks it from waking to stone tools.
 - Radiation v1 (D12): the live reading, HUD bar, damage, data maps, dead wood as the first source.
 - **Done when:** you can survive the first night with only Dead Lands resources, and none of the ~10 people you
   playtest it with can name a vanilla block they saw.

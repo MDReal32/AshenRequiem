@@ -1,0 +1,15 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "eden"
+	group: "1410CC851F9E4B11"
+	icon: {
+		count: 1
+		id: "minecraft:feather"
+	}
+	id: "7672D90FCEE368EA"
+	order_index: 5
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [ ]
+}
