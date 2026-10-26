@@ -19,12 +19,21 @@ class AshenRequiemCoreClient(modBus: IEventBus) {
     init {
         modBus.addListener<RegisterGuiLayersEvent> { it.registerAbove(VanillaGuiLayers.FOOD_LEVEL, RadiationHud.ID, RadiationHud::render) }
         NeoForge.EVENT_BUS.addListener<ItemTooltipEvent> {
-            if (Radiation.strength(it.itemStack) > 0f) it.toolTip.add(1.coerceAtMost(it.toolTip.size), RADIATED)
+            val strength = Radiation.strength(it.itemStack)
+            if (strength > 0f) {
+                // Under the name: the mark, then what the whole stack adds when carried.
+                val at = 1.coerceAtMost(it.toolTip.size)
+                it.toolTip.add(at, RADIATED)
+                it.toolTip.add(at + 1, units(Radiation.unitsText(strength * it.itemStack.count)))
+            }
         }
         NeoForge.EVENT_BUS.addListener<ClientPlayerNetworkEvent.LoggingOut> { ClientRadiation.tenths = 0 }
     }
 
     private companion object {
         val RADIATED: Component = Component.translatable("tooltip.${CoreConfig.MOD_ID}.radiated").withStyle(ChatFormatting.GREEN)
+
+        fun units(text: String): Component =
+            Component.translatable("tooltip.${CoreConfig.MOD_ID}.radiation", text).withStyle(ChatFormatting.GRAY)
     }
 }

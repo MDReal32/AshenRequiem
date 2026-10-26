@@ -92,6 +92,12 @@ object Radiation {
 
     fun pointsPerUnit(): Float = CoreCommonConfig.radiationPointsPerUnit.get().toFloat()
 
+    /** [points] in units of the HUD bar, for players to read: two decimals, or "<0.01" for a trace. */
+    fun unitsText(points: Float): String {
+        val units = points / pointsPerUnit()
+        return if (units > 0f && units < 0.01f) "<0.01" else "%.2f".format(units)
+    }
+
     private fun tick(player: Player) {
         if (player is ServerPlayer && player.tickCount % CoreCommonConfig.radiationInterval.get() == 0) update(player)
     }
