@@ -1,3 +1,5 @@
+import type { $ServerPlayer } from "@package/net/minecraft/server/level";
+
 // The intro scene plays once per player, the first time they ever join the world, and finishes the first quest.
 
 const SCENE = "ashen_requiem:intro";
@@ -11,7 +13,7 @@ const DELAY = 1;
 // The first quest, Waking, is the intro itself: it completes when the scene ends, however it ends.
 const WAKING = "0001000100100000";
 
-function wake(player: any): void {
+function wake(player: $ServerPlayer): void {
   const team = FTBQuests.getServerDataFromPlayer(player);
   if (!team.isCompleted(WAKING)) team.complete(WAKING);
 }
