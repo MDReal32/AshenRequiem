@@ -158,6 +158,8 @@ during level 1, vanilla again once level 1's quests are done.
   vanilla crafting table; vanilla sticks and our dead planks are `workbench_only`.
 - **Per-player level** (`core`): `level` in the player's progress, 1–6. `/ar level get|set`, `AR.getLevel` /
   `AR.setLevel`, and a `LevelChangedEvent`.
+- **Ashen stone works like vanilla stone:** any pickaxe mines it, and ashen cobblestone makes stone tools and
+  furnaces (`stone_tool_materials`, `stone_crafting_materials`).
 - **Dead trees never grow back:** dead leaves drop no saplings (already true), so cut forests stay cut.
 - **New items and blocks** (`world`):
   - `scrap`, from `rubble`: half-high heaps scattered over the Dead Lands, with a few always around the Cradle.
@@ -255,7 +257,7 @@ when" criteria. Stage numbers follow the order of work, not the order of the sto
 - **Structures:** the Cradle (spawn), Waystations, Signal Relays, ruined towns, dead roads (feature).
 - Sky, fog, weather, ambient sound, ash weather effect.
 - The first hour (D11): no vanilla wood crafting, the scrap knife, scraped wood, the Cradle's broken workbench, the
-  first quest.
+  first quest. The FTB Quests chapter "Ch. 1 — Waking" (level 1 group) walks it from waking to stone tools.
 - Radiation v1 (D12): the live reading, HUD bar, damage, data maps, dead wood as the first source.
 - **Done when:** you can survive the first night with only Dead Lands resources, and none of the ~10 people you
   playtest it with can name a vanilla block they saw.

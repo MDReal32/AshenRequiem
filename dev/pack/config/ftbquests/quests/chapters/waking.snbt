@@ -1,0 +1,143 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "waking"
+	group: "1410CC851F9E4B11"
+	icon: {
+		count: 1
+		id: "ashen_requiem_world:scrap_knife"
+	}
+	id: "50FDBEB381E428E3"
+	order_index: 0
+	progression_mode: "flexible"
+	quest_links: [ ]
+	quests: [
+		{
+			id: "1B7BFBE6B3A78E28"
+			tasks: [{
+				dimension: "ashen_requiem_world:deadlands"
+				id: "960509C5B7EABE6D"
+				type: "dimension"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1B7BFBE6B3A78E28"]
+			id: "E3124B283FC0CA3B"
+			tasks: [{
+				id: "82F80E005773062B"
+				item: {
+					count: 1
+					id: "ashen_requiem_world:scrap"
+				}
+				type: "item"
+			}]
+			x: 1.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["E3124B283FC0CA3B"]
+			id: "F46BC84D0532F68E"
+			tasks: [{
+				id: "745C8DC6AECCD014"
+				item: {
+					count: 1
+					id: "ashen_requiem_world:scrap_knife"
+				}
+				type: "item"
+			}]
+			x: 3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["F46BC84D0532F68E"]
+			id: "7F87FE2C3AA35AF9"
+			tasks: [{
+				id: "46ECC0EFF04B3F4B"
+				item: {
+					count: 1
+					id: "ashen_requiem_world:scraped_log"
+				}
+				type: "item"
+			}]
+			x: 4.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7F87FE2C3AA35AF9"]
+			icon: {
+				count: 1
+				id: "ashen_requiem_world:workbench"
+			}
+			id: "1333A28A05B5D535"
+			tasks: [{
+				id: "A59DC489D12AF3A8"
+				observation_type: "block"
+				observe_type: 0
+				timer: 0L
+				to_observe: "ashen_requiem_world:workbench"
+				type: "observation"
+			}]
+			x: 6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["1333A28A05B5D535"]
+			id: "A420BC013AC7AA19"
+			tasks: [{
+				id: "EDD1A5E07C7304EA"
+				item: {
+					count: 1
+					id: "ashen_requiem_world:dead_planks"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["A420BC013AC7AA19"]
+			id: "FE0BF996BCE31DAD"
+			tasks: [{
+				id: "F2E33B9E6E5AEFEB"
+				item: {
+					count: 1
+					id: "ashen_requiem_world:workbench"
+				}
+				only_from_crafting: true
+				type: "item"
+			}]
+			x: 9.0d
+			y: -1.0d
+		}
+		{
+			dependencies: ["A420BC013AC7AA19"]
+			id: "0614B522C0C0B3BC"
+			tasks: [{
+				id: "61609FCB4361E877"
+				item: {
+					count: 1
+					id: "minecraft:wooden_pickaxe"
+				}
+				type: "item"
+			}]
+			x: 9.0d
+			y: 1.0d
+		}
+		{
+			dependencies: ["0614B522C0C0B3BC"]
+			id: "510FDE662B910DEE"
+			tasks: [{
+				id: "F5878EE098E3F4A6"
+				item: {
+					count: 1
+					id: "minecraft:stone_pickaxe"
+				}
+				type: "item"
+			}]
+			x: 10.5d
+			y: 1.0d
+		}
+	]
+}
