@@ -16,7 +16,7 @@
 			id: "1B7BFBE6B3A78E28"
 			tasks: [{
 				dimension: "ashen_requiem_world:deadlands"
-				id: "960509C5B7EABE6D"
+				id: "160509C5B7EABE6D"
 				type: "dimension"
 			}]
 			x: 0.0d
@@ -24,9 +24,9 @@
 		}
 		{
 			dependencies: ["1B7BFBE6B3A78E28"]
-			id: "E3124B283FC0CA3B"
+			id: "63124B283FC0CA3B"
 			tasks: [{
-				id: "82F80E005773062B"
+				id: "02F80E005773062B"
 				item: {
 					count: 1
 					id: "ashen_requiem_world:scrap"
@@ -37,8 +37,8 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["E3124B283FC0CA3B"]
-			id: "F46BC84D0532F68E"
+			dependencies: ["63124B283FC0CA3B"]
+			id: "746BC84D0532F68E"
 			tasks: [{
 				id: "745C8DC6AECCD014"
 				item: {
@@ -51,7 +51,7 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["F46BC84D0532F68E"]
+			dependencies: ["746BC84D0532F68E"]
 			id: "7F87FE2C3AA35AF9"
 			tasks: [{
 				id: "46ECC0EFF04B3F4B"
@@ -72,7 +72,7 @@
 			}
 			id: "1333A28A05B5D535"
 			tasks: [{
-				id: "A59DC489D12AF3A8"
+				id: "259DC489D12AF3A8"
 				observation_type: "block"
 				observe_type: 0
 				timer: 0L
@@ -84,9 +84,9 @@
 		}
 		{
 			dependencies: ["1333A28A05B5D535"]
-			id: "A420BC013AC7AA19"
+			id: "2420BC013AC7AA19"
 			tasks: [{
-				id: "EDD1A5E07C7304EA"
+				id: "6DD1A5E07C7304EA"
 				item: {
 					count: 1
 					id: "ashen_requiem_world:dead_planks"
@@ -97,10 +97,10 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["A420BC013AC7AA19"]
-			id: "FE0BF996BCE31DAD"
+			dependencies: ["2420BC013AC7AA19"]
+			id: "7E0BF996BCE31DAD"
 			tasks: [{
-				id: "F2E33B9E6E5AEFEB"
+				id: "72E33B9E6E5AEFEB"
 				item: {
 					count: 1
 					id: "ashen_requiem_world:workbench"
@@ -112,7 +112,7 @@
 			y: -1.0d
 		}
 		{
-			dependencies: ["A420BC013AC7AA19"]
+			dependencies: ["2420BC013AC7AA19"]
 			id: "0614B522C0C0B3BC"
 			tasks: [{
 				id: "61609FCB4361E877"
@@ -129,7 +129,7 @@
 			dependencies: ["0614B522C0C0B3BC"]
 			id: "510FDE662B910DEE"
 			tasks: [{
-				id: "F5878EE098E3F4A6"
+				id: "75878EE098E3F4A6"
 				item: {
 					count: 1
 					id: "minecraft:stone_pickaxe"

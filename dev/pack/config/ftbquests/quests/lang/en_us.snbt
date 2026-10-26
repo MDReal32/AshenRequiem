@@ -1,10 +1,10 @@
 {
 	chapter.19B36F23B45AB620.title: "Welcome"
 	chapter.50FDBEB381E428E3.title: "Level 1 — Dead Lands"
-	chapter.B67A7D9792DA801F.title: "Level 2 — Overworld"
-	chapter.8789BD767ECE5727.title: "Level 3 — The Otherside"
-	chapter.D7C995D267590DC9.title: "Level 4 — Advanced Dead Lands"
-	chapter.B671E139ED5A5509.title: "Level 5 — The Dying Overworld"
+	chapter.367A7D9792DA801F.title: "Level 2 — Overworld"
+	chapter.0789BD767ECE5727.title: "Level 3 — The Otherside"
+	chapter.57C995D267590DC9.title: "Level 4 — Advanced Dead Lands"
+	chapter.3671E139ED5A5509.title: "Level 5 — The Dying Overworld"
 	chapter.7672D90FCEE368EA.title: "Level 6 — Eden"
 	chapter_group.1410CC851F9E4B11.title: "Main Story"
 	quest.4C42E0C9D5063097.title: "Welcome"
@@ -14,13 +14,13 @@
 		"Okay. I'm awake. I think."
 		"Everything's grey. Don't panic. Start with what's close."
 	]
-	quest.E3124B283FC0CA3B.title: "Scrap"
-	quest.E3124B283FC0CA3B.quest_desc: [
+	quest.63124B283FC0CA3B.title: "Scrap"
+	quest.63124B283FC0CA3B.quest_desc: [
 		"Those heaps around the pod. Junk, but junk is something."
 		"Break a few. Scrap, and a stick if I'm lucky."
 	]
-	quest.F46BC84D0532F68E.title: "Scrap Knife"
-	quest.F46BC84D0532F68E.quest_desc: [
+	quest.746BC84D0532F68E.title: "Scrap Knife"
+	quest.746BC84D0532F68E.quest_desc: [
 		"Scrap and a stick. Tie them together and that's a blade."
 		"My hands remember how. I don't."
 	]
@@ -34,13 +34,13 @@
 		"That bench in the corner. Broken, not gone."
 		"Two clean logs and two bits of scrap should hold it together."
 	]
-	quest.A420BC013AC7AA19.title: "Dead Planks"
-	quest.A420BC013AC7AA19.quest_desc: [
+	quest.2420BC013AC7AA19.title: "Dead Planks"
+	quest.2420BC013AC7AA19.quest_desc: [
 		"Clean logs into planks. Only on the bench, though."
 		"Out here nothing works in bare hands."
 	]
-	quest.FE0BF996BCE31DAD.title: "A Bench of My Own"
-	quest.FE0BF996BCE31DAD.quest_desc: [
+	quest.7E0BF996BCE31DAD.title: "A Bench of My Own"
+	quest.7E0BF996BCE31DAD.quest_desc: [
 		"I can't keep walking back to that corner."
 		"Planks and scrap. One I can take with me."
 	]
