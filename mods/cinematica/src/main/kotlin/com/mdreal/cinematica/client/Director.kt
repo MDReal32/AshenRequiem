@@ -105,6 +105,9 @@ object Director {
     private var savedCameraType: CameraType? = null
 
     val active get() = run != null
+
+    /** Whether this playback takes the control keys and shows the bar: a real one, with developer mode on. */
+    private val Run.controlled get() = !preview && CinematicaClientConfig.developerMode.get()
     val isPreview get() = run?.preview == true
 
     fun play(name: String, timeline: Timeline, origin: Vec, from: Double = 0.0, preview: Boolean = false, showActor: Boolean = true) {
@@ -183,7 +186,7 @@ object Director {
         if (abs(mouse.xpos() - mouseX) + abs(mouse.ypos() - mouseY) > 4) reveal()
         mouseX = mouse.xpos()
         mouseY = mouse.ypos()
-        if (run.preview) return
+        if (!run.controlled) return
         if (Keys.PLAY_PAUSE.presses() % 2 == 1) togglePause()
         val delta = (Keys.STEP_FORWARD.presses() - Keys.STEP_BACK.presses()) * STEP
         if (delta != 0) step(delta)
@@ -195,7 +198,7 @@ object Director {
         val run = run ?: return false
         val mc = Minecraft.getInstance()
         // Not when the click only gives the mouse back to the game window.
-        if (run.preview || mc.screen != null || !mc.mouseHandler.isMouseGrabbed) return false
+        if (!run.controlled || mc.screen != null || !mc.mouseHandler.isMouseGrabbed) return false
         togglePause()
         return true
     }
@@ -233,7 +236,7 @@ object Director {
         if (run.preview) return
         PacketDistributor.sendToServer(ControlPayload(run.from.toInt() + ticks, paused))
         val mc = Minecraft.getInstance()
-        if (paused && mc.screen == null) mc.setScreen(PlayerScreen())
+        if (paused && mc.screen == null && run.controlled) mc.setScreen(PlayerScreen())
         if (!paused && mc.screen is PlayerScreen) mc.setScreen(null)
     }
 
@@ -383,7 +386,7 @@ object Director {
         }
         val alpha = (run.timeline.fade(time) * 255).toInt().coerceIn(0, 255)
         if (alpha > 0) graphics.fill(0, 0, width, height, alpha shl 24)
-        if (!run.preview && !shotPending) controlsHud(graphics, run, time, partialTick, width, height)
+        if (run.controlled && !shotPending) controlsHud(graphics, run, time, partialTick, width, height)
     }
 
     /** A video player's bar along the bottom: progress, play state, time, the keys; and the big sign after a toggle. */

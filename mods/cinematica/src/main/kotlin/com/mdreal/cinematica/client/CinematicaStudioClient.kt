@@ -17,7 +17,9 @@ import net.minecraft.client.gui.LayeredDraw
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
+import net.neoforged.fml.config.ModConfig
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent
 import net.neoforged.neoforge.client.event.ClientTickEvent
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
@@ -35,8 +37,9 @@ import org.lwjgl.glfw.GLFW
 import java.util.UUID
 
 @Mod(value = CinematicaStudio.MOD_ID, dist = [Dist.CLIENT])
-class CinematicaStudioClient(modBus: IEventBus) {
+class CinematicaStudioClient(container: ModContainer, modBus: IEventBus) {
     init {
+        container.registerConfig(ModConfig.Type.CLIENT, CinematicaClientConfig.getSpec(), "cinematica-studio-client.toml")
         ClientBridge.sink = Sink
         modBus.addListener<EntityRenderersEvent.RegisterRenderers> { it.registerEntityRenderer(ModEntities.ACTOR.get(), ::ActorRenderer) }
         modBus.addListener<RegisterKeyMappingsEvent> { event -> Keys.ALL.forEach(event::register) }
