@@ -66,8 +66,10 @@ quest data directly. That keeps quests easy to rearrange, and `/ar` debug comman
 
 The book: a Welcome chapter, then a Main Story group with one chapter per level (1–6). Other groups that move the
 story sit beside it. Ids are written by hand as `GGGG CCCC QQQQ TTTT` (hex): group, chapter, quest, task. Group
-`0000` is "no group" (Welcome is `0000 0001`), Main Story is `0001`, its chapters are the levels, and quests and tasks
-count up from `0001`. Rewards use `1001` and up in the last block. Every id starts with `0`: FTB Quests reads ids as
+`0000` is "no group" (Welcome is `0000 0001`), Main Story is `0001`, and its chapters are the levels. Quests go in
+steps of `0010` in story order (`0010`, `0020` … `0090`, `00A0`; it's hex), so one added later takes a number in the gap
+(`0015` between `0010` and `0020`). Tasks count up from `0001` and rewards from `1001` in the last block. Never
+renumber after release: progress is saved by id. Every id starts with `0`: FTB Quests reads ids as
 signed longs and replaces one that starts with 8–F.
 
 ### D4 — Per-player reveal (veil)

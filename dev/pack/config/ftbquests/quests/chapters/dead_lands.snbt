@@ -13,20 +13,20 @@
 	quest_links: [ ]
 	quests: [
 		{
-			id: "0001000100010000"
+			id: "0001000100100000"
 			tasks: [{
 				dimension: "ashen_requiem_world:deadlands"
-				id: "0001000100010001"
+				id: "0001000100100001"
 				type: "dimension"
 			}]
 			x: 0.0d
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100010000"]
-			id: "0001000100020000"
+			dependencies: ["0001000100100000"]
+			id: "0001000100200000"
 			tasks: [{
-				id: "0001000100020001"
+				id: "0001000100200001"
 				item: { count: 1, id: "ashen_requiem_world:scrap" }
 				type: "item"
 			}]
@@ -34,10 +34,10 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100020000"]
-			id: "0001000100030000"
+			dependencies: ["0001000100200000"]
+			id: "0001000100300000"
 			tasks: [{
-				id: "0001000100030001"
+				id: "0001000100300001"
 				item: { count: 1, id: "ashen_requiem_world:scrap_knife" }
 				type: "item"
 			}]
@@ -45,10 +45,10 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100030000"]
-			id: "0001000100040000"
+			dependencies: ["0001000100300000"]
+			id: "0001000100400000"
 			tasks: [{
-				id: "0001000100040001"
+				id: "0001000100400001"
 				item: { count: 1, id: "ashen_requiem_world:scraped_log" }
 				type: "item"
 			}]
@@ -56,13 +56,13 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100040000"]
+			dependencies: ["0001000100400000"]
 			icon: {
 				id: "ashen_requiem_world:workbench"
 			}
-			id: "0001000100050000"
+			id: "0001000100500000"
 			tasks: [{
-				id: "0001000100050001"
+				id: "0001000100500001"
 				observation_type: "block"
 				observe_type: 0
 				timer: 0L
@@ -73,10 +73,10 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100050000"]
-			id: "0001000100060000"
+			dependencies: ["0001000100500000"]
+			id: "0001000100600000"
 			tasks: [{
-				id: "0001000100060001"
+				id: "0001000100600001"
 				item: { count: 1, id: "ashen_requiem_world:dead_planks" }
 				type: "item"
 			}]
@@ -84,10 +84,10 @@
 			y: 0.0d
 		}
 		{
-			dependencies: ["0001000100060000"]
-			id: "0001000100070000"
+			dependencies: ["0001000100600000"]
+			id: "0001000100700000"
 			tasks: [{
-				id: "0001000100070001"
+				id: "0001000100700001"
 				item: { count: 1, id: "ashen_requiem_world:workbench" }
 				only_from_crafting: true
 				type: "item"
@@ -96,10 +96,10 @@
 			y: -1.0d
 		}
 		{
-			dependencies: ["0001000100060000"]
-			id: "0001000100080000"
+			dependencies: ["0001000100600000"]
+			id: "0001000100800000"
 			tasks: [{
-				id: "0001000100080001"
+				id: "0001000100800001"
 				item: { count: 1, id: "minecraft:wooden_pickaxe" }
 				type: "item"
 			}]
@@ -107,10 +107,10 @@
 			y: 1.0d
 		}
 		{
-			dependencies: ["0001000100080000"]
-			id: "0001000100090000"
+			dependencies: ["0001000100800000"]
+			id: "0001000100900000"
 			tasks: [{
-				id: "0001000100090001"
+				id: "0001000100900001"
 				item: { count: 1, id: "minecraft:stone_pickaxe" }
 				type: "item"
 			}]
