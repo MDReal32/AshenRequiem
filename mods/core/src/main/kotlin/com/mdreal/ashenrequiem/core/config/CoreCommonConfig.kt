@@ -17,6 +17,13 @@ object CoreCommonConfig {
         .comment("How much more the items in the main hand and offhand count than the rest of the inventory. 1 counts them the same.")
         .defineInRange("heldMultiplier", 1.0, 0.0, 100.0)
 
+    val radiationContainerShare: ModConfigSpec.DoubleValue = spec
+        .comment(
+            "How much of the radiation of items inside carried containers (shulker boxes, bundles, backpacks) gets through.",
+            "1 counts them fully, 0 shields them completely. A container inside a container shields again.",
+        )
+        .defineInRange("containerShare", 0.5, 0.0, 1.0)
+
     val radiationRadius: ModConfigSpec.IntValue = spec
         .comment("How far, in blocks, radiated blocks and dropped items reach. Their strength falls off to nothing at this distance.")
         .defineInRange("radius", 6, 0, 16)

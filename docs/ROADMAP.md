@@ -190,7 +190,9 @@ A per-player value with its own HUD bar. It lives in `core`, so every module and
   where they stand. It's recalculated once a second, so dropping the items or walking away lowers it at once. Nothing
   builds up over time.
   - **Carried items:** every radiated item in the inventory adds its strength, per item: the more you carry, the
-    higher it goes. Held items count double.
+    higher it goes. Held items count the same as the rest (`heldMultiplier`).
+  - **Carried containers shield:** items inside a shulker box, bundle or backpack count at half (`containerShare`),
+    and half again for each container they're nested in.
   - **Nearby blocks and dropped items:** each radiated one within 6 blocks adds its strength, falling off with
     distance. The scan skips chunk sections that hold no radiated blocks, so it stays cheap.
   - Strengths (points per item or block) come from NeoForge data maps (`ashen_requiem:radiation`, one for items and

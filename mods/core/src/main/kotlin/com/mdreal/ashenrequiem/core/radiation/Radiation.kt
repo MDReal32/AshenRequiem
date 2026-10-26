@@ -3,6 +3,7 @@ package com.mdreal.ashenrequiem.core.radiation
 import com.mdreal.ashenrequiem.core.config.CoreCommonConfig
 import com.mojang.serialization.Codec
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import net.neoforged.neoforge.network.PacketDistributor
@@ -43,6 +45,9 @@ object Radiation {
     val BLOCKS: DataMapType<Block, Float> = DataMapType.builder(ID, Registries.BLOCK, STRENGTH).synced(STRENGTH, false).build()
 
     val DAMAGE: ResourceKey<DamageType> = ResourceKey.create(Registries.DAMAGE_TYPE, ID)
+
+    /** Containers inside containers are looked into this deep, no further. */
+    private const val MAX_DEPTH = 3
 
     private val readings = HashMap<UUID, Float>()
     private val sent = HashMap<UUID, Int>()
@@ -121,6 +126,19 @@ object Radiation {
         if (health > 0f) player.hurt(player.damageSources().source(DAMAGE), health)
     }
 
+    /**
+     * What a container item holds: through its item handler when it has one (most modded backpacks and boxes), else
+     * vanilla's container (shulker boxes) or bundle contents.
+     */
+    private fun contents(stack: ItemStack): List<ItemStack> {
+        stack.getCapability(Capabilities.ItemHandler.ITEM)?.let { handler ->
+            return (0 until handler.slots).map(handler::getStackInSlot).filter { !it.isEmpty }
+        }
+        stack.get(DataComponents.CONTAINER)?.let { return it.nonEmptyItems().toList() }
+        stack.get(DataComponents.BUNDLE_CONTENTS)?.let { return it.items().toList() }
+        return emptyList()
+    }
+
     private fun measure(player: ServerPlayer, sources: MutableMap<String, Float>?): Float {
         var total = 0f
         fun add(label: String, points: Float) {
@@ -131,9 +149,14 @@ object Radiation {
 
         val inventory = player.inventory
         val held = CoreCommonConfig.radiationHeldMultiplier.get().toFloat()
-        fun carry(stack: ItemStack, multiplier: Float) {
+        val share = CoreCommonConfig.radiationContainerShare.get().toFloat()
+        // Items inside a carried container count at the container share, once more for each container they're nested in.
+        fun carry(stack: ItemStack, multiplier: Float, inside: String = "", depth: Int = 0) {
+            if (stack.isEmpty) return
             val strength = strength(stack)
-            if (strength > 0f) add("carried ${stack.hoverName.string}", strength * stack.count * multiplier)
+            if (strength > 0f) add("carried ${stack.hoverName.string}$inside", strength * stack.count * multiplier)
+            if (share <= 0f || depth >= MAX_DEPTH) return
+            for (item in contents(stack)) carry(item, multiplier * share, " in ${stack.hoverName.string}", depth + 1)
         }
         inventory.items.forEachIndexed { i, stack -> carry(stack, if (i == inventory.selected) held else 1f) }
         inventory.armor.forEach { carry(it, 1f) }
